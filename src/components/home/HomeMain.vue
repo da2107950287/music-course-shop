@@ -1,0 +1,49 @@
+<template>
+    <div class="home-main"> 
+        <div class="title">
+            <slot name="title"></slot>
+        </div>
+        <div class="content">
+            <course-item></course-item>
+        </div>
+    </div>
+</template>
+<script>
+ import CourseItem from './CourseItem'
+    export default{
+        components:{
+            CourseItem
+        }
+    }
+</script>
+<style scoped>
+.home-main{
+    width: 1200px;
+    background-color: #F7F7F7;
+    margin: 0 auto;
+   
+}
+.title{
+    font-size: 22px;
+    font-weight: 500;
+    color: #36363A;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    
+}
+.title::before{
+    content: "";
+    width: 6px;
+    height: 20px;
+   
+    display: inline-block;
+    background-color: #98B702;
+    margin-right: 10px;
+    
+}
+.content{
+    display: flex;
+    flex-wrap: wrap;
+}
+</style>
