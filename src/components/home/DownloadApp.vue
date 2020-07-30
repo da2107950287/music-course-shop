@@ -20,7 +20,7 @@ export default {
   
 
   background-image: url(../../assets/image/bg_ad_xz.png);
-  background-size: 1200px 100%;
+  background-size: 100%;
 }
 .download > div {
     height: 120px;

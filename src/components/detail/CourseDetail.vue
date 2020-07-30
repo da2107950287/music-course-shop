@@ -3,15 +3,19 @@
         <div class="top">
             <div class="list-tab" v-for="(item,index) in lists" :key=index :class="{'active':index===currentIndex}"
                 @click="handleClick(index)">{{item}}</div>
-            
+           <img src="../../assets/image/lab_kcxq_kcml.png" alt="" class="audition-icon">
         </div>
         <div class="content">
-            <course-description></course-description>
+            <course-description v-show="currentIndex==0"></course-description>
+            <course-catalog v-show="currentIndex==1"></course-catalog>
+            <teacher-intro v-show="currentIndex==2"></teacher-intro>
         </div>
     </div>
 </template>
 <script>
      import CourseDescription from '../detail/CourseDescription'
+     import CourseCatalog from '../detail/CourseCatalog'
+     import TeacherIntro from '../detail/TeacherIntro'
     export default {
         data() {
             return {
@@ -25,23 +29,35 @@
             }
         },
         components:{
-            CourseDescription
+            CourseDescription,
+            TeacherIntro,
+            CourseCatalog
         }
     }
 </script>
 <style scoped>
     .course-detail {
         background-color: #fff;
+        width: 1200px;
     }
 
     .top {
         display: flex;
+        position: relative;
+        
     }
-
+    .audition-icon{
+        width: 52px;
+        height: 18px;
+        position: absolute;
+        top: 23px;
+        left: 635px;
+    }
     .list-tab {
         width: 400px;
         height: 64px;
         line-height: 64px;
+        text-align: center;
         background-color: #f7f7f7;
         border-top: 1px solid #ddd;
         color: #36363A;
@@ -52,7 +68,6 @@
         color: #98B702;
         background-color: #fff;
     }
-    .content{
-        padding: 30px;
-    }
+    
+    
 </style>

@@ -35,7 +35,7 @@
 </script>
 <style scoped>
     .footer-box{
-    
+    width: 100%;
                background-color: #36363A;
     }
     .footer {

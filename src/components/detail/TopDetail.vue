@@ -55,8 +55,9 @@
 <style scoped>
     .top-detail {
         height: 440px;
-        display: flex;
+        width: 1200px;
         padding: 30px;
+        display: flex;
         box-sizing: border-box;
         background-color: #fff;
     }

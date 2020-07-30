@@ -1,21 +1,47 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-// import Detail from '../views/'
+
 Vue.use(VueRouter)
 
   const routes = [
   {
     path: '/',
-    component: ()=>import('../views/Home')
+    component: ()=>import('../views/Home.vue')
   },
   {
     path:'/home',
-    component:()=>import('../views/Home')
+    component:()=>import('../views/Home.vue')
   },
   {
     path:'/detail',
-    component:()=>import('../views/Detail')
+    component:()=>import('../views/Detail.vue')
+  },
+  {
+    path:'/user',
+    component:()=>import('../views/User.vue'),
+    children:[
+      {
+        path:'profile',
+        component:()=>import('../views/Profile.vue'),
+        meta:{title:'我的资料'}
+      },
+      {
+        path:'course',
+        component:()=>import('../views/Course.vue'),
+        meta:{title:'我的课程'}
+      },
+      {
+        path:'integral',
+        component:()=>import('../views/Integral.vue'),
+        meta:{title:'我的积分'}
+      },
+      {
+        path:'order',
+        component:()=>import('../views/Order.vue'),
+        meta:{title:'我的订单'}
+      }
+
+    ]
   },
   {
     path: '/about',

@@ -2,7 +2,7 @@
 <div>
     <div class="main-detail">
         <top-detail></top-detail>
-        <course-detail></course-detail>
+        <course-detail class="margin30"></course-detail>
     </div>
 
 </div>
@@ -24,7 +24,12 @@
 </script>
 <style scoped>
     .main-detail{
-        padding: 0 360px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         background-color: #F7F7F7;
+    }
+    .margin30{
+        margin-top: 30px;
     }
 </style>

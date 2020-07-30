@@ -3,7 +3,6 @@
         <div class="course-item">
             <div class="title">钢琴</div>
             <div class="content">
-
                 <div class="course-name">小提琴</div>
                 <div class="course-time common">
                     <img src="../../assets/image/icon_zks.png" class="img-icon">
@@ -81,6 +80,7 @@
         color: #FFFFFF;
         background: #98B702;
         border-radius: 15px;
+        text-align: center;
     }
 
     .content {
@@ -88,7 +88,7 @@
         background-color: #F7F7F7;
         color: #9899A1;
         font-size: 16px;
-        text-align: left;
+        /* text-align: left; */
 
     }
 

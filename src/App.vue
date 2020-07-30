@@ -15,14 +15,9 @@
     }
   }
 </script>
-<style lang="scss">
-
-
-*{
-  padding: 0;
-  margin: 0;
-}
-#app{
- 
-}
+<style>
+  #app{
+    background-color: #F7F7F7;
+    font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', SimSun, sans-serif;
+  }
 </style>
