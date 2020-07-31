@@ -100,6 +100,7 @@
 <style lang="scss" scoped>
   .top-header-box {
     width: 100%;
+    margin-bottom: 30px;
     background-image: url(../assets/image/bg_hander.png);
   }
 

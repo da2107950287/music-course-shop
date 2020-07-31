@@ -2,47 +2,79 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
-
-  const routes = [
+// 解决vue-router重复点击菜单报错的问题
+const originalPush= VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch(err => err);
+};
+const routes = [
   {
     path: '/',
-    component: ()=>import('../views/Home.vue')
+    component: () => import('../views/Home.vue')
   },
   {
-    path:'/home',
-    component:()=>import('../views/Home.vue')
+    path: '/home',
+    component: () => import('../views/Home.vue')
   },
   {
-    path:'/detail',
-    component:()=>import('../views/Detail.vue')
+    path: '/detail',
+    component: () => import('../views/Detail.vue')
   },
   {
-    path:'/user',
-    component:()=>import('../views/User.vue'),
-    children:[
+    path: '/buySuccess',
+    component: () => import('../views/BuySuccess.vue'),
+    meta: { title: '购买成功' }
+  },
+  {
+    path: '/orderDetail',
+    component: () => import('../views/OrderDetail.vue'),
+    meta: { title: '订单详情' }
+  },
+  
+  {
+    path: '/user',
+    component: () => import('../views/User.vue'),
+    children: [
       {
-        path:'profile',
-        component:()=>import('../views/Profile.vue'),
-        meta:{title:'我的资料'}
-      },
-      {
-        path:'course',
-        component:()=>import('../views/Course.vue'),
-        meta:{title:'我的课程'}
-      },
-      {
-        path:'integral',
-        component:()=>import('../views/Integral.vue'),
-        meta:{title:'我的积分'}
-      },
-      {
-        path:'order',
-        component:()=>import('../views/Order.vue'),
-        meta:{title:'我的订单'}
-      }
+        path: "/user", redirect: "profile" 
 
+      
+    },
+      {
+        path: 'profile',
+        component: () => import('../views/Profile.vue'),
+        meta: { title: '我的资料' }
+      },
+      
+      {
+        path: 'course',
+        component: () => import('../views/Course.vue'),
+        meta: { title: '我的课程' }
+      },
+     
+      {
+        path: 'order',
+        component: () => import('../views/Order.vue'),
+        meta: { title: '我的订单' }
+      },
+      {
+        path: 'collect',
+        component: () => import('../views/Collect.vue'),
+        meta: { title: '我的收藏' }
+      },
+      {
+        path: 'news',
+        component: () => import('../views/News.vue'),
+        meta: { title: '我的消息' }
+      },
+      {
+        path: 'integral',
+        component: () => import('../views/Integral.vue'),
+        meta: { title: '我的积分' }
+      },
     ]
   },
+ 
   {
     path: '/about',
     name: 'About',

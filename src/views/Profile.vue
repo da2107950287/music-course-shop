@@ -8,12 +8,12 @@
       <div>
         <span>绑定手机：</span>
         <span>15287598688</span>
-        <span>修改</span>
+        <span @click="modifyPhone">修改</span>
       </div>
       <div>
         <span>绑定微信：</span>
         <span>未绑定</span>
-        <span>去绑定</span>
+        <span @click="bindWeChat">去绑定</span>
       </div>
       <div>
         <span>昵称：</span>
@@ -36,17 +36,53 @@
         <img src="../assets/image/icon_xg.png" @click="changeImg" />
       </div>
     </div>
+
+    <el-dialog
+      :visible.sync="dialogVisible1"
+      width="340px"
+      :before-close="handleClose1"
+      center
+    >
+    <div slot="title" class="popup-title">扫描二维码绑定微信</div>
+      <img src="../assets/image/img_qr.png" alt />
+    </el-dialog>
+      <el-dialog
+      :visible.sync="dialogVisible2"
+      width="340px"
+      :before-close="handleClose2"
+      center
+    >
+    <div slot="title" class="popup-title">绑定、更换手机号</div>
+      <img src="../assets/image/img_qr.png" alt />
+    </el-dialog>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
+      dialogVisible1:false,
+      dialogVisible2:false,
       form: {},
     };
   },
-  methods: {
-    changeImage() {},
+  methods:{
+    changeImg() {
+    },
+    // 绑定微信
+    bindWeChat() {
+      this.dialogVisible1=true
+    },
+    
+    handleClose1(){
+      this.dialogVisible1=false
+    },
+    modifyPhone(){
+      this.dialogVisible2=true;
+    },
+    handleClose2(){
+      this.dialogVisible2=false;
+    }
   },
 };
 </script>
@@ -109,5 +145,11 @@ export default {
       right: 8px;
     }
   }
+}
+.popup-title{
+  color: #36363A;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 28px;
 }
 </style>

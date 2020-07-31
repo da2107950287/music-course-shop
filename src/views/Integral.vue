@@ -1,7 +1,7 @@
 <template>
   <div>
     <profile-header>
-      <h3 slot="left">我的积分</h3>
+      <h3 slot="title">我的积分</h3>
       <div slot="right">当前积分：9277</div>
     </profile-header>
     <div class="integral-bottom">

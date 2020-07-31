@@ -50,11 +50,13 @@
 </script>
 <style scoped>
     .course-box {
-        width: 408px;
-        height: 330px;
+        /* width: 408px;
+        height: 330px; */
+        width:384px;
+        height:306px;
         box-sizing: border-box;
         /* background-image: url(../../assets/image/bg_jxkc_hover.png); */
-        margin: 30px 0;
+        padding: 30px 0;
     }
 
     .course-item {
@@ -73,11 +75,12 @@
 
         width: 90px;
         height: 30px;
-        line-height: 30px;
+        
         position: absolute;
         top: -15px;
         left: 148px;
         color: #FFFFFF;
+        line-height: 30px;
         background: #98B702;
         border-radius: 15px;
         text-align: center;
@@ -93,10 +96,12 @@
     }
 
     .course-name {
-        font-size: 20px;
-        color: #36363A;
-        font-weight: 500;
         margin-bottom: 20px;
+        line-height: 36px;
+        color: #36363A;
+        font-size: 22px;
+        font-weight: 500;
+        
     }
 
     .img-icon {
