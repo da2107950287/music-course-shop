@@ -5,6 +5,14 @@
         </div>
         <div class="content">
             <course-item></course-item>
+            <course-item></course-item>
+
+            <course-item></course-item>
+            <course-item></course-item>
+            <course-item></course-item>
+
+            <course-item></course-item>
+
         </div>
     </div>
 </template>
@@ -20,10 +28,12 @@
 .home-main{
     width: 1200px;
     background-color: #F7F7F7;
-    margin: 0 auto;
+    margin: 0 auto ;
+    padding-top: 30px;
    
 }
 .title{
+    /* margin-top: 30px; */
     font-size: 22px;
     font-weight: 500;
     color: #36363A;
@@ -44,6 +54,7 @@
 }
 .content{
     display: flex;
+    justify-content: space-between;
     flex-wrap: wrap;
 }
 </style>

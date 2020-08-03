@@ -17,8 +17,6 @@ export default {
 <style scoped>
 .download {
   width: 100%;
-  
-
   background-image: url(../../assets/image/bg_ad_xz.png);
   background-size: 100%;
 }

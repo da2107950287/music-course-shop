@@ -50,32 +50,36 @@
 </script>
 <style scoped>
     .course-box {
-        /* width: 408px;
-        height: 330px; */
-        width:384px;
-        height:306px;
+        width: 384px;
+        height: 306px;
         box-sizing: border-box;
-        /* background-image: url(../../assets/image/bg_jxkc_hover.png); */
-        padding: 30px 0;
+        margin-top: 45px;
+        background-color: #fff;
+        border: 1px solid rgba(238, 238, 238, 1);
+
     }
 
     .course-item {
         position: relative;
-
         background: #fff;
-       
         border-radius: 3px;
-        border: 1px solid rgba(238, 238, 238, 1);
         padding: 30px 20px 15px;
+        box-sizing: border-box;
 
 
     }
 
-    .title {
+    .course-box:hover {
+        -webkit-box-shadow: 0 4px 12px rgba(152, 183, 2, 0.2);
+        box-shadow: 0 4px 12px rgba(152, 183, 2, 0.2);
+        -webkit-transform: translate3d(0, -2px, 0);
+        transform: translate3d(0, -2px, 0);
+        cursor: pointer;
+    }
 
+    .title {
         width: 90px;
         height: 30px;
-        
         position: absolute;
         top: -15px;
         left: 148px;
@@ -88,12 +92,16 @@
 
     .content {
         padding: 20px;
+        box-sizing: border-box;
         background-color: #F7F7F7;
         color: #9899A1;
         font-size: 16px;
         /* text-align: left; */
+        display: block;
+
 
     }
+
 
     .course-name {
         margin-bottom: 20px;
@@ -101,7 +109,7 @@
         color: #36363A;
         font-size: 22px;
         font-weight: 500;
-        
+
     }
 
     .img-icon {
@@ -124,35 +132,42 @@
         background-color: #ccc;
         margin-left: 8px;
     }
-    .bottom{
+
+    .bottom {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-top: 15px;
     }
-    .left,.right{
+
+    .left,
+    .right {
         display: flex;
         align-items: center;
-      
+
     }
-    .live-lesson{
+
+    .live-lesson {
         color: #FB9715;
         font-weight: 400;
-       
+
     }
-    
-    .right>img{
+
+    .right>img {
         width: 32px;
         height: 18px;
     }
-    .money{
+
+    .money {
         color: #36363A;
         font-weight: 600px;
     }
-    .money>span:nth-child(1){
+
+    .money>span:nth-child(1) {
         font-size: 20px;
     }
-    .money>span:nth-child(2){
+
+    .money>span:nth-child(2) {
         font-size: 32px;
     }
 </style>

@@ -36,7 +36,8 @@
 <style scoped>
     .footer-box{
     width: 100%;
-               background-color: #36363A;
+    background-color: #36363A;
+
     }
     .footer {
         /* width: 100%; */
@@ -46,7 +47,9 @@
         display: flex;
         justify-content: space-between;
         margin-left: auto;
-        margin-right: auto
+        margin-right: auto;
+        background-color: #36363A;
+
  
     }
 

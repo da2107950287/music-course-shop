@@ -33,7 +33,7 @@
         </el-form-item>
 
         <el-form-item prop="pass" class="pass">
-          <el-input type="password" v-model="ruleForm.pass" placeholder="请输入验证码"></el-input>
+          <el-input v-model="ruleForm.pass" placeholder="请输入验证码"></el-input>
           <div class="code" :class="{'can-click':canClick}" @click="codeClick">{{codeMsg}}</div>
         </el-form-item>
       </el-form>
@@ -48,10 +48,16 @@
         <span>400-555-666</span>
       </div>
     </el-dialog>
+    <div class="btn">
+      <img src="../assets/image/bnt_top.png" alt @click="consult" />
+      <img src="../assets/image/bnt_zxzx.png" alt />
+    </div>
+    <consult></consult>
   </div>
 </template>
 <script>
-import LoginBox from "../components/LoginBox.vue";
+import Consult from "../components/Consult"
+import LoginBox from "../components/LoginBox";
 export default {
   data() {
     var validatorNum = (rule, value, callback) => {
@@ -81,7 +87,7 @@ export default {
       chooseIndex: 0,
       canClick: false, //验证码开关
       codeMsg: "发送验证码",
-      totalTime:60,
+      totalTime: 60,
       list: ["推荐课程", "钢琴", "吉他", "尤克里里", "小提琴", "大提琴"],
       choose: [
         "我的资料",
@@ -92,7 +98,7 @@ export default {
         "我的积分",
         "退出登录",
       ],
-    
+
       ruleForm: {
         num: "",
         password: "",
@@ -125,9 +131,11 @@ export default {
         }
       }, 1000);
     },
+    consult() {},
   },
   components: {
     LoginBox,
+    Consult
   },
 };
 </script>
@@ -153,7 +161,8 @@ export default {
   align-items: center;
   text-align: center;
 }
-.self-left{
+
+.self-left {
   margin-bottom: 50px;
 }
 
@@ -263,8 +272,10 @@ export default {
   color: #36363a;
   border-radius: 0;
 }
+
 .pass {
   position: relative;
+
   .code {
     position: absolute;
     top: 0;
@@ -274,10 +285,12 @@ export default {
     font-weight: 400;
     color: #ccc;
   }
-  .can-click{
-    color:#98B702
+
+  .can-click {
+    color: #98b702;
   }
 }
+
 .login-button {
   width: 400px;
   height: 50px;
@@ -318,4 +331,17 @@ export default {
 .contact > span:nth-child(2) {
   color: #0091ff;
 }
+.btn {
+  position: fixed;
+  top: 100px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  img {
+    width: 80px;
+    height: 80px;
+  }
+}
+
 </style>

@@ -44,6 +44,7 @@ li {
   width: 950px;
   margin-top: 10px;
   padding: 30px;
+  box-sizing: border-box;
 
   background-color: #fff;
 }

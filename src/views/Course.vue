@@ -37,10 +37,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-  .course{
-    width: 950px;
-  }
 .course-bottom {
+  width: 950px;
+
   padding: 0 30px;
   box-sizing: border-box;
   background-color: #fff;

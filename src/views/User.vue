@@ -41,8 +41,7 @@
       }
     },
     created(){
-      console.log(window.location.href)
-      console.log(888)
+      
     },
     methods: {
       handleClick(item) {
@@ -108,9 +107,15 @@
         vertical-align: middle;
         margin-right: 80px;
       }
+      .active{
+        background:rgba(152,183,2,0.1);
+        color: #98b702;
 
+        /* opacity: 0.1; */
+      }
       .active::before {
         background-color: #98b702;
+       
       }
     }
   }
