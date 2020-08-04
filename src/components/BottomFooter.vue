@@ -2,9 +2,9 @@
     <div class="footer-box">
         <div class="footer">
             <div class="left">
-                <span>关于我们</span>
+                <span @click="seeAgreement()">关于我们</span>
                 <div class="common"></div>
-                <span>用户协议</span>
+                <span @click="seeAgreement">用户协议</span>
                 <div class="common"></div>
                 <span @click="dispalyQrCode">微信公众号</span>
             </div>
@@ -16,73 +16,92 @@
         <div class="bg-qr" v-if="isShow">
             <img src="../assets/image/qr.png" alt="">
         </div>
-       
+
     </div>
 </template>
 <script>
-    export default{
-        data(){
-            return{
-                isShow:false
+    export default {
+        data() {
+            return {
+                isShow: false
             }
         },
-        methods:{
-            dispalyQrCode(){
-                this.isShow=!this.isShow;
+        watch:{
+            $route(to,from){
+                this.isShow=false
+            }
+        },
+        methods: {
+            dispalyQrCode() {
+                console.log(8888)
+                this.isShow = !this.isShow;
+            },
+            seeAgreement() {
+                this.$router.push({ path: '/about' })
             }
         }
     }
 </script>
-<style scoped>
-    .footer-box{
-    width: 100%;
-    background-color: #36363A;
-
-    }
-    .footer {
-        /* width: 100%; */
-        width: 1200px;
-        height: 100px;
-        
-        display: flex;
-        justify-content: space-between;
-        margin-left: auto;
-        margin-right: auto;
+<style lang="scss" scoped>
+    .footer-box {
+        width: 100%;
         background-color: #36363A;
+        position: relative;
 
- 
+        .footer {
+            width: 1200px;
+            height: 100px;
+            display: flex;
+            justify-content: space-between;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #36363A;
+
+            .left,
+            .right {
+                display: flex;
+                align-items: center;
+                color: #9899A1;
+            }
+        }
     }
 
-    .left,.right {
-        display: flex;
-        align-items: center;
-        color: #9899A1;
+    .left {
+        span {
+            cursor: pointer;
+        }
+
+        .common {
+            width: 1px;
+            height: 10px;
+            background: rgba(152, 153, 161, 1);
+            margin: 0 15px;
+        }
     }
 
-    .common{
-        width: 1px;
-        height: 10px;
-        background: rgba(152, 153, 161, 1);
-        margin:0 15px;
+    .right {
+        :nth-child(1) {
+            margin-right: 20px;
+        }
     }
-    .right>:nth-child(1){
-        margin-right: 20px;
-    }
-    .bg-qr{
+
+    .bg-qr {
+        z-index: 200;
         width: 120px;
         height: 120px;
         position: absolute;
         left: 508px;
-        top: -66px;
+        bottom: 66px;
         background-image: url(../assets/image/bg_wxgzh.png);
         background-size: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
-    }
-    .bg-qr>img{
-        width: 80px;
-        height: 80px;
-     
+
+        img {
+            width: 80px;
+            height: 80px;
+
+        }
     }
 </style>

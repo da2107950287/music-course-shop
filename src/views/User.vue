@@ -96,6 +96,7 @@
         height: 60px;
         line-height: 60px;
         text-align: left;
+        cursor: pointer;;
       }
 
       >div::before {

@@ -1,27 +1,28 @@
 <template>
     <div class="top-detail">
         <div class="left">
-            <img src="../../assets/image/img_kcxq.png" alt="">
+            <img :src="topDetail.cover" alt="">
         </div>
         <div class="right">
             <div class="title">
-                <span>大提琴乐曲《赛马》提升课——琴艺技能提升</span>
-                <img src="../../assets/image/icon_kcxq_sc_def.png">
+                <span>{{topDetail.couName}}</span>
+                <img src="../../assets/image/icon_kcxq_sc_def.png" v-if="topDetail.courseCollState==0" @click="collectCourse">
+                <img src="../../assets/image//icon_kcxq_sc_sel.png" v-else>
             </div>
             <div class="price">
                 <div class="member-price">
-                    <span>会员价：￥</span>
-                    <span>299.00</span>
+                    <span>会员价：&yen;</span>
+                    <span>{{topDetail.priceVip}}</span>
                 </div>
                 <div class="orgin-price">
-                    原价：￥322.00
+                    原价：&yen;{{topDetail.price}}
                 </div>
             </div>
             <div>
                 <div class="common">
                     <img src="../../assets/image/icon_zks.png" class="img-icon">
                     <span>总 课 时：</span>
-                    <span>23.0</span>
+                    <span>{{topDetail.totalHours}}</span>
                 </div>
                 <div class="blank"></div>
                 <div class="common">
@@ -33,7 +34,7 @@
                 <div class=" common">
                     <img src="../../assets/image/icon_skls.png" class="img-icon">
                     <span>授课老师：</span>
-                    <span>李萌萌</span>
+                    <span>{{topDetail.lecturer}}</span>
                 </div>
             </div>
             <div class="btn-box">
@@ -45,9 +46,22 @@
 </template>
 <script>
     export default {
+        props:{
+            topDetail:{
+                type:Object,
+                default(){
+                    return {}
+                }
+            }
+        },
         data() {
             return {
 
+            }
+        },
+        methods:{
+            collectCourse(){
+                this.$emit('collectCourse');
             }
         }
     }
@@ -61,7 +75,8 @@
         box-sizing: border-box;
         background-color: #fff;
     }
-
+    .left{
+    }
     .left>img {
         width: 580px;
         height: 380px;
@@ -69,9 +84,13 @@
 
     .right {
         margin-left: 20px;
+        width: 538px;
+
     }
 
     .title {
+        display: flex;
+        justify-content: space-between;
         font-size: 22px;
         color: #36363A;
     }
@@ -84,15 +103,20 @@
 
     .price {
         height: 70px;
+        
         display: flex;
         align-items: center;
         margin: 35px 0 20px ;
         background: rgba(251, 151, 21, 0.15);
+        padding-left: 20px;
         /* opacity: 0.15; */
     }
 
     .member-price {
         color: #36363A;
+        display: flex;
+        align-items: center;
+        
     }
 
     .member-price>span:nth-child(1) {

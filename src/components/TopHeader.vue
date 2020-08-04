@@ -1,6 +1,6 @@
 <template>
   <div class="top-header-box">
-    <div class="top-header">
+    <div class="top-header" id="top-header">
       <div class="left">
         <div class="logo">芥末</div>
         <div class="title">芥末音乐</div>
@@ -22,26 +22,27 @@
         </div>
       </div>
     </div>
+    <!-- 登录弹窗 -->
     <el-dialog :visible.sync="dialogFormVisible" center width="480px">
-      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
+      <el-form :model="loginForm" :rules="rules" ref="loginForm" class="demo-ruleForm">
         <div class="left self-left">
           <div class="logo">芥末</div>
           <div class="title">芥末音乐</div>
         </div>
-        <el-form-item prop="num">
-          <el-input v-model.number="ruleForm.num" maxlength="11" placeholder="请输入手机号"></el-input>
+        <el-form-item prop="phone">
+          <el-input v-model="loginForm.phone" maxlength="11" placeholder="请输入手机号"></el-input>
         </el-form-item>
 
-        <el-form-item prop="pass" class="pass">
-          <el-input v-model="ruleForm.pass" placeholder="请输入验证码"></el-input>
-          <div class="code" :class="{'can-click':canClick}" @click="codeClick">{{codeMsg}}</div>
+        <el-form-item prop="smsCode" class="graphics-code">
+          <el-input v-model="loginForm.smsCode" placeholder="请输入验证码"></el-input>
+          <div class="code" :class="{'can-click':!canClick}" @click="codeClick">{{codeMsg}}</div>
         </el-form-item>
       </el-form>
       <div class="agreement">
         <span>首次登陆默认同意</span>
-        <span>《用户协议》</span>
+        <span @click="seeUserAgreement">《用户协议》</span>
       </div>
-      <button @click="submitForm('ruleForm')" class="login-button">登 录</button>
+      <button @click="submitForm()" class="login-button">登 录</button>
 
       <div class="contact">
         <span>登录遇到问题请联系客服：</span>
@@ -49,18 +50,22 @@
       </div>
     </el-dialog>
     <div class="btn">
-      <img src="../assets/image/bnt_top.png" alt @click="consult" />
+      <a href="#top-header">
+        <img src="../assets/image/bnt_top.png" alt @click="consult" />
+      </a>
       <img src="../assets/image/bnt_zxzx.png" alt />
     </div>
-    <consult></consult>
+    <!-- <consult></consult> -->
   </div>
 </template>
 <script>
-import Consult from "../components/Consult"
+import Consult from "../components/Consult";
 import LoginBox from "../components/LoginBox";
+
 export default {
   data() {
-    var validatorNum = (rule, value, callback) => {
+    //手机号自定义规则
+    var validatorPhone = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入手机号"));
       } else {
@@ -73,7 +78,8 @@ export default {
         }
       }
     };
-    var validatorPass = (rule, value, callback) => {
+    //短信验证码自定义规则
+    var validatorSmsCode = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入验证码"));
       } else {
@@ -84,34 +90,26 @@ export default {
     return {
       dialogFormVisible: false,
       currentIndex: 0,
-      chooseIndex: 0,
       canClick: false, //验证码开关
       codeMsg: "发送验证码",
       totalTime: 60,
       list: ["推荐课程", "钢琴", "吉他", "尤克里里", "小提琴", "大提琴"],
-      choose: [
-        "我的资料",
-        "我的课程",
-        "我的订单",
-        "我的收藏",
-        "我的消息",
-        "我的积分",
-        "退出登录",
-      ],
-
-      ruleForm: {
-        num: "",
-        password: "",
+      loginForm: {
+        phone: "",
+        smsCode: "",
       },
       rules: {
-        num: [{ validator: validatorNum, trigger: "blur" }],
-        pass: [{ validator: validatorPass, trigger: "blur" }],
+        phone: [{ validator: validatorPhone, trigger: "blur" }],
+        smsCode: [{ validator: validatorSmsCode, trigger: "blur" }],
       },
     };
   },
+  created() {},
   methods: {
     select(index) {
       this.currentIndex = index;
+     
+
     },
     showLogin() {
       this.dialogFormVisible = true;
@@ -130,12 +128,58 @@ export default {
           this.canClick = true; //这里重新开启
         }
       }, 1000);
+      this.$post("/userinfo/send_sms", { account: this.loginForm.phone }).then(
+        (res) => {
+          console.log(res.msg)
+          switch (res.code) {
+            case 200:
+              this.$message.success(res.msg);
+              break;
+            case 500:
+              this.$message.error(res.msg);
+              break;
+            default:
+              console.log(res.msg);
+          }
+        }
+      );
+    },
+    submitForm() {
+      this.$refs.loginForm.validate((valid) => {
+        if (valid) {
+          this.$post("/userinfo/login", {
+            account: this.loginForm.phone,
+            verify: this.loginForm.smsCode,
+            inCode: "",
+          }).then((res) => {
+            switch (res.code) {
+              case 200:
+                localStorage.setItem("token",res.data.token)
+              case 201:
+                this.$message.success(res.msg);
+                this.dialogFormVisible = true;
+                break;
+              case 401:
+              case 402:
+              case 500:
+                this.$message.error(res.msg);
+                break;
+              default:
+                console.log(res.msg);
+            }
+          });
+        }
+      });
     },
     consult() {},
+    //查看用户协议
+    seeUserAgreement(){
+      this.$router({path:'/about',})
+    }
   },
   components: {
     LoginBox,
-    Consult
+    Consult,
   },
 };
 </script>
@@ -222,31 +266,7 @@ export default {
   margin-left: 73px;
 }
 
-.profile-choose {
-  width: 154px;
-  height: 324px;
-  position: absolute;
-  top: 70px;
-  right: 38px;
-  text-align: center;
-  color: #36363a;
-  box-sizing: border-box;
-  background-image: url(../assets/image/bg_zk.png);
 
-  .choose-box {
-    padding: 20px 0;
-
-    div {
-      line-height: 40px;
-      font-family: "PingFangSC-Regular", "PingFang SC";
-      font-weight: 400;
-    }
-
-    .choose-active {
-      color: #98b702;
-    }
-  }
-}
 
 .login {
   display: flex;
@@ -273,7 +293,7 @@ export default {
   border-radius: 0;
 }
 
-.pass {
+.graphics-code {
   position: relative;
 
   .code {
@@ -343,5 +363,4 @@ export default {
     height: 80px;
   }
 }
-
 </style>

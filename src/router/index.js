@@ -3,18 +3,20 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 // 解决vue-router重复点击菜单报错的问题
-const originalPush= VueRouter.prototype.push;
+const originalPush = VueRouter.prototype.push;
 VueRouter.prototype.push = function push(location) {
-    return originalPush.call(this, location).catch(err => err);
+  return originalPush.call(this, location).catch(err => err);
 };
 const routes = [
   {
-    path: '/',
-    component: () => import('../views/Home.vue')
+    path: '/',redirect:'/home'
   },
   {
     path: '/home',
-    component: () => import('../views/Home.vue')
+    component: () => import('../views/Home.vue'),
+    children:[
+      
+    ]
   },
   {
     path: '/detail',
@@ -30,28 +32,29 @@ const routes = [
     component: () => import('../views/OrderDetail.vue'),
     meta: { title: '订单详情' }
   },
-  
+  {
+    path:'/courseLearning',
+    component:()=>import("../views/CourseLearning.vue")
+  },
   {
     path: '/user',
     component: () => import('../views/User.vue'),
     children: [
       {
-        path: "/user", redirect: "profile" 
-
-      
-    },
+        path: "/user", redirect: "profile"
+      },
       {
         path: 'profile',
         component: () => import('../views/Profile.vue'),
         meta: { title: '我的资料' }
       },
-      
+
       {
         path: 'course',
         component: () => import('../views/Course.vue'),
         meta: { title: '我的课程' }
       },
-     
+
       {
         path: 'order',
         component: () => import('../views/Order.vue'),
@@ -74,7 +77,7 @@ const routes = [
       },
     ]
   },
- 
+
   {
     path: '/about',
     name: 'About',
@@ -87,7 +90,7 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
-  base: process.env.BASE_URL,
+  // base: process.env.BASE_URL,
   routes
 })
 

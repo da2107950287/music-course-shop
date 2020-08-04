@@ -1,8 +1,13 @@
 module.exports = {
-    devServer : {
-        hot:true,
-        open : true,
-        port : 8080,
-        host : "0.0.0.0"
+    devServer: {
+        open: true,
+        port:8080,
+        proxy:{
+           "/mustard": {
+                target: "http://47.111.244.224/mustard",
+                changeOrigin: true,
+                pathRewrite: { '^/mustard': '' }
+            }
+        }
     }
 }

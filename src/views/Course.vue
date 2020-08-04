@@ -18,7 +18,7 @@
           <div class="progress-text">已学习</div>
         </div>
 
-        <div slot="last" class="btn">去学习</div>
+        <div slot="last" class="btn" @click="toStudy">去学习</div>
       </course-item>
     </div>
   </div>
@@ -29,6 +29,11 @@ import CourseItem from "../components/CourseItem.vue";
 export default {
   data() {
     return {};
+  },
+  methods:{
+    toStudy(){
+      this.$router.push({path:'/courseLearning'})
+    }
   },
   components: {
     ProfileHeader,

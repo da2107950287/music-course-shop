@@ -81,4 +81,7 @@ li {
     width: 50%;
   }
 }
+.el-pagination.is-background /deep/ .el-pager li:not(.disabled).active{
+  background-color: #98B702;
+}
 </style>

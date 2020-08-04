@@ -8,7 +8,7 @@
         <div class="content">
             <course-description v-show="currentIndex==0"></course-description>
             <course-catalog v-show="currentIndex==1"></course-catalog>
-            <teacher-intro v-show="currentIndex==2"></teacher-intro>
+            <teacher-intro v-show="currentIndex==2" :teacherList="teacherList"></teacher-intro>
         </div>
     </div>
 </template>
@@ -17,11 +17,23 @@
      import CourseCatalog from '../detail/CourseCatalog'
      import TeacherIntro from '../detail/TeacherIntro'
     export default {
+        props:{
+            couresDetail:{
+                type:Object,
+                default(){
+                    return {}
+                }
+            }
+        },
         data() {
             return {
                 currentIndex: 0,
-                lists: ["课程介绍", "课程目录", "讲师介绍"]
+                lists: ["课程介绍", "课程目录", "讲师介绍"],
+                teacherList:[]
             }
+        },
+        created(){
+            this.teacherList=this.couresDetail.list;
         },
         methods: {
             handleClick(index) {

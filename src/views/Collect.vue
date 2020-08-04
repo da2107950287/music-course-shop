@@ -25,6 +25,11 @@
 
             }
         },
+        created(){
+            this.$post('/course/getCourseColl').then(res=>{
+                console.log(res)
+            })
+        },
         components: {
             ProfileHeader,
             CourseItem
