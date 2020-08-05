@@ -37,7 +37,7 @@ export function post(url, params) {
 
 			// 4.等等
 			if (localStorage.getItem("token")) {
-				config.headers.authorization = localStorage.getItem("token");
+				config.headers.token = localStorage.getItem("token");
 			  }
 			return config
 		}, err => {

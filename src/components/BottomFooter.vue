@@ -37,7 +37,7 @@
                 this.isShow = !this.isShow;
             },
             seeAgreement() {
-                this.$router.push({ path: '/about' })
+                this.$router.push({ path: '/index/about',query:{type:"B"} })
             }
         }
     }
@@ -47,6 +47,7 @@
         width: 100%;
         background-color: #36363A;
         position: relative;
+       
 
         .footer {
             width: 1200px;

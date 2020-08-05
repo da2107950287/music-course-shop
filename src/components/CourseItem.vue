@@ -6,7 +6,7 @@
     </div>
     <div class="right">
       <div>
-        <course-info></course-info>
+        <course-info :list="list"></course-info>
         <div class="collect">
           <slot name="collect"></slot>
         </div>
@@ -20,10 +20,14 @@
 <script>
 import CourseInfo from "../components/CrouseInfo";
 export default {
-  data() {
-    return {};
+  props: {
+    list:{
+      type:Object,
+      default(){
+        return {}
+      }
+    }
   },
-  props: {},
   components: {
     CourseInfo,
   },
@@ -38,6 +42,7 @@ export default {
     width: 282px;
     height: 185px;
   }
+
 }
 .left {
   width: 282px;

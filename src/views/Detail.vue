@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="main-detail">
-            <top-detail :topDetail="topDetail" @collectCourse="collectCourse"></top-detail>
-            <course-detail :couresDetail="couresDetail" class="margin30"></course-detail>
+            <top-detail :topDetail="topDetail" @collectCourse="collectCourse" @buy="buy"></top-detail>
+            <course-detail :couresDetail="couresDetail" :catalogue="catalogue" class="margin30"></course-detail>
         </div>
 
     </div>
@@ -16,6 +16,7 @@
                 couId: '',
                 couresDetail: {},
                 topDetail: {},
+                catalogue:[]
             }
         },
         created() {
@@ -38,14 +39,23 @@
             })
             // 获取课程目录
             this.$post('/course/getCatalogue',{couId: this.couId}).then(res=>{
-                console.log(res)
+                if(res.code==200){
+                    this.catalogue=res.data;
+                }
             })
         },
         methods:{
+            //收藏课程
             collectCourse(){
                 this.$post('/course/setCourseColl',{couId: this.couId}).then(res=>{
-                    console.log(res)
+                    if(res.code==200){
+                        this.$message.success(res.msg)
+                    }
                 })
+            },
+            //立即购买
+            buy(){
+                this.$router.push({path:'/pay',})
             }
         },
         components: {

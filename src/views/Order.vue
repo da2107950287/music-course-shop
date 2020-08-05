@@ -205,13 +205,20 @@ export default {
     return {
       status:0,
       currentIndex: 0,
+      pageNumber:1,
+      pageSize:10,
+      type:1,
+      olState:"all",
       lists: ["全部", "待付款", "已完成", "已取消"],
     };
   },
+  created(){
+    this.$post('/orderlist/getOrderlist',{olState:this.olState,type:this.type,PageNumber:this.pageNumber,PageSize:this.pageSize}).then(res=>{
+      console.log(res)
+    })
+  },
   methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
-    },
+    
     handleClick(index) {
       this.currentIndex = index;
     },

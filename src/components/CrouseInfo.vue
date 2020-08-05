@@ -1,25 +1,37 @@
 <template>
     <div class="content">
-        <div class="course-name">小提琴</div>
+        <div class="course-name">{{list.couName}}</div>
         <div class="course-time common">
             <img src="../assets/image/icon_zks.png" class="img-icon">
             <span>总 课 时：</span>
-            <span>23.0</span>
+            <span>{{list.totalHours}}</span>
         </div>
         <div class="blank"></div>
         <div class="period-of-validity common">
             <img src="../assets/image/icon_yxq.png" class="img-icon">
             <span>有 效 期：</span>
-            <span>长期有效</span>
+            <span>{{list.termOfValidity}}</span>
         </div>
         <div class="blank"></div>
         <div class="teacher-name common">
             <img src="../assets/image/icon_skls.png" class="img-icon">
             <span>授课老师：</span>
-            <span>李萌萌</span>
+            <span>{{list.lecturer}}</span>
         </div>
     </div>
 </template>
+<script>
+    export default{
+        props:{
+            list:{
+                type:Object,
+                default(){
+                    return {}
+                }
+            }
+        }
+    }
+</script>
 <style scoped>
      .content {
         padding: 0 20px;

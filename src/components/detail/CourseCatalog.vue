@@ -1,6 +1,6 @@
 <template>
   <div class="course-catalog">
-    <div>
+    <div v-for="(item,index) in catalogue" :key="index">
       <div class="title">第 1 章 ：基础夯实</div>
       <div class="lists">
         <a>
@@ -19,6 +19,16 @@
   </div>
 </template>
 <script>
+  export default{
+    props:{
+      catalogue:{
+        type:Array,
+        default(){
+          return []
+        }
+      }
+    }
+  }
 </script>
 <style lang="scss" scoped>
 .course-catalog {

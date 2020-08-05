@@ -7,7 +7,7 @@
     <div v-if="!isShow" class="profile-bottom">
       <div>
         <span>绑定手机：</span>
-        <span>15287598688</span>
+        <span>{{userinfo.account}}</span>
         <span @click="modifyPhone">修改</span>
       </div>
       <div>
@@ -17,22 +17,22 @@
       </div>
       <div>
         <span>昵称：</span>
-        <span>爱听音乐的大毛</span>
+        <span>{{userinfo.nickname}}</span>
       </div>
       <div>
         <span>性别：</span>
-        <span>女</span>
+        <span>{{userinfo.sex}}</span>
       </div>
       <div>
         <span>所在城市：</span>
-        <span>北京市朝阳区建外大街建外SOHO东区</span>
+        <span>{{userinfo.province}}{{userinfo.city}}</span>
       </div>
       <div>
         <span>简介：</span>
-        <span>爱音乐的大毛就是爱音乐</span>
+        <span>{{userinfo.intro}}</span>
       </div>
       <div class="personal-icon">
-        <img src="../assets/image/pho_mrtx.png" alt />
+        <img :src="userinfo.headportrait" alt />
         <img src="../assets/image/icon_xg.png" @click="changeImg" />
       </div>
     </div>
@@ -199,6 +199,7 @@
           city: "",
           brief: "",
         },
+        userinfo:{},//用户信息
       };
     },
     created() {
@@ -206,7 +207,9 @@
     },
     created() {
       this.$post('/userinfo/showUserinfo', {}).then(res => {
-        console.log(res)
+        if(res.code==200){
+          this.userinfo=res.data.userinfo
+        }
       })
     },
     methods: {

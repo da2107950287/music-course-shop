@@ -28,7 +28,15 @@ import ProfileHeader from "../components/ProfileHeader.vue";
 import CourseItem from "../components/CourseItem.vue";
 export default {
   data() {
-    return {};
+    return {
+      pageNumber:1,
+      pageSize:5,
+    };
+  },
+  created(){
+    this.$post('/course/getUserCourse',{PageNumber:this.pageNumber,PageSize:this.pageSize}).then(res=>{
+      console.log(res)
+    })
   },
   methods:{
     toStudy(){
@@ -48,6 +56,9 @@ export default {
   padding: 0 30px;
   box-sizing: border-box;
   background-color: #fff;
+  >div{
+    border-bottom:1px solid #EEEEEE
+  }
 
   .bg-progress {
     width: 282px;

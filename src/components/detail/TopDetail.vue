@@ -28,7 +28,7 @@
                 <div class="common">
                     <img src="../../assets/image/icon_yxq.png" class="img-icon">
                     <span>有 效 期：</span>
-                    <span>长期有效</span>
+                    <span>{{topDetail.termOfValidity}}</span>
                 </div>
                 <div class="blank"></div>
                 <div class=" common">
@@ -38,8 +38,8 @@
                 </div>
             </div>
             <div class="btn-box">
-                <button>立即购买</button>
-                <button>免费试听</button>
+                <div @click="buy">立即购买</div>
+                <div>免费试听</div>
             </div>
         </div>
     </div>
@@ -62,6 +62,9 @@
         methods:{
             collectCourse(){
                 this.$emit('collectCourse');
+            },
+            buy(){
+                this.$emit("buy");
             }
         }
     }
@@ -162,22 +165,24 @@
     }
     .btn-box{
         margin-top: 58px;
+        display: flex;
     }
-    .btn-box>button {
+    .btn-box>div {
         width: 200px;
         height: 55px;
+        line-height: 55px;
+        text-align: center;
         border-radius: 3px;
         font-size: 18px;
-
         font-weight: 400;
         border: none;
     }
-    .btn-box>button:nth-child(1){
+    .btn-box>div:nth-child(1){
         background-color: #98B702;
         color: #fff;
         
     }
-    .btn-box>button:nth-child(2){
+    .btn-box>div:nth-child(2){
         margin-left: 20px;
         background:rgba(251,151,21,0.1);
         color: #FB9715;

@@ -3,15 +3,15 @@
     <div class="user">
       <div class="user-left">
         <div class="left-top">
-          <img src="../assets/image/pho_mrtx.png" alt />
+          <img :src="avatar" alt />
           <div>
-            <span>爱听音乐的大毛</span>
+            <span>{{nickName}}</span>
             <div class="sex-icon"></div>
           </div>
         </div>
         <div class="left-bottom">
           <div v-for="(item,index) in choose" :key="index" @click="handleClick(item)"
-            :class="{'active':chooseIndex==item.id}">{{item.title}}</div>
+            :class="{'active':$route.path.includes(item.link)}">{{item.title}}</div>
         </div>
       </div>
       <router-view></router-view>
@@ -22,31 +22,38 @@
   export default {
     data() {
       return {
-        chooseIndex: 0,
         choose: [
-          { id: 0, title: "我的资料", link: 'profile' },
-          { id: 1, title: "我的课程", link: 'course' },
-          { id: 2, title: "我的订单", link: 'order' },
-          { id: 3, title: "我的收藏", link: 'collect' },
-          { id: 4, title: "我的消息", link: 'news' },
-          { id: 5, title: "我的积分", link: 'integral' },
-          { id: 6, title: "退出登录", link: '' },
+          {  title: "我的资料", link: '/profile' },
+          {  title: "我的课程", link: '/course' },
+          {  title: "我的订单", link: '/order' },
+          {  title: "我的收藏", link: '/collect' },
+          {  title: "我的消息", link: '/news' },
+          {  title: "我的积分", link: '/integral' },
+          {  title: "退出登录", link: '/home' },
         ],
+        
       };
     },
+    computed:{
+      avatar(){
+        return localStorage.getItem("avatar")
+      },
+      nickName(){
+        return localStorage.getItem("nickName")
+      }
+    },
     watch:{
-      
       $route(to,from){
         console.log(to,from)
-      }
+      },
+
     },
     created(){
       
     },
     methods: {
       handleClick(item) {
-        this.chooseIndex = item.id;
-        this.$router.push('/user/' + item.link)
+        this.$router.push('/index/user' + item.link)
       },
     },
   };
@@ -70,6 +77,10 @@
       padding: 34px 0;
       box-sizing: border-box;
       background-color: #fff;
+      >img{
+        width: 80px;
+        height: 80px;
+      }
 
       >div {
         display: flex;

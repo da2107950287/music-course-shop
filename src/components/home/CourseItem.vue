@@ -2,7 +2,7 @@
     <div class="course-box">
         <div class="course-item" @click="showCourse">
             <!-- <div>{{course}}</div> -->
-            <div class="title">钢琴</div>
+            <div class="title">{{course.courseEntity.couTypeName}}</div>
             <div class="content">
                 <div class="course-name">{{course.courseEntity.couName}}</div>
                 <div class="course-time common">
@@ -58,7 +58,7 @@
         },
         methods:{
             showCourse(){
-                this.$router.push({path:'/detail',query:{couId:this.course.couId}})
+                this.$router.push({path:'/index/detail',query:{couId:this.course.couId}})
             }
         }
     }
@@ -185,4 +185,5 @@
     .money>span:nth-child(2) {
         font-size: 32px;
     }
+    
 </style>
