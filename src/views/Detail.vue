@@ -16,6 +16,7 @@
         data() {
             return {
                 couId: '',
+                couType:'',
                 couresDetail: {},
                 topDetail: {},
                 catalogue:[],
@@ -29,7 +30,7 @@
                 if (res.code == 200) {
                     this.couresDetail = res.data;
                     console.log(this.couresDetail)
-
+                    this.couType=res.data.couType;
                     this.topDetail = {
                         cover: res.data.cover,
                         couName: res.data.couName,
@@ -62,7 +63,7 @@
             },
             //立即购买
             buy(){
-                this.$router.push({path:'/index/submitOrder',query:{couId:this.couId}})
+                this.$router.push({path:'/index/submitOrder',query:{couType:this.couType,couId:this.couId}})
             }
         },
         components: {
