@@ -14,6 +14,7 @@ Vue.prototype.$axios=axios
 // axios.defaults.baseURL = "http://47.111.244.224/mustard";
 Vue.config.productionTip = false
 Vue.prototype.$post=post
+Vue.prototype.$bus=new Vue()
 
 new Vue({
   router,

@@ -1,16 +1,20 @@
 <template>
   <div class="home">
     <banner :banners="banners" />
-    <home-main :courses="boutiqueCourses">
-      <span slot="title">精品课程</span>
-    </home-main>
-    <div class="recommend">
-      <home-main :courses="recommendedCourse" class="recommend">
-        <span slot="title">推荐</span>
+    <div>
+      <home-main :courses="boutiqueCourses">
+        <span slot="title">精品课程</span>
       </home-main>
+      <div class="recommend">
+        <home-main :courses="recommendedCourse" class="recommend">
+          <span slot="title">推荐</span>
+        </home-main>
+      </div>
     </div>
-    <!-- <div>
-      <course-item></course-item>
+ 
+    
+    <!-- <div v-else class="course">
+      <course-item v-for="(item,index) in list" :key="index" :course="item"></course-item>
     </div> -->
     <download-app />
   </div>
@@ -19,6 +23,7 @@
   import CourseItem from '../components/home/CourseItem'
   import Banner from '../components/home/Banner'
   import HomeMain from '../components/home/HomeMain'
+  import Courses from '../components/home/Courses'
   import DownloadApp from '../components/home/DownloadApp'
   export default {
     data() {
@@ -27,11 +32,12 @@
         boutiqueCourses: [],
         recommendedCourse: [],
         pageNumber: 1,
-        pageSize: 6
-
+        pageSize: 6,
+        list:[],
       }
     },
     created() {
+
       // 获取精品课
       this.$post('/course/getCourseBoutique', {}).then(res => {
         if (res.code == 200) {
@@ -51,19 +57,31 @@
         }
       })
     },
+    methods: {
+      //获取课程
+      getCourse(type) {
+        this.$post("/course/getCourse", { couType: type, PageNumber: this.pageNumber, PageSize: this.pageSize }).then(res => {
+          if(res.code==200){
+            this.list=res.data.list;
+            console.log(this.list)
+          }
+        })
+      }
+    },
     components: {
       Banner,
       HomeMain,
       CourseItem,
+      Courses,
       DownloadApp
     }
   };
 </script>
 <style lang="scss" scoped>
-  .home>.recommend {
+  .recommend {
     /* width: 100%; */
     background-color: #fff;
     margin-top: 40px;
-    padding-bottom: 40px;
+    padding-bottom: 20px;
   }
 </style>

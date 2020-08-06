@@ -6,7 +6,7 @@
             <img src="../../assets/image/lab_kcxq_kcml.png" alt="" class="audition-icon">
         </div>
         <div class="content">
-            <course-description v-show="currentIndex==0"></course-description>
+            <course-description v-show="currentIndex==0" :courseDes="couresDetail"></course-description>
             <course-catalog v-show="currentIndex==1" :catalogue="catalogue"></course-catalog>
             <teacher-intro v-show="currentIndex==2" :teacherList="teacherList"></teacher-intro>
         </div>
@@ -39,6 +39,7 @@
             }
         },
         created() {
+            console.log(this.couresDetail)
             this.teacherList = this.couresDetail.list;
         },
         methods: {
@@ -57,6 +58,7 @@
     .course-detail {
         background-color: #fff;
         width: 1200px;
+        margin-bottom: 30px;
     }
 
     .top {

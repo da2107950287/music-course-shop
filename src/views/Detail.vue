@@ -1,22 +1,25 @@
 <template>
     <div>
         <div class="main-detail">
-            <top-detail :topDetail="topDetail" @collectCourse="collectCourse" @buy="buy"></top-detail>
+            <top-detail :topDetail="topDetail" @collectCourse="collectCourse" @buy="buy" :collected="collected"></top-detail>
             <course-detail :couresDetail="couresDetail" :catalogue="catalogue" class="margin30"></course-detail>
         </div>
 
     </div>
 </template>
 <script>
+    
     import TopDetail from '../components/detail/TopDetail'
     import CourseDetail from '../components/detail/CourseDetail'
     export default {
+        inject:['reload'],
         data() {
             return {
                 couId: '',
                 couresDetail: {},
                 topDetail: {},
-                catalogue:[]
+                catalogue:[],
+                collected:false
             }
         },
         created() {
@@ -25,6 +28,8 @@
             this.$post('/course/showCourse', { couId: this.couId }).then(res => {
                 if (res.code == 200) {
                     this.couresDetail = res.data;
+                    console.log(this.couresDetail)
+
                     this.topDetail = {
                         cover: res.data.cover,
                         couName: res.data.couName,
@@ -49,13 +54,15 @@
             collectCourse(){
                 this.$post('/course/setCourseColl',{couId: this.couId}).then(res=>{
                     if(res.code==200){
+                        this.collected=true;
+                        this.reload()
                         this.$message.success(res.msg)
                     }
                 })
             },
             //立即购买
             buy(){
-                this.$router.push({path:'/pay',})
+                this.$router.push({path:'/index/submitOrder',query:{couId:this.couId}})
             }
         },
         components: {

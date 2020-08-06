@@ -1,39 +1,39 @@
 <template>
     <div class="course-box">
-        <div class="course-item" @click="showCourse">
+        <div class="course-item" @click="showCourse(course.couType)">
             <!-- <div>{{course}}</div> -->
-            <div class="title">{{course.courseEntity.couTypeName}}</div>
+            <div class="title">{{course.couTypeName}}</div>
             <div class="content">
-                <div class="course-name">{{course.courseEntity.couName}}</div>
-                <div class="course-time common">
+                <div class="course-name">{{course.couName}}</div>
+                <div class="common">
                     <img src="../../assets/image/icon_zks.png" class="img-icon">
                     <span>总 课 时：</span>
-                    <span>{{course.courseEntity.totalHours}}</span>
+                    <span>{{course.totalHours}}</span>
                 </div>
                 <div class="blank"></div>
-                <div class="period-of-validity common">
+                <div class="common">
                     <img src="../../assets/image/icon_yxq.png" class="img-icon">
                     <span>有 效 期：</span>
-                    <span>{{course.courseEntity.termOfValidity}}</span>
+                    <span>{{course.termOfValidity}}</span>
                 </div>
                 <div class="blank"></div>
-                <div class="teacher-name common">
+                <div class="common">
                     <img src="../../assets/image/icon_skls.png" class="img-icon">
                     <span>授课老师：</span>
-                    <span>{{course.courseEntity.lecturer}}</span>
+                    <span>{{course.lecturer}}</span>
                 </div>
             </div>
             <div class="bottom">
-                <div class="left" v-if="course.courseEntity.teachingMethods==1">
+                <div class="left" v-if="course.teachingMethods==1">
                     <img src="../../assets/image/icon_zb.png" alt="" class="img-icon">
                     <div class="live-lesson">直播课</div>
                 </div>
-                <div class="left"v-else></div>
+                <div class="left" v-else></div>
                 <div class="right">
                     <img src="../../assets/image/icon_vip.png">
                     <div class="money">
                         <span>&yen;</span>
-                        <span>{{course.courseEntity.pricevip}}</span>
+                        <span>{{course.pricevip}}</span>
                     </div>
                 </div>
             </div>
@@ -43,10 +43,10 @@
 </template>
 <script>
     export default {
-        props:{
-            course:{
-                type:Object,
-                default(){
+        props: {
+            course: {
+                type: Object,
+                default() {
                     return {}
                 }
             }
@@ -56,9 +56,12 @@
 
             }
         },
-        methods:{
-            showCourse(){
-                this.$router.push({path:'/index/detail',query:{couId:this.course.couId}})
+        created() {
+            console.log(this.course)
+        },
+        methods: {
+            showCourse(couType) {
+                this.$router.push({ path: '/index/detail', query: { couId: this.course.couId,couType } })
             }
         }
     }
@@ -66,10 +69,11 @@
 <style scoped>
     .course-box {
         width: 384px;
-        height: 306px;  
+        height: 306px;
         box-sizing: border-box;
         margin-top: 45px;
         background-color: #fff;
+        border: 1px solid rgba(238, 238, 238, 1);
 
     }
 
@@ -79,7 +83,7 @@
         border-radius: 3px;
         padding: 30px 20px 15px;
         box-sizing: border-box;
-        border: 1px solid rgba(238, 238, 238, 1);
+
 
 
     }
@@ -124,6 +128,9 @@
         color: #36363A;
         font-size: 22px;
         font-weight: 500;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
 
     }
 
@@ -131,6 +138,12 @@
         width: 16px;
         height: 16px;
         margin-right: 3px;
+    }
+
+    .common {
+        display: flex;
+        align-items: center;
+        line-height: 22px;
     }
 
     .common>span:nth-child(2) {
@@ -161,7 +174,7 @@
         align-items: center;
 
     }
-    
+
     .live-lesson {
         color: #FB9715;
         font-weight: 400;
@@ -185,5 +198,4 @@
     .money>span:nth-child(2) {
         font-size: 32px;
     }
-    
 </style>

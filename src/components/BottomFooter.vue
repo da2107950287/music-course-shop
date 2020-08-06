@@ -2,9 +2,9 @@
     <div class="footer-box">
         <div class="footer">
             <div class="left">
-                <span @click="seeAgreement()">关于我们</span>
+                <span @click="seeAgreement('B')">关于我们</span>
                 <div class="common"></div>
-                <span @click="seeAgreement">用户协议</span>
+                <span @click="seeAgreement('A')">用户协议</span>
                 <div class="common"></div>
                 <span @click="dispalyQrCode">微信公众号</span>
             </div>
@@ -36,8 +36,8 @@
                 console.log(8888)
                 this.isShow = !this.isShow;
             },
-            seeAgreement() {
-                this.$router.push({ path: '/index/about',query:{type:"B"} })
+            seeAgreement(type) {
+                this.$router.push({ path: '/index/about',query:{type} })
             }
         }
     }

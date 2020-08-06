@@ -26,8 +26,8 @@
         data() {
             return {
                 currentPage: 1,
-                pageSize: 5,
-                total: null,
+                pageSize: 1,
+                total: 0,
                 list: [],
 
             }
@@ -40,14 +40,13 @@
                 this.$post('/course/getCourseColl', { PageNumber: this.currentPage, PageSize: this.pageSize }).then(res => {
                     if (res.code == 200) {
                         this.list = res.data.list;
-                        this.total = res.data.list.length;
+                        this.total = res.data.PageCount;
                     }
                 })
             },
             handleCurrentChange(currentPage) {
                 this.currentPage = currentPage;
                 this.getData()
-                console.log(this.currentPage)
             }
         },
         components: {
@@ -57,6 +56,7 @@
     }
 </script>
 <style lang="scss" scoped>
+    @import "../assets/css/pagination.css";
     .collect {
         width: 950px;
     }
@@ -65,8 +65,9 @@
         padding: 0 30px;
         box-sizing: border-box;
         background-color: #fff;
-        >div{
-            border-bottom:1px solid #EEEEEE
+
+        >div {
+            border-bottom: 1px solid #EEEEEE
         }
     }
 
@@ -80,15 +81,5 @@
         }
     }
 
-    .pagination {
-        margin-top: 30px;
-        margin-bottom: 30px;
-        text-align: center;
 
-
-    }
-
-    .is-background /deep/ .el-pager li:not(.disabled).active {
-        background-color: #98B702;
-    }
 </style>

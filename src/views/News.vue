@@ -7,13 +7,13 @@
       <div class="table-header flex">
         <div @click="handleCheckedAll">
           <img v-if="!checkedAll" src="../assets/image/icon_check_normal.png" class="select-icon" />
-        <img v-else src="../assets/image/icon_check_sel.png" class="select-icon" />
+          <img v-else src="../assets/image/icon_check_sel.png" class="select-icon" />
         </div>
 
-        <div class="btn read">已读</div>
+        <div @click="readMsg" class="btn read">已读</div>
         <img @click="deleteMsg" src="../assets/image/bnt_sc.png" class="btn delete" />
       </div>
-      <div v-for="(item,index) in arr" :key="index">
+      <div v-for="(item,index) in arr" :key="index" class="list">
         <div class="table-body flex">
           <div @click="item.checked=!item.checked">
             <img v-if="item.checked==false" src="../assets/image/icon_check_normal.png" class="select-icon" />
@@ -24,16 +24,20 @@
             <img src="../assets/image/icon_jyxx.png" />
             <div class="td-right">
               <div class="flex">
-                <span v-if="item.type==0" class="tip">交易消息</span>
-                <span v-else class="tip">系统通知</span>
-                <span>{{item.time}}</span>
+                <!-- <span v-if="item.type==0" class="tip">交易消息</span>
+                <span v-else class="tip">系统通知</span> -->
+                <span>{{item.msgTitle}}</span>
+                <span>{{item.msgTime}}</span>
               </div>
-              <div>{{item.message}}</div>
+              <div>{{item.content}}</div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <el-pagination @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize" background
+      layout="prev, pager, next" :total="total" class="pagination">
+    </el-pagination>
   </div>
 </template>
 <script>
@@ -42,7 +46,10 @@
     data() {
       return {
         checked: [],
-        // checkedAll:false,
+
+        currentPage: 1,
+        pageSize: 1,
+        total: 0,
         arr: [
           {
             id: 0,
@@ -58,39 +65,66 @@
               "您成功购买“大提琴乐曲《赛马》提升课——琴艺技能提升课”请查看详细信息。",
             time: "2020-1010 12:00",
           },
-          
+
         ],
       };
     },
-    computed:{
-      checkedAll(){
-      return !this.arr.some(item=>{
-          return item.checked===false;
+    computed: {
+      checkedAll() {
+        if (this.arr.length == 0) {
+          return false;
+        }
+        return !this.arr.some(item => {
+          return item.checked === false;
         })
       }
     },
     created() {
-      this.arr.forEach((ele, index) => {
-        this.$set(ele, "checked", false);
-      });
+      this.$post("/other/getMessage", { PageNumber: this.currentPage, PageSize: this.pageSize }).then(res => {
+        if (res.code == 200) {
+          this.arr = res.data.list;
+          this.total = res.data.PageCount
+          this.arr.forEach((ele, index) => {
+            this.$set(ele, "checked", false);
+          });
+        }
+      })
+
     },
     methods: {
-      handleCheckedAll(){
-       let isCheckedAll= this.arr.some(item=>{
-          return item.checked===false;
+      handleCheckedAll() {
+        let isCheckedAll = this.arr.some(item => {
+          return item.checked === false;
         })
-        if(isCheckedAll){
-          this.arr.forEach(item=>{
-            item.checked=true
+        if (isCheckedAll) {
+
+          this.arr.forEach(item => {
+            item.checked = true
           })
-        }else{
-          this.arr.forEach(item=>{
-            item.checked=false
+        } else {
+          this.arr.forEach(item => {
+            item.checked = false
           })
         }
       },
+      // 获取已读消息
+      readMsg() {
+        this.$post('/other/getMessage', { PageNumber: this.pageNumber, PageSize: this.pageSize }).then(res => {
+          if (res.code == 200) {
+            this.arr = res.data.list;
+            
+            this.arr.forEach((ele, index) => {
+              this.$set(ele, "checked", false);
+            });
+          }
+        })
+      },
       deleteMsg() {
-        console.log(this.checked)
+        this.arr = this.arr.filter(item => {
+          item.checked == false;
+        })
+
+
       }
     },
     components: {
@@ -99,6 +133,7 @@
   };
 </script>
 <style lang="scss" scoped>
+  @import "../assets/css/pagination.css";
   .flex {
     display: flex;
   }
@@ -130,6 +165,7 @@
       line-height: 28px;
       text-align: center;
       border-radius: 2px;
+      cursor: default;
     }
 
     .read {
@@ -144,6 +180,10 @@
     .delete {
       margin-left: 30px;
     }
+  }
+
+  .list {
+    border-bottom: 1px solid #eee;
   }
 
   .table-body {
@@ -180,4 +220,6 @@
       }
     }
   }
+
+
 </style>

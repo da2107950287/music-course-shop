@@ -16,15 +16,23 @@
         type:""
       }
     },
+    watch:{
+      $route(){
+        this.getAgreement()
+      }
+    },
     created(){
-      this.type=this.$route.query.type;
+     this.getAgreement()
+    },
+    methods:{
+      getAgreement(){
+        this.type=this.$route.query.type;
       this.$post('/other/getAgreement',{type:this.type}).then(res=>{
         if(res.code==200){
           this.text=res.data.content;
-          console.log(this.text)
-          
         }
       })
+      }
     }
   }
 </script>

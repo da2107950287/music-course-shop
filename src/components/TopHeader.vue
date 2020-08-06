@@ -6,11 +6,16 @@
         <div class="title">芥末音乐</div>
       </div>
       <div class="center">
-        <div v-for="(item,index) in list" :key="index" class="item" :class="{'active':$route.path.includes(item.link)}"
-          @click="select(index,item.link)">{{item.name}}</div>
+        <div :class="{'active':$route.path=='/index/home'}" class="item" @click="select('/index/home')">推荐课程</div>
+        <div v-for="(item,index) in list" :key="index" class="item"
+          :class="{'active': $route.query.couType===item.dicId}" @click="select('/index/courses',item.dicId)">
+          {{item.dicName}}</div>
       </div>
       <div class="right">
-        <img src="../assets/image/icon_hender_xx.png" @click="go('/index/user/news')" class="notification-message" />
+        <div @click="go('/index/user/news')" class="notification">
+          <img src="../assets/image/icon_hender_xx.png" class="notification-message" />
+          <div class="red-box">{{notReadNUm}}</div>
+        </div>
         <div v-if="isShow" class="login" @click="showLogin">
           <img src="../assets/image/pho_def.png" class="login-icon" />
           <span class="login-text">点击登录</span>
@@ -92,14 +97,8 @@
         totalTime: 60,
         avatar: "",
         nickName: "",
-        list: [
-          {type:0, name: "推荐课程", link: '/home' },
-          { name: "钢琴", link: '/1' },
-          { name: "吉他", link: '/1' },
-          { name: "尤克里里", link: '/1' },
-          { name: "小提琴", link: '/1' },
-          { name: "大提琴", link: '/1' }
-        ],
+        notReadNUm:0,
+        list: [],
         loginForm: {
           phone: "",
           smsCode: "",
@@ -124,13 +123,27 @@
       },
     },
     created() {
-      this.$post("/course/getCourse",{couType:"smd1",PageNumber:1,PageSize:10}).then(res=>{
-        console.log(res)
+      //获取头部课程类
+      this.$post('/other/getDictionary', { dicType: "smd1" }).then(res => {
+        if (res.code == 200) {
+          this.list = res.data;
+        }
+      })
+      //获取未读消息
+      this.$post('/other/getNotReadNumber',{}).then(res=>{
+        if(res.code==200){
+          this.notReadNUm=res.data;
+        }
       })
     },
     methods: {
-      select(index,link) {
-        this.$router.push({path:'/index'+link})
+      select(link, couType) {
+        if (couType) {
+          this.$router.push({ path: link, query: { couType } })
+
+        } else {
+          this.$router.push(link)
+        }
       },
       showLogin() {
         this.dialogFormVisible = true;
@@ -199,9 +212,9 @@
       consult() { },
       //查看用户协议
       seeUserAgreement() {
-        this.$router.push({ path: "/index/about",query:{type:"A"} });
+        this.$router.push({ path: "/index/about", query: { type: "A" } });
       },
-      go(link){
+      go(link) {
         this.$router.push(link)
       }
     },
@@ -283,9 +296,28 @@
     color: #fff;
   }
 
-  .notification-message {
-    width: 24px;
-    height: 24px;
+  .notification {
+    position: relative;
+    display: flex;
+    .notification-message {
+      width: 24px;
+      height: 24px;
+    }
+
+    .red-box {
+      width: 14px;
+      height: 14px;
+      background-color: #FF4545;
+      border-radius: 50%;
+      position: absolute;
+      left: 15px;
+      top: -5px;
+      font-size:10px;
+      line-height: 14px;
+      text-align: center;
+      color: #fff;
+    }
+
   }
 
   .right {

@@ -30,6 +30,15 @@ const routes = [
         component:()=>import('../views/Vedio.vue')
       },
       {
+        path:'courses',
+        component:()=>import('../views/Courses.vue')
+      },
+      {
+        path:'submitOrder',
+        component:()=>import('../views/SubmitOrder.vue'),
+        meta:{title:'提交订单'}
+      },
+      {
         path: 'about',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route

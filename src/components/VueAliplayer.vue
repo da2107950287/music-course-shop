@@ -1,8 +1,8 @@
 <template>
-    <div ref="aliplayer" class="prism-player" :id="playerId" :style="playStyle"></div>
-  </template>
-  
-  <script>
+  <div ref="aliplayer" class="prism-player" :id="playerId" :style="playStyle"></div>
+</template>
+
+<script>
   export default {
     name: "Aliplayer",
     props: {
@@ -69,7 +69,7 @@
       },
       skinLayout: {
         type: Array,
-        default: function() {
+        default: function () {
           return [];
         }
       },
@@ -136,11 +136,11 @@
                 y: 25
               },
               {
-          "name": "setting",
-          "align": "tr",
-          "x": 15,
-          "y": 12
-        },
+                name: "setting",
+                align: "tr",
+                x: 50,
+                y: 25
+              },
               {
                 name: "fullScreenButton",
                 align: "tr",
@@ -298,7 +298,7 @@
           (_this.instance === null || _this.reloadPlayer)
         ) {
           _this.instance && _this.instance.dispose();
-  
+
           document.querySelector("#" + _this.playerId).innerHTML = "";
           // Vue 异步执行 DOM 更新，这样一来代码执行到这里的时候可能 template 里面的 script 标签还没真正创建
           // 所以，我们只能在 nextTick 里面初始化 Aliplayer
@@ -358,7 +358,7 @@
             _this.instance.on("snapshoted", () => {
               this.$emit("snapshoted", _this.instance);
             });
-  
+
             _this.instance.on("timeupdate", () => {
               _this2.$emit("timeupdate", _this.instance);
             });
@@ -383,51 +383,51 @@
       /**
        * 播放视频
        */
-      play: function() {
+      play: function () {
         this.instance.play();
       },
       /**
        * 暂停视频
        */
-      pause: function() {
+      pause: function () {
         this.instance.pause();
       },
       /**
        * 重播视频
        */
-      replay: function() {
+      replay: function () {
         this.instance.replay();
       },
       /**
        * 跳转到某个时刻进行播放
        * @argument time 的单位为秒
        */
-      seek: function(time) {
+      seek: function (time) {
         this.instance.seek(time);
       },
       /**
        * 获取当前时间 单位秒
        */
-      getCurrentTime: function() {
+      getCurrentTime: function () {
         return this.instance.getCurrentTime();
       },
       /**
        *获取视频总时长，返回的单位为秒
        * @returns 返回的单位为秒
        */
-      getDuration: function() {
+      getDuration: function () {
         return this.instance.getDuration();
       },
       /**
         获取当前的音量，返回值为0-1的实数ios和部分android会失效
        */
-      getVolume: function() {
+      getVolume: function () {
         return this.instance.getVolume();
       },
       /**
         设置音量，vol为0-1的实数，ios和部分android会失效
        */
-      setVolume: function(vol) {
+      setVolume: function (vol) {
         this.instance.setVolume(vol);
       },
       /**
@@ -435,14 +435,14 @@
        *@argument url 视频地址
        *@argument time 跳转到多少秒
        */
-      loadByUrl: function(url, time) {
+      loadByUrl: function (url, time) {
         this.instance.loadByUrl(url, time);
       },
       /**
        * 设置播放速度
        *@argument speed 速度
        */
-      setSpeed: function(speed) {
+      setSpeed: function (speed) {
         this.instance.setSpeed(speed);
       },
       /**
@@ -450,7 +450,7 @@
        *@argument w 播放器宽度
        *@argument h 播放器高度
        */
-      setPlayerSize: function(w, h) {
+      setPlayerSize: function (w, h) {
         this.instance.setPlayerSize(w, h);
       },
       /**
@@ -458,19 +458,18 @@
        *@argument vid 视频id
        *@argument playauth 播放凭证
        */
-      reloaduserPlayInfoAndVidRequestMts: function(vid, playauth) {
+      reloaduserPlayInfoAndVidRequestMts: function (vid, playauth) {
         this.instance.reloaduserPlayInfoAndVidRequestMts(vid, playauth);
       },
-      reloadPlayer: function() {
+      reloadPlayer: function () {
         this.isReload = true;
         this.initAliplayer();
         this.isReload = false;
       }
     }
   };
-  </script>
-  
-  <style>
+</script>
+
+<style>
   @import url("https://g.alicdn.com/de/prismplayer/2.8.1/skins/default/aliplayer-min.css");
-  </style>
-  
+</style>

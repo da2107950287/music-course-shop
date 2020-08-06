@@ -6,7 +6,7 @@
         <div class="right">
             <div class="title">
                 <span>{{topDetail.couName}}</span>
-                <img src="../../assets/image/icon_kcxq_sc_def.png" v-if="topDetail.courseCollState==0" @click="collectCourse">
+                <img src="../../assets/image/icon_kcxq_sc_def.png" v-if="topDetail.courseCollState==0 || collected" @click="collectCourse">
                 <img src="../../assets/image//icon_kcxq_sc_sel.png" v-else>
             </div>
             <div class="price">
@@ -46,11 +46,18 @@
 </template>
 <script>
     export default {
+        
         props:{
             topDetail:{
                 type:Object,
                 default(){
                     return {}
+                }
+            },
+            collected:{
+                type:Boolean,
+                default(){
+                    return false
                 }
             }
         },
@@ -176,6 +183,7 @@
         font-size: 18px;
         font-weight: 400;
         border: none;
+        cursor: default;
     }
     .btn-box>div:nth-child(1){
         background-color: #98B702;

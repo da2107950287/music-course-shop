@@ -1,17 +1,17 @@
 <template>
   <div class="course-catalog">
     <div v-for="(item,index) in catalogue" :key="index">
-      <div class="title">第 1 章 ：基础夯实</div>
+      <!-- <div class="title">第 1 章 ：基础夯实</div> -->
       <div class="lists">
         <a>
           <div>
             <span>第一讲</span>
             <img src="../../assets/image/icon_kcml_sp.png" alt />
-            <span>胡定弦与基本乐理知识</span>
+            <span>{{item.catName}}</span>
           </div>
-          <div>欧阳老师</div>
+          <div>{{item.lecturer}}</div>
           <!-- <img src="../../assets/image/bat_st_def.png" alt /> -->
-          <div>2020.10.10 ~ 2020.12.12 14：00</div>
+          <div>{{item.catTime}}</div>
           <!-- <div>{{未开通}}</div> -->
         </a>
       </div>
@@ -64,8 +64,12 @@
     line-height: 20px;
     border-bottom: 1px solid #eee;
     color: #9899a1;
+    cursor: pointer;
+    
     div {
       display: flex;
+      flex:1;
+      justify-content: flex-end;
       span {
         color: #6a6a6f;
       }
@@ -73,9 +77,16 @@
         margin: 0 10px;
       }
     }
-    // div.color {
+    div:first-child{
+      justify-content: flex-start;
+      flex: 2;
+    }
+    div:nth-child(2){
+      justify-content: flex-start;
+    }
+    /* // div.color {
     //   color: #9899a1;
-    // }
+    // } */
     > img {
       width: 86px;
       height: 24px;
