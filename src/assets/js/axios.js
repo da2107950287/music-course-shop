@@ -1,5 +1,5 @@
 import originAxios from 'axios'
-
+import store from '../../store/index'
 // export function post(url,data={}){
 //     return new Promise((resolve,reject) => {
 //         originAxios.post(url,data)
@@ -39,12 +39,14 @@ export function post(url, params) {
 			if (localStorage.getItem("token")) {
 				config.headers.token = localStorage.getItem("token");
 			  }
+			  store.dispatch('showLoading')
 			return config
 		}, err => {
 			return err
 		})
 
 		instance.interceptors.response.use(response => {
+			store.dispatch('hideLoading')
 			return response.data
 		}, err => {
 			if (err && err.response) {

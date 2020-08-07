@@ -1,8 +1,8 @@
 <template>
   <div>
     <profile-header>
-      <h3 slot="title">我的积分</h3>
-      <div slot="right">当前积分：9277</div>
+      <div slot="title">我的积分</div>
+      <div slot="right">当前积分：{{integral}}</div>
     </profile-header>
     <div class="integral-bottom">
       <div class="table">
@@ -18,70 +18,103 @@
         </ol>
       </div>
     </div>
-    <el-pagination background layout="prev, pager, next" :total="10"></el-pagination>
+    <el-pagination @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize" background
+      layout="prev, pager, next" :total="total" class="pagination">
+    </el-pagination>
   </div>
 </template>
 <script>
-import ProfileHeader from "../components/ProfileHeader.vue";
-export default {
-  data() {
-    return {};
-  },
-  components: {
-    ProfileHeader,
-  },
-};
+  import ProfileHeader from "../components/ProfileHeader.vue";
+  export default {
+    data() {
+      return {
+        integral: 0,
+        currentPage: 1,
+        pageSize: 10,
+        total: 100,
+      };
+    },
+    created() {
+      this.$post('/userinfo/showUserinfo', {}).then(res => {
+        if (res.code == 200) {
+          this.integral = res.data.userinfo.integral;
+        }
+      })
+    },
+    methods: {
+      getData(){
+
+      },
+      handleCurrentChange(currentPage) {
+        this.currentPage = currentPage;
+        this.getData()
+      }
+    },
+    components: {
+      ProfileHeader,
+    },
+  };
 </script>
 <style lang="scss" scoped>
-ul,
-ol,
-li {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.integral-bottom {
-  width: 950px;
-  margin-top: 10px;
-  padding: 30px;
-  box-sizing: border-box;
+  @import '../assets/css/pagination.css';
 
-  background-color: #fff;
-}
-.table {
-  border: 1px solid #eee;
-}
-.table-header {
-  display: flex;
-  height: 50px;
-  line-height: 50px;
-  background-color: #f7f7f7;
+  ul,
+  ol,
   li {
-    font-weight: 500;
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
-}
 
-.table-body {
-  display: flex;
-  line-height: 80px;
-  li:nth-child(1) {
-    text-align: left;
-    margin-left: 30px;
+  .integral-bottom {
+    width: 950px;
+    margin-top: 10px;
+    padding: 30px;
+    box-sizing: border-box;
+
+    background-color: #fff;
   }
-}
-.table-header,
-.table-body {
-  li {
-    width: 25%;
-    font-size: 14px;
-    color: #36363a;
-    text-align: center;
+
+  .table {
+    border: 1px solid #eee;
   }
-  li:nth-child(1) {
-    width: 50%;
+
+  .table-header {
+    display: flex;
+    height: 50px;
+    line-height: 50px;
+    background-color: #f7f7f7;
+
+    li {
+      font-weight: 500;
+    }
   }
-}
-.el-pagination.is-background /deep/ .el-pager li:not(.disabled).active{
-  background-color: #98B702;
-}
+
+  .table-body {
+    display: flex;
+    line-height: 80px;
+
+    li:nth-child(1) {
+      text-align: left;
+      margin-left: 30px;
+    }
+  }
+
+  .table-header,
+  .table-body {
+    li {
+      width: 25%;
+      font-size: 14px;
+      color: #36363a;
+      text-align: center;
+    }
+
+    li:nth-child(1) {
+      width: 50%;
+    }
+  }
+
+  .el-pagination.is-background /deep/ .el-pager li:not(.disabled).active {
+    background-color: #98B702;
+  }
 </style>

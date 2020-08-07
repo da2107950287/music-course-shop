@@ -3,17 +3,17 @@
     <div v-for="(item,index) in catalogue" :key="index">
       <!-- <div class="title">第 1 章 ：基础夯实</div> -->
       <div class="lists">
-        <a>
+        <div class="list" @click="go(item.catUrl)">
           <div>
-            <span>第一讲</span>
+            <span>第 {{index+1}} 讲</span>
             <img src="../../assets/image/icon_kcml_sp.png" alt />
             <span>{{item.catName}}</span>
           </div>
           <div>{{item.lecturer}}</div>
-          <!-- <img src="../../assets/image/bat_st_def.png" alt /> -->
-          <div>{{item.catTime}}</div>
+          <img v-if="item.audition" src="../../assets/image/bat_st_def.png" alt />
+          <div v-else>{{item.catTime}}</div>
           <!-- <div>{{未开通}}</div> -->
-        </a>
+        </div>
       </div>
     </div>
   </div>
@@ -26,6 +26,11 @@
         default(){
           return []
         }
+      }
+    },
+    methods:{
+      go(url){
+        this.$router.push({path:'/index/vedio',query:{url}})
       }
     }
   }
@@ -55,7 +60,7 @@
   margin-right: 20px;
 }
 .lists {
-  a {
+  .list {
     height: 67px;
     display: flex;
     justify-content: space-between;
@@ -74,6 +79,8 @@
         color: #6a6a6f;
       }
       img {
+        width: 20px;
+        height: 20px;
         margin: 0 10px;
       }
     }
@@ -93,7 +100,7 @@
     }
   }
 }
-a:hover span,a:hover div{
+.list:hover span,.list:hover div{
   color: #98b702 !important;
 }
 </style>

@@ -1,66 +1,160 @@
 <template>
   <div class="vedio">
-    <!-- <div style="float:left;width:550px;">
-          直播
-          <ali-player @play="play($event)"
-          :useFlashPrism="true" 
-          :autoplay="true" 
-          :isLive="true" 
-          :rePlay="false"
-          :showBuffer="true"
-          showBarTime="5000"
-          width="500px" 
-          height="400px" 
-          controlBarVisibility="hover"
-          source="https://banlvresources.oss-cn-chengdu.aliyuncs.com/video/1595904529175.mp4" ></ali-player>
-    </div>-->
-
-   
-   
-      <ali-player
-        @play="play"
-        @seek="seek"
-        :useFlashPrism="true"
-        :autoplay="true"
-        :isLive="false"
-        :rePlay="false"
-        :showBuffer="true"
-        :enableSystemMenu="true"
-        :disableSeek="true"
-        showBarTime="5000"
-        width="1200px"
-        height="675px"
-        controlBarVisibility="hover"
-        source="https://banlvresources.oss-cn-chengdu.aliyuncs.com/video/1595904529175.mp4"
-      ></ali-player>
-    
-    
-    <!-- <img src="../" alt=""> -->
+    <div class="prism-player" id="player-con"></div>
   </div>
 </template>
-  
-  <script>
-import aliplayer from "../components/VueAliplayer";
+
+<script>
+import RateComponent from "../components/vedio/RateComponent/index.js";
 export default {
-  components: {
-    "ali-player": aliplayer,
+  data() {
+    return {
+      url: "",
+    };
   },
-  methods: {
-    play(event) {
-      console.log(event);
-    },
-    seek(e){
-      this.$refs.aliplayer.seek()
-    }
+  mounted() {
+    
+    this.url = this.$route.query.url;
+    var player = new Aliplayer(
+      {
+        id: "player-con",
+        source: this.url,
+        width: "1200px",
+        height: "675px",
+        autoplay: true,
+        isLive: false,
+        rePlay: false,
+        playsinline: true,
+        preload: true,
+        controlBarVisibility: "hover",
+        useH5Prism: true,
+        skinLayout: [
+          {
+            name: "H5Loading",
+            align: "cc",
+          },
+          {
+            name: "errorDisplay",
+            align: "tlabs",
+            x: 0,
+            y: 0,
+          },
+          {
+            name: "infoDisplay",
+          },
+          {
+            name: "tooltip",
+            align: "blabs",
+            x: 0,
+            y: 56,
+          },
+          {
+            name: "thumbnail",
+          },
+          {
+            name: "tooltip",
+            align: "blabs",
+            x: 0,
+            y: 56,
+          },
+          {
+            name: "controlBar",
+            align: "blabs",
+            x: 0,
+            y: 0,
+            children: [
+              {
+                name: "progress",
+                align: "blabs",
+                x: 0,
+                y: 44,
+              },
+              {
+                name: "playButton",
+                align: "tl",
+                x: 15,
+                y: 12,
+              },
+              {
+                name: "fullScreenButton",
+                align: "tr",
+                x: 10,
+                y: 12,
+              },
+              {
+                name: "timeDisplay",
+                align: "tl",
+                x: 10,
+                y: 7,
+              },
+            ],
+          },
+        ],
+        components: [
+          {
+            name: "RateComponent",
+            type: RateComponent,
+          },
+        ],
+      },
+      function (player) {
+        console.log("The player is created");
+      }
+    );
   },
 };
 </script>
-<style scoped>
+<style lang="scss">
 .vedio {
   width: 1200px;
-  height: 675px;
   margin: 0 auto;
+  margin-bottom: 30px;
+}
+
+.player-hidden {
+  display: none !important;
+}
+
+.rate-components {
+  float: right;
+  color: #fff;
+  height: 35px;
+  position: relative;
+  box-sizing: border-box;
+  margin-top: 5px;
+}
+
+.current-rate {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  cursor: pointer;
+}
+
+.rate-list {
+  position: absolute;
+  bottom: 46px;
+  display: none;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  li {
+    text-align: center;
+    width: 70px;
+    line-height: 30px;
+    background-color: rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+    &.current {
+      color: #98b702;
+    }
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+  }
 }
 </style>
-  
-  
+<style  scoped>
+@import "https://g.alicdn.com/de/prismplayer/2.8.8/skins/default/aliplayer-min.css";
+</style>

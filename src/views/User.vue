@@ -10,7 +10,7 @@
           </div>
         </div>
         <div class="left-bottom">
-          <div v-for="(item,index) in choose" :key="index" @click="handleClick(item)"
+          <div v-for="(item,index) in menu" :key="index" @click="handleClick(item)"
             :class="{'active':$route.path.includes(item.link)}">{{item.title}}</div>
         </div>
       </div>
@@ -22,7 +22,7 @@
   export default {
     data() {
       return {
-        choose: [
+        menu: [
           {  title: "我的资料", link: '/profile' },
           {  title: "我的课程", link: '/course' },
           {  title: "我的订单", link: '/order' },

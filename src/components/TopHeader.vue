@@ -5,7 +5,7 @@
         <div class="logo">芥末</div>
         <div class="title">芥末音乐</div>
       </div>
-      <div class="center">
+      <div class="top-center">
         <div :class="{'active':$route.path=='/index/home'}" class="item" @click="select('/index/home')">推荐课程</div>
         <div v-for="(item,index) in list" :key="index" class="item"
           :class="{'active': $route.query.couType===item.dicId}" @click="select('/index/courses',item.dicId)">
@@ -20,10 +20,12 @@
           <img src="../assets/image/pho_def.png" class="login-icon" />
           <span class="login-text">点击登录</span>
         </div>
-        <div v-else class="login" @click="go('/index/user')">
+        <div v-else class="login" @click="showMenu">
           <img :src="avatar" class="login-icon" />
           <span class="login-text">{{nickName}}</span>
         </div>
+        <top-menu v-if="isShowMenu" @hideMenu="hideMenu"></top-menu>
+
       </div>
     </div>
     <!-- 登录弹窗 -->
@@ -65,6 +67,8 @@
 <script>
   import Consult from "../components/Consult";
   import LoginBox from "../components/LoginBox";
+  import TopMenu from "../components/TopMenu";
+
 
   export default {
     data() {
@@ -97,8 +101,9 @@
         totalTime: 60,
         avatar: "",
         nickName: "",
-        notReadNUm:0,
+        notReadNUm: 0,
         list: [],
+        isShowMenu: false,
         loginForm: {
           phone: "",
           smsCode: "",
@@ -130,9 +135,9 @@
         }
       })
       //获取未读消息
-      this.$post('/other/getNotReadNumber',{}).then(res=>{
-        if(res.code==200){
-          this.notReadNUm=res.data;
+      this.$post('/other/getNotReadNumber', {}).then(res => {
+        if (res.code == 200) {
+          this.notReadNUm = res.data;
         }
       })
     },
@@ -216,28 +221,47 @@
       },
       go(link) {
         this.$router.push(link)
+      },
+      showMenu() {
+        this.isShowMenu = !this.isShowMenu;
+      },
+      hideMenu() {
+        console.log(888)
+        this.isShowMenu = false
       }
     },
     components: {
       LoginBox,
       Consult,
+      TopMenu
     },
   };
 </script>
 <style lang="scss" scoped>
   .top-header-box {
     width: 100%;
+
     margin-bottom: 30px;
     background-image: url(../assets/image/bg_hander.png);
   }
 
   .top-header {
     width: 1200px;
+    height: 100px;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     position: relative;
     margin-left: auto;
     margin-right: auto;
+
+    .top-center {
+      display: flex;
+      align-items: center;
+      margin-left: 60px;
+      text-align: center;
+      font-family: "PingFangSC-Medium", "PingFang SC";
+    }
   }
 
   .left {
@@ -272,13 +296,7 @@
     font-family: "STHupo";
   }
 
-  .center {
-    display: flex;
-    align-items: center;
-    margin-left: 60px;
-    text-align: center;
-    font-family: "PingFangSC-Medium", "PingFang SC";
-  }
+
 
   .item {
     width: 120px;
@@ -299,6 +317,7 @@
   .notification {
     position: relative;
     display: flex;
+
     .notification-message {
       width: 24px;
       height: 24px;
@@ -312,7 +331,7 @@
       position: absolute;
       left: 15px;
       top: -5px;
-      font-size:10px;
+      font-size: 10px;
       line-height: 14px;
       text-align: center;
       color: #fff;
