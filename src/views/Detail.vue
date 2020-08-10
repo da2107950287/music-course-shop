@@ -29,7 +29,7 @@
             this.$post('/course/showCourse', { couId: this.couId }).then(res => {
                 if (res.code == 200) {
                     this.couresDetail = res.data;
-                    console.log(this.couresDetail)
+                
                     this.couType=res.data.couType;
                     this.topDetail = {
                         cover: res.data.cover,

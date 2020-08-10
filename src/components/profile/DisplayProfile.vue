@@ -31,14 +31,16 @@
             <img :src="userinfo.headportrait" alt />
             <label for="inputId">
                 <input style="display: none" id="inputId" ref="input" type="file"
-                accept="image/gif, image/jpeg, image/jpg, image/png, image/svg" 
-                @change="handleFileChange"> <img src="~assets/image/icon_xg.png" />
+                    accept="image/gif, image/jpeg, image/jpg, image/png, image/svg" @change="handleFileChange"> <img
+                    src="~assets/image/icon_xg.png" />
             </label>
-            
+            <img src="../../assets/js/axios.js" alt="">
+
         </div>
     </div>
 </template>
 <script>
+    import { uploadPost } from 'assets/js/axios.js'
     export default {
         props: {
             userinfo: {
@@ -58,9 +60,41 @@
             bindWeChat() {
                 this.$emit("bindWeChat")
             },
-            handleFileChange(){
-                
+            handleFileChange(e) {
+                let file = e.target.files[0];
+                let formdata = new FormData();
+                formdata.append('myfiles', file)
+                console.log(formdata)
+                uploadPost('/upload/pictureOrVideo', formdata).then(res => {
+                    if (res.code == 200) {
+                        let imgUrl = res.data;
+                        console.log(999)
+                        this.update(imgUrl)
+                    }
+                })
+
+
+            },
+            update(imgUrl) {
+                this.$post('/userinfo/updateUserinfo', {
+                    nickname: this.userinfo.nickname,
+                    headportrait: imgUrl,
+                    sex: this.userinfo.sex,
+                    intro: this.userinfo.intro,
+                    province: this.userinfo.province,
+                    city: this.userinfo.city,
+                    background: this.userinfo.background
+                }).then(res => {
+                    if (res.code == 200) {
+                        localStorage.setItem("nickName",this.userinfo.nickname)
+                        localStorage.setItem("headportrait",imgUrl)
+                        this.$emit("updateAvatar",imgUrl)
+                        window.location.reload()
+                        
+                    }
+                })
             }
+
         }
     }
 </script>
@@ -109,8 +143,8 @@
 
             img:nth-child(2) {
                 position: absolute;
-                bottom: 0;
-                right: 8px;
+                bottom: 2px;
+                right: 12px;
             }
         }
     }

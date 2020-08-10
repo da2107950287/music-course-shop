@@ -119,8 +119,7 @@
         if (localStorage.getItem("token") == null) {
           return true;
         } else {
-          this.avatar = localStorage.getItem('avatar')
-          console.log(localStorage.getItem("avatar"))
+          this.avatar = localStorage.getItem('headportrait')
           this.nickName = localStorage.getItem("nickName")
           console.log(localStorage.getItem("nickName"))
           return false;
@@ -194,10 +193,25 @@
                 case "200":
                   this.avatar = res.data.headportrait;
                   this.nickName = res.data.nickname;
-                  console.log(res.data.headportrait, res.data.nickname);
-                  localStorage.setItem("token", res.data.token);
-                  localStorage.setItem("avatar", res.data.headportrait);
+                  localStorage.setItem("accLeaTime",res.data.accLeaTime);
+                  localStorage.setItem("headportrait",res.data.headportrait);
+                  localStorage.setItem("token",res.data.token);
                   localStorage.setItem("nickName", res.data.nickname);
+                  localStorage.setItem("vip",res.data.vip);
+                  localStorage.setItem("sex",res.data.sex)
+                  localStorage.setItem("state",res.data.state)
+                  this.$store.commit("setUserInfo",{
+                    accLeaTime:res.data.accLeaTime,
+                    headportrait:res.data.headportrait,
+                    nickname:res.data.nickname,
+                    token:res.data.token,
+                    vip:res.data.vip,
+                    integral:res.data.integral,
+                    sex:res.data.sex,
+                    status:res.data.state
+                  });
+                  
+                  this.dialogFormVisible = false;
                 case 201:
                   this.$message.success(res.msg);
                   this.dialogFormVisible = false;
@@ -383,6 +397,7 @@
       font-family: "PingFangSC-Regular", "PingFang SC";
       font-weight: 400;
       color: #ccc;
+      cursor:default;
     }
 
     .can-click {

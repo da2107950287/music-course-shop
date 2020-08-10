@@ -2,8 +2,10 @@
     <div class="course-desc">
         <div class="title">课程参数</div>
         <!-- <div class="course-parameters" v-html="courseDes.intro"></div> -->
+      
         <ul class="course-parameters">
-            <li>
+            <li v-html="courseDes.lecturerIntro"></li>
+            <!-- <li>
                 <span>课时：</span>
                 <span>13.0</span>
             </li>
@@ -34,7 +36,7 @@
             <li>
                 <span>智能语音识别练习：</span>
                 <span>有</span>
-            </li>
+            </li> -->
         </ul>
         <div class="title">课程介绍</div>
         <p v-html="courseDes.intro"></p>

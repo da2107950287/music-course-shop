@@ -11,10 +11,10 @@
           <li>积分变化</li>
           <li>日期</li>
         </ul>
-        <ol class="table-body">
-          <li>购买二胡曲《赛马》提升课-琴艺技能提升课</li>
-          <li>+3000</li>
-          <li>2020-10-10 12:00</li>
+        <ol class="table-body" v-for="(item,index) in list" :key="index">
+          <li>{{item.describes}}</li>
+          <li><span v-if="item.irSort==0">&#43;</span><span v-else>&#45;</span>{{item.number}}</li>
+          <li>{{item.irTime}}</li>
         </ol>
       </div>
     </div>
@@ -29,9 +29,8 @@
     data() {
       return {
         integral: 0,
-        currentPage: 1,
-        pageSize: 10,
-        total: 100,
+        
+        list:[],
       };
     },
     created() {
@@ -40,10 +39,16 @@
           this.integral = res.data.userinfo.integral;
         }
       })
+     this.getData()
     },
     methods: {
       getData(){
-
+        this.$post("/other/getIntegralRecord",{PageNumber:this.currentPage,PageSize:this.pageSize}).then(res=>{
+        if (res.code == 200) {
+          this.total=res.data.PageCount;
+          this.list=res.data.list;
+        }
+      })
       },
       handleCurrentChange(currentPage) {
         this.currentPage = currentPage;
@@ -77,6 +82,7 @@
 
   .table {
     border: 1px solid #eee;
+    border-bottom: 0;
   }
 
   .table-header {
@@ -93,6 +99,7 @@
   .table-body {
     display: flex;
     line-height: 80px;
+    border-bottom: 1px solid #eee;
 
     li:nth-child(1) {
       text-align: left;

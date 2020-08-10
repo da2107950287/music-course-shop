@@ -80,7 +80,12 @@
       }
     },
     created() {
-      this.$post("/other/getMessage", { PageNumber: this.currentPage, PageSize: this.pageSize }).then(res => {
+   this.getData()
+
+    },
+    methods: {
+      getData(){
+        this.$post("/other/getMessage", { PageNumber: this.currentPage, PageSize: this.pageSize }).then(res => {
         if (res.code == 200) {
           this.arr = res.data.list;
           this.total = res.data.PageCount
@@ -89,9 +94,7 @@
           });
         }
       })
-
-    },
-    methods: {
+      },
       handleCheckedAll() {
         let isCheckedAll = this.arr.some(item => {
           return item.checked === false;
@@ -123,9 +126,12 @@
         this.arr = this.arr.filter(item => {
           item.checked == false;
         })
-
-
+      },
+      handleCurrentChange(){
+        this.currentPage = currentPage;
+        this.getData()
       }
+      
     },
     components: {
       ProfileHeader,

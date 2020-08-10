@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
+import store from '../store'
 Vue.use(VueRouter)
 // 解决vue-router重复点击菜单报错的问题
 const originalPush = VueRouter.prototype.push;
@@ -26,17 +26,17 @@ const routes = [
         component: () => import('../views/Detail.vue')
       },
       {
-        path:'vedio',
-        component:()=>import('../views/Vedio.vue')
+        path: 'vedio',
+        component: () => import('../views/Vedio.vue')
       },
       {
-        path:'courses',
-        component:()=>import('../views/Courses.vue')
+        path: 'courses',
+        component: () => import('../views/Courses.vue')
       },
       {
-        path:'submitOrder',
-        component:()=>import('../views/SubmitOrder.vue'),
-        meta:{title:'提交订单'}
+        path: 'submitOrder',
+        component: () => import('../views/SubmitOrder.vue'),
+        meta: { title: '提交订单' }
       },
       {
         path: 'about',
@@ -62,6 +62,11 @@ const routes = [
       {
         path: 'pay',
         component: () => import("../views/Pay.vue")
+      },
+      {
+        path: 'scanPay',
+        component: () => import("../views/ScanPay.vue"),
+        meta: { title: "扫码支付" }
       },
       {
         path: 'user',
@@ -105,7 +110,7 @@ const routes = [
         ]
       },
 
-     
+
     ]
   }
 
@@ -117,4 +122,18 @@ const router = new VueRouter({
   routes
 })
 
+// router.beforeEach((to,from,next)=>{
+
+// if(store.getters.token){
+//   next()
+// }else{
+//   if(to.path.includes('/home')||to.path.includes('/courses')){
+//     next()
+//   }else{
+//     next({
+//       path:'/index/home'
+//     })
+//   }
+// }
+// })
 export default router

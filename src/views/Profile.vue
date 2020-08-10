@@ -4,7 +4,7 @@
       <div>基本资料</div>
       <span v-if="!isShow" @click="editProfile">编辑</span>
     </div>
-    <display-profile v-if="!isShow" :userinfo="userinfo" @showPhoneForm="showPhoneForm" @bindWeChat="bindWeChat"/>
+    <display-profile v-if="!isShow" :userinfo="userinfo" @showPhoneForm="showPhoneForm" @bindWeChat="bindWeChat" @updateAvatar="updateAvatar"/>
     <div v-else>
       <!-- <el-form ref="form" :model="form" label-width="100px" class="edit-form">
         <el-form-item label="昵称：">
@@ -55,18 +55,18 @@
           <el-cascader
             size="large"
             :options="options"
-            v-model="selectedOptions"
+            v-model="userinfo.selectedOptions"
             @change="handleChange"
             separator
           ></el-cascader>
         </div>
         <div>
           <span>简介:</span>
-          <el-input type="text" v-mode="userinfo.intro"></el-input>
+          <el-input type="text" v-model="userinfo.intro"></el-input>
         </div>
       </div>
       <div class="btn-box">
-        <div class="btn cancel">取消</div>
+        <div class="btn cancel" @click="cancel">取消</div>
         <div class="btn save" @click="saveEdit">保存</div>
       </div>
     </div>
@@ -99,8 +99,8 @@ export default {
       isShowForm: false,
 
       sexOptions: [
-        { value: "male", label: "男" },
-        { value: "female", label: "女" },
+        { value: "男", label: "男" },
+        { value: "女", label: "女" },
       ],
       value: "",
       options: regionData,
@@ -151,10 +151,29 @@ export default {
 
     // 保存用户信息修改
     saveEdit() {
-      this.$post("/userinfo/updateUserinfo", {}).then((res) => {
-        console.log(res);
-      });
+       this.$post('/userinfo/updateUserinfo', {
+                    nickname: this.userinfo.nickname,
+                    headportrait: this.userinfo.headportrait,
+                    sex: this.userinfo.sex,
+                    intro: this.userinfo.intro,
+                    province: this.userinfo.province,
+                    city: this.userinfo.city,
+                    background: this.userinfo.background
+                }).then(res => {
+                    if (res.code == 200) {
+                        localStorage.setItem("nickName",this.userinfo.nickname)
+                        localStorage.setItem("avatar",imgUrl)
+                        this.isShow=false;
+                        
+                    }
+                })
     },
+    updateAvatar(imgUrl){
+      this.userinfo.headportrait=imgUrl
+    },
+    cancel(){
+      this.isShow=false;
+    }
   },
   components: {
     DisplayProfile,

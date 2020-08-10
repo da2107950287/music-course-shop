@@ -9,7 +9,7 @@
         <span>(微信/支付宝支付)</span>
       </div>
       <div class="table-body">
-        <el-radio-group v-model="radio" fill="#98B702">
+        <el-radio-group v-model="payType" fill="#98B702">
           <el-radio :label="1">
             <div class="btn">
               <img src="../../assets/image/icon_wxzf.png" />
@@ -30,7 +30,7 @@
       <span class="price">&yen;{{totalPrice}}</span>
     </div>
     <div class="confirm-btn">
-      <div>确认付款</div>
+      <div @click="pay">确认付款</div>
     </div>
   </div>
 </template>
@@ -38,10 +38,15 @@
   export default {
     data() {
       return {
-        radio: 1,
+        payType: 1,
       };
     },
-    props: ["totalPrice"]
+    props: ["totalPrice"],
+    methods:{
+      pay(){
+        this.$emit("pay",this.payType)
+      }
+    }
   };
 </script>
 <style lang="scss" scoped>

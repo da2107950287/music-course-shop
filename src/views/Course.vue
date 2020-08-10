@@ -2,7 +2,7 @@
   <div class="course">
     <profile-header>
       <div slot="title">我的课程</div>
-      <div slot="right">累计学习：3200分钟</div>
+      <div slot="right">累计学习：{{accLeaTime}}分钟</div>
     </profile-header>
     <div class="course-bottom">
       <course-item>
@@ -26,14 +26,19 @@
 <script>
 import ProfileHeader from "../components/ProfileHeader.vue";
 import CourseItem from "../components/CourseItem.vue";
+
+
 export default {
   data() {
     return {
       pageNumber:1,
       pageSize:5,
+      accLeaTime:null,
     };
   },
+
   created(){
+this.accLeaTime=localStorage.getItem("accLeaTime")
     this.$post('/course/getUserCourse',{PageNumber:this.pageNumber,PageSize:this.pageSize}).then(res=>{
       console.log(res)
     })
@@ -41,7 +46,8 @@ export default {
   methods:{
     toStudy(){
       this.$router.push({path:'/courseLearning'})
-    }
+    },
+
   },
   components: {
     ProfileHeader,
