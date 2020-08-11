@@ -24,12 +24,13 @@
   </div>
 </template>
 <script>
-  import ProfileHeader from "../components/ProfileHeader.vue";
+  import ProfileHeader from "components/ProfileHeader.vue";
   export default {
     data() {
       return {
         integral: 0,
-        
+        currentPage:1,
+        pageSize:10,
         list:[],
       };
     },

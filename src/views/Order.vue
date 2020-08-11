@@ -5,209 +5,14 @@
         <div :class="{'active':currentIndex==index}">{{item.name}}</div>
       </div>
     </div>
-    <div class="order-list" v-if="currentIndex==0">
-      <div class="order-item" v-for="(item,index) in list" :key="index">
-        <div class="title" v-show="item.olState===1">
-          <div>待支付</div>
-          <div>请在29分29秒内完成支付，超时订单将被自动取消哦〜</div>
-        </div>
-        <div class="title" v-show="item.olState==5">
-          <div>已完成</div>
-        </div>
-        <div class="title" v-show="item.olState==6">
-          <div>已取消 </div>
-        </div>
-        <div class="table">
-          <div class="table-header">
-            <div>
-              <span>订单号：</span>
-              <span>{{item.orderId}}</span>
-            </div>
-            <div>
-              <span>下单时间：</span>
-              <span>{{item.olTime}}</span>
-            </div>
-          </div>
-          <div class="table-body" v-for="(el,index) in item.orderlistCourse" :key="index+'1'">
-            <div class="left">{{el.couName}}</div>
-            <div class="right">
-              <span>总课时：{{el.totalHours}}</span>
-              <span>&yen;{{el.price}}</span>
-              <span>&times;{{el.number}}</span>
-            </div>
-          </div>
-        </div>
-        <div class="total">
-          <span>合计：2件商品</span>
-          <div>
-            <span>共计：</span>
-            <span class="price">&yen;{{item.cdyPrice}}</span>
-          </div>
-        </div>
-        <div class="btn-box">
-          <div class="cancel btn" v-show="item.olState==1">取消订单</div>
-          <div class="pay btn" v-show="item.olState==1">去支付</div>
-          <div class="pay btn" v-show="item.olState==6">再次购买</div>
-          <div class="study btn" v-show="item.olState==5">去学习</div>
-
-        </div>
-      </div>
-    </div>
-    <div class="order-list" v-if="currentIndex==1">
-      <div class="order-item" v-for="(item,index) in list" :key="index">
-        <div class="title">
-          <div>待支付</div>
-          <div>请在{{item.countTime}}内完成支付，超时订单将被自动取消哦〜</div>
-        </div>
-        <!-- <div class="title">
-          <div>已完成</div>
-        </div> -->
-        <!-- <div class="title">
-          <div>已取消 </div>
-        </div> -->
-        <div class="table">
-          <div class="table-header">
-            <div>
-              <span>订单号：</span>
-              <span>{{item.orderId}}</span>
-            </div>
-            <div>
-              <span>下单时间：</span>
-              <span>{{item.olTime}}</span>
-            </div>
-          </div>
-          <div class="table-body" v-for="(el,index) in item.orderlistCourse" :key="index+'1'">
-            <div class="left">{{el.couName}}</div>
-            <div class="right">
-              <span>总课时：{{el.totalHours}}</span>
-              <span>&yen;{{el.price}}</span>
-              <span>&times;{{el.number}}</span>
-            </div>
-          </div>
-        </div>
-        <div class="total">
-          <span>合计：2件商品</span>
-          <div>
-            <span>共计：</span>
-            <span class="price">&yen;{{item.cdyPrice}}</span>
-          </div>
-        </div>
-        <div class="btn-box">
-          <div class="cancel btn">取消订单</div>
-          <div class="pay btn">去支付</div>
-          <!-- <div class="pay btn">再次购买</div>
-          <div class="study btn">去学习</div> -->
-
-        </div>
-      </div>
-    </div>
-    <div class="order-list" v-if="currentIndex==2">
-      <div class="order-item" v-for="(item,index) in list" :key="index">
-
-        <!-- <div class="title" >
-          <div>待支付</div>
-          <div>请在29分29秒内完成支付，超时订单将被自动取消哦〜</div>
-        </div> -->
-        <div class="title">
-          <div>已完成</div>
-        </div>
-        <!-- <div class="title">
-          <div>已取消 </div>
-        </div> -->
-        <div class="table">
-          <div class="table-header">
-            <div>
-              <span>订单号：</span>
-              <span>1001893148786</span>
-            </div>
-            <div>
-              <span>下单时间：</span>
-              <span>2020-10-10 12:23</span>
-            </div>
-          </div>
-          <div class="table-body">
-            <div class="left">大提琴乐曲《赛马》提升课——琴艺技能提升</div>
-            <div class="right">
-              <span>总课时：3.0</span>
-              <span>&yen;299.00</span>
-              <span>&times;1</span>
-            </div>
-          </div>
-        </div>
-        <div class="total">
-          <span>合计：2件商品</span>
-          <div>
-            <span>共计：</span>
-            <span class="price">&yen;598.00</span>
-          </div>
-        </div>
-        <div class="btn-box">
-          <!-- <div class="cancel btn">取消订单</div>
-          <div class="pay btn">去支付</div> -->
-          <!-- <div class="pay btn">再次购买</div> -->
-          <div class="study btn">去学习</div>
-
-        </div>
-      </div>
-    </div>
-    <div class="order-list" v-if="currentIndex==3">
-      <div class="order-item" v-for="(item,index) in list" :key="index">
-
-        <!-- <div class="title" >
-          <div>待支付</div>
-          <div>请在29分29秒内完成支付，超时订单将被自动取消哦〜</div>
-        </div> -->
-        <!-- <div class="title">
-          <div>已完成</div>
-        </div> -->
-        <div class="title">
-          <div>已取消 </div>
-        </div>
-        <div class="table">
-          <div class="table-header">
-            <div>
-              <span>订单号：</span>
-              <span>{{item.orderId}}</span>
-            </div>
-            <div>
-              <span>下单时间：</span>
-              <span>{{item.olTime}}</span>
-            </div>
-          </div>
-          <div class="table-body" v-for="(el,index) in item.orderlistCourse" :key="index+'1'">
-            <div class="left">{{el.couName}}</div>
-            <div class="right">
-              <span>总课时：{{el.totalHours}}</span>
-              <span>&yen;{{el.price}}</span>
-              <span>&times;{{el.number}}</span>
-            </div>
-          </div>
-        </div>
-        <div class="total">
-          <span>合计：2件商品</span>
-          <div>
-            <span>共计：</span>
-            <span class="price">&yen;{{item.cdyPrice}}</span>
-          </div>
-
-        </div>
-        <div class="btn-box">
-          <!-- <div class="cancel btn">取消订单</div>
-          <div class="pay btn">去支付</div> -->
-          <div class="pay btn">再次购买</div>
-          <!-- <div class="study btn">去学习</div> -->
-
-        </div>
-      </div>
-
-
-    </div>
-    <el-pagination @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize" background
-      layout="prev, pager, next" :total="total" class="pagination">
+    <order-list :list="list"></order-list>
+    <el-pagination v-if="list.length!=0" @current-change="handleCurrentChange" :current-page="currentPage"
+      :page-size="pageSize" background layout="prev, pager, next" :total="total" class="pagination">
     </el-pagination>
   </div>
 </template>
 <script>
+  import OrderList from 'components/order/OrderList'
   export default {
     data() {
       return {
@@ -217,68 +22,41 @@
         pageSize: 10,
         total: null,
         type: 1,
-        time: null,
-
         lists: [
           { name: "全部", olState: "all" },
           { name: "待付款", olState: "1" },
           { name: "已完成", olState: "5" },
           { name: "已取消", olState: "6" },
-
         ],
         list: []
-
       };
     },
-    watch: {
-      time() {
 
-      }
-    },
     created() {
       this.getData("all")
     },
     methods: {
-      countTime() {
-        //获取当前时间
-        var date = new Date();
-        var now = date.getTime();
-        //设置截止时间
-        var endDate = new Date();
-        var end = endDate.getTime();
-        //时间差
-        var leftTime = end - now;
-        //定义变量 d,h,m,s保存倒计时的时间
-        if (leftTime >= 0) {
-          d = Math.floor(leftTime / 1000 / 60 / 60 / 24);
-          this.h = Math.floor(leftTime / 1000 / 60 / 60 % 24);
-          this.m = Math.floor(leftTime / 1000 / 60 % 60);
-          this.s = Math.floor(leftTime / 1000 % 60);
-        }
-
-        console.log(this.s);
-        //递归每秒调用countTime方法，显示动态时间效果
-        setTimeout(this.countTime, 1000);
-      },
       getData(olState) {
+
         this.$post('/orderlist/getOrderlist', { olState, type: this.type, PageNumber: this.currentPage, PageSize: this.pageSize }).then(res => {
           if (res.code == 200) {
             this.total = res.data.PageCount
             this.list = res.data.list;
             this.list.forEach(item => {
               if (item.olState == 1) {
-                let data = item.olTime;
-                let now = data.getTime()
-                let end = now + 30 * 1000 * 60;
-                let leftTIme = end - now;
-                if (leftTIme >= 0) {
-                  d = Math.floor(leftTime / 1000 / 60 / 60 / 24);
-                  let m = Math.floor(leftTime / 1000 / 60 % 60);
-                  let s = Math.floor(leftTime / 1000 % 60);
-                  this.$set(item,"countTime",m+"分"+s+"秒")
-                }
-
-                // this.$set(item,'',)
+                setInterval(() => {
+                  var date = new Date();
+                  var now = date.getTime();
+                  let olData = new Date(item.olTime.replace(/-/g, '/'))
+                  let olTime = olData.getTime()
+                  let end = olTime + 30 * 1000 * 60;
+                  let leftTime = end - now;
+                  if (leftTime >= 0) {
+                    let m = Math.floor(leftTime / 1000 / 60 % 60);
+                    let s = Math.floor(leftTime / 1000 % 60);
+                    this.$set(item, "countTime", m + "分" + s + "秒")
+                  }
+                }, 1000);
               }
             })
           }
@@ -289,12 +67,15 @@
         this.getData()
       },
       handleClick(olState, index) {
-        console.l
+        this.currentPage = 1;
         this.currentIndex = index;
         this.getData(olState)
 
       },
     },
+    components: {
+      OrderList
+    }
   };
 </script>
 <style lang="scss" scoped>

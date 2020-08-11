@@ -9,8 +9,8 @@
         <div class="right">
           <span>主讲：{{detail.lecturer}}</span>
           <span>总课时：{{detail.totalHours}}</span>
-          <span v-if="detail.vip==0">&yen;{{detail.pricevip}}</span>
-          <span v-else>&yen;{{detail.price}}</span>
+          <span v-if="detail.vip==0">&yen;{{detail.price}}</span>
+          <span v-else>&yen;{{detail.pricevip}}</span>
           <span class="num">&times;1</span>
         </div>
       </div>
@@ -25,8 +25,8 @@
         <span>合计：1件商品</span>
         <div>
           <span>共计：</span>
-          <span v-if="detail.vip==0" class="price">&yen;{{detail.pricevip}}</span>
-          <span v-else class="price">{{detail.price}}</span>
+          <span v-if="detail.vip==0" class="price">&yen;{{detail.price}}</span>
+          <span v-else class="price">{{detail.pricevip}}</span>
         </div>
       </div>
     </div>

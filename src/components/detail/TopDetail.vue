@@ -1,13 +1,13 @@
 <template>
     <div class="top-detail">
         <div class="left">
-            <img :src="topDetail.cover" alt="">
+            <img v-lazy="topDetail.cover" alt="">
         </div>
         <div class="right">
             <div class="title">
                 <span>{{topDetail.couName}}</span>
-                <img src="../../assets/image/icon_kcxq_sc_def.png" v-if="topDetail.courseCollState==0 || collected" @click="collectCourse">
-                <img src="../../assets/image//icon_kcxq_sc_sel.png" v-else>
+                <img src="~assets/image/icon_kcxq_sc_def.png" v-if="topDetail.courseCollState==0 || collected" @click="collectCourse">
+                <img src="~assets/image/icon_kcxq_sc_sel.png" v-else>
             </div>
             <div class="price">
                 <div class="member-price">
@@ -20,19 +20,19 @@
             </div>
             <div>
                 <div class="common">
-                    <img src="../../assets/image/icon_zks.png" class="img-icon">
+                    <img src="~assets/image/icon_zks.png" class="img-icon">
                     <span>总 课 时：</span>
                     <span>{{topDetail.totalHours}}</span>
                 </div>
                 <div class="blank"></div>
                 <div class="common">
-                    <img src="../../assets/image/icon_yxq.png" class="img-icon">
+                    <img src="~assets/image/icon_yxq.png" class="img-icon">
                     <span>有 效 期：</span>
-                    <span>{{topDetail.termOfValidity}}</span>
+                    <span>{{topDetail.termOfValidity}}月</span>
                 </div>
                 <div class="blank"></div>
                 <div class=" common">
-                    <img src="../../assets/image/icon_skls.png" class="img-icon">
+                    <img src="~assets/image/icon_skls.png" class="img-icon">
                     <span>授课老师：</span>
                     <span>{{topDetail.lecturer}}</span>
                 </div>

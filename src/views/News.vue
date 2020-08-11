@@ -6,22 +6,22 @@
     <div class="table">
       <div class="table-header flex">
         <div @click="handleCheckedAll">
-          <img v-if="!checkedAll" src="../assets/image/icon_check_normal.png" class="select-icon" />
-          <img v-else src="../assets/image/icon_check_sel.png" class="select-icon" />
+          <img v-if="!checkedAll" src="assets/image/icon_check_normal.png" class="select-icon" />
+          <img v-else src="assets/image/icon_check_sel.png" class="select-icon" />
         </div>
 
         <div @click="readMsg" class="btn read">已读</div>
-        <img @click="deleteMsg" src="../assets/image/bnt_sc.png" class="btn delete" />
+        <img @click="deleteMsg" src="assets/image/bnt_sc.png" class="btn delete" />
       </div>
       <div v-for="(item,index) in arr" :key="index" class="list">
         <div class="table-body flex">
           <div @click="item.checked=!item.checked">
-            <img v-if="item.checked==false" src="../assets/image/icon_check_normal.png" class="select-icon" />
-            <img v-else src="../assets/image/icon_check_sel.png" class="select-icon" />
+            <img v-if="item.checked==false" src="assets/image/icon_check_normal.png" class="select-icon" />
+            <img v-else src="assets/image/icon_check_sel.png" class="select-icon" />
           </div>
 
           <div class="flex td">
-            <img src="../assets/image/icon_jyxx.png" />
+            <img src="assets/image/icon_jyxx.png" />
             <div class="td-right">
               <div class="flex">
                 <!-- <span v-if="item.type==0" class="tip">交易消息</span>
@@ -41,7 +41,7 @@
   </div>
 </template>
 <script>
-  import ProfileHeader from "../components/ProfileHeader.vue";
+  import ProfileHeader from "components/ProfileHeader.vue";
   export default {
     data() {
       return {

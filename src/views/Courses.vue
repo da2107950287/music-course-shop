@@ -2,16 +2,17 @@
     <div>
         <banner :banners="banners" />
         <courses :courses="list" />
-        <el-pagination @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize"
+        <el-pagination v-if="!list.length==0" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize"
             background layout="prev, pager, next" :total="total" class="pagination">
         </el-pagination>
+        
         <download-app />
     </div>
 </template>
 <script>
-    import Banner from '../components/home/Banner'
-    import Courses from '../components/home/Courses'
-    import DownloadApp from '../components/home/DownloadApp'
+    import Banner from 'components/home/Banner'
+    import Courses from 'components/home/Courses'
+    import DownloadApp from 'components/home/DownloadApp'
 
     export default {
         data() {
@@ -26,6 +27,7 @@
         },
         watch: {
             $route() {
+                this.currentPage=1;
                 this.couType = this.$route.query.couType
                 this.getData()
             }
@@ -37,7 +39,6 @@
                 }
             })
             this.getData();
-
         },
         methods: {
             getData() {

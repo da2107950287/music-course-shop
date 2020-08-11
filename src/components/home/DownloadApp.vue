@@ -2,8 +2,8 @@
   <div class="download">
     <div>
       <div>下载APP 加入圈子聊音乐 音乐器材网上购 更多名师课程资源等着你</div>
-      <img src="../../assets/image/qr.png" alt class="img-qr" />
-      <img src="../../assets/image/qr.png" alt class="img-qr" />
+      <img src="~assets/image/qr.png" alt class="img-qr" />
+      <img src="~/assets/image/qr.png" alt class="img-qr" />
     </div>
   </div>
 </template>
@@ -17,7 +17,7 @@ export default {
 <style scoped>
 .download {
   width: 100%;
-  background-image: url(../../assets/image/bg_ad_xz.png);
+  background-image: url(~assets/image/bg_ad_xz.png);
   background-size: 100%;
 }
 .download > div {

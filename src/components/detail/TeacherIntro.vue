@@ -2,7 +2,7 @@
   <div class="teacher-intro">
     <div class="intro-item" v-for="(item,index) in teacherList" :key="index">
       <div class="left">
-        <img :src="item.headportrait" />
+        <img v-lazy="item.headportrait" />
       </div>
 
       <div class="right">

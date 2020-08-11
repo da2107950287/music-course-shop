@@ -36,7 +36,7 @@
     },
     computed:{
       avatar(){
-        return localStorage.getItem("avatar")
+        return localStorage.getItem("headportrait")
       },
       nickName(){
         return localStorage.getItem("nickName")
@@ -94,7 +94,7 @@
       .sex-icon {
         width: 16px;
         height: 16px;
-        background-image: url(../assets/image/icon.png);
+        background-image: url(~assets/image/icon.png);
         background-position: -66px -195px;
       }
     }

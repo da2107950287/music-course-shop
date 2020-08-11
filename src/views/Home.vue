@@ -11,8 +11,8 @@
         </home-main>
       </div>
     </div>
- 
-    
+
+
     <!-- <div v-else class="course">
       <course-item v-for="(item,index) in list" :key="index" :course="item"></course-item>
     </div> -->
@@ -20,11 +20,11 @@
   </div>
 </template>
 <script>
-  import CourseItem from '../components/home/CourseItem'
-  import Banner from '../components/home/Banner'
-  import HomeMain from '../components/home/HomeMain'
-  import Courses from '../components/home/Courses'
-  import DownloadApp from '../components/home/DownloadApp'
+  import CourseItem from 'components/home/CourseItem'
+  import Banner from 'components/home/Banner'
+  import HomeMain from 'components/home/HomeMain'
+  import Courses from 'components/home/Courses'
+  import DownloadApp from 'components/home/DownloadApp'
   export default {
     data() {
       return {
@@ -33,7 +33,7 @@
         recommendedCourse: [],
         pageNumber: 1,
         pageSize: 6,
-        list:[],
+        list: [],
       }
     },
     created() {
@@ -61,9 +61,8 @@
       //获取课程
       getCourse(type) {
         this.$post("/course/getCourse", { couType: type, PageNumber: this.pageNumber, PageSize: this.pageSize }).then(res => {
-          if(res.code==200){
-            this.list=res.data.list;
-            console.log(this.list)
+          if (res.code == 200) {
+            this.list = res.data.list;
           }
         })
       }
@@ -79,7 +78,6 @@
 </script>
 <style lang="scss" scoped>
   .recommend {
-    /* width: 100%; */
     background-color: #fff;
     margin-top: 40px;
     padding-bottom: 20px;

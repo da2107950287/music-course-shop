@@ -21,7 +21,6 @@ export default {
   methods: {
     handleClick(link) {
       this.$emit('hideMenu')
-
       this.$router.push("/index/user" + link);
     },
   },

@@ -6,7 +6,7 @@
         <div class="collect-bottom">
             <course-item v-for="(item,index) in list" :key="index" :list="item.courseEntity">
                 <img slot="img" :src="item.courseEntity.cover">
-                <img slot="collect" src="../assets/image/icon_kcxq_sc_sel.png" alt="">
+                <img slot="collect" src="assets/image/icon_kcxq_sc_sel.png" alt="">
                 <div slot="last" class="btn">
                     <span>会员价：&yen;</span>
                     <span class="price">{{item.courseEntity.pricevip}}</span>
@@ -20,8 +20,8 @@
     </div>
 </template>
 <script>
-    import ProfileHeader from "../components/ProfileHeader.vue";
-    import CourseItem from "../components/CourseItem.vue"
+    import ProfileHeader from "components/ProfileHeader.vue";
+    import CourseItem from "components/CourseItem.vue"
     export default {
         data() {
             return {

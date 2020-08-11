@@ -13,11 +13,11 @@
       </div>
       <div class="right">
         <div @click="go('/index/user/news')" class="notification">
-          <img src="../assets/image/icon_hender_xx.png" class="notification-message" />
+          <img src="~assets/image/icon_hender_xx.png" class="notification-message" />
           <div class="red-box">{{notReadNUm}}</div>
         </div>
         <div v-if="isShow" class="login" @click="showLogin">
-          <img src="../assets/image/pho_def.png" class="login-icon" />
+          <img src="~assets/image/pho_def.png" class="login-icon" />
           <span class="login-text">点击登录</span>
         </div>
         <div v-else class="login" @click="showMenu">
@@ -48,7 +48,7 @@
         <span>首次登陆默认同意</span>
         <span @click="seeUserAgreement">《用户协议》</span>
       </div>
-      <button @click="submitForm" class="login-button">登 录</button>
+      <div @click="submitForm" class="login-button" :class="{'login-btn-active':loginBtn}">登 录</div>
 
       <div class="contact">
         <span>登录遇到问题请联系客服：</span>
@@ -57,20 +57,21 @@
     </el-dialog>
     <div class="btn">
       <a href="#top-header">
-        <img src="../assets/image/bnt_top.png" alt @click="consult" />
+        <img src="~assets/image/bnt_top.png" alt @click="consult" />
       </a>
-      <img src="../assets/image/bnt_zxzx.png" alt />
+      <img src="~assets/image/bnt_zxzx.png" alt />
     </div>
     <!-- <consult></consult> -->
   </div>
 </template>
 <script>
-  import Consult from "../components/Consult";
-  import LoginBox from "../components/LoginBox";
-  import TopMenu from "../components/TopMenu";
+  import Consult from "components/Consult";
+  import LoginBox from "components/LoginBox";
+  import TopMenu from "components/TopMenu";
 
 
   export default {
+    inject:["reload"],
     data() {
       //手机号自定义规则
       var validatorPhone = (rule, value, callback) => {
@@ -91,12 +92,14 @@
         if (value === "") {
           callback(new Error("请输入验证码"));
         } else {
+
           callback();
         }
       };
       return {
         dialogFormVisible: false, //登录弹窗开关
         canClick: false, //验证码开关
+        loginBtn:false,
         codeMsg: "发送验证码",
         totalTime: 60,
         avatar: "",
@@ -181,6 +184,7 @@
           }
         );
       },
+      //登录
       submitForm() {
         this.$refs.loginForm.validate((valid) => {
           if (valid) {
@@ -198,8 +202,9 @@
                   localStorage.setItem("token",res.data.token);
                   localStorage.setItem("nickName", res.data.nickname);
                   localStorage.setItem("vip",res.data.vip);
-                  localStorage.setItem("sex",res.data.sex)
-                  localStorage.setItem("state",res.data.state)
+                  localStorage.setItem("sex",res.data.sex);
+                  localStorage.setItem("state",res.data.state);
+                  localStorage.setItem("uid",res.data.uid);
                   this.$store.commit("setUserInfo",{
                     accLeaTime:res.data.accLeaTime,
                     headportrait:res.data.headportrait,
@@ -208,13 +213,16 @@
                     vip:res.data.vip,
                     integral:res.data.integral,
                     sex:res.data.sex,
-                    status:res.data.state
+                    status:res.data.state,
+                    uid:res.data.uid
                   });
                   
                   this.dialogFormVisible = false;
+                  this.reload()
                 case 201:
                   this.$message.success(res.msg);
                   this.dialogFormVisible = false;
+                  this.reload()
                   break;
                 case "401":
                 case "402":
@@ -256,7 +264,7 @@
     width: 100%;
 
     margin-bottom: 30px;
-    background-image: url(../assets/image/bg_hander.png);
+    background-image: url(~assets/image/bg_hander.png);
   }
 
   .top-header {
@@ -408,16 +416,20 @@
   .login-button {
     width: 400px;
     height: 50px;
+    line-height: 50px;
+    text-align: center;
     background-color: #98b702;
     border-radius: 3px;
     opacity: 0.6;
-    border: 0;
     color: #fff;
     font-size: 18px;
     font-weight: 500;
     margin: 12px 0;
+    cursor: default;
   }
-
+  .login-btn-active{
+opacity: 1;
+  }
   .agreement {
     font-size: 14px;
     text-align: center;

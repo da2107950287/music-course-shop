@@ -23,15 +23,18 @@ const routes = [
       },
       {
         path: 'detail',
-        component: () => import('../views/Detail.vue')
+        component: () => import('../views/Detail.vue'),
+        meta:{title:"课程详情"}
       },
       {
         path: 'vedio',
-        component: () => import('../views/Vedio.vue')
+        component: () => import('../views/Vedio.vue'),
+        meta:{title:"录播播放"}
       },
       {
         path: 'courses',
-        component: () => import('../views/Courses.vue')
+        component: () => import('../views/Courses.vue'),
+        meta:{title:""}
       },
       {
         path: 'submitOrder',
@@ -57,12 +60,10 @@ const routes = [
       },
       {
         path: 'courseLearning',
-        component: () => import("../views/CourseLearning.vue")
+        component: () => import("../views/CourseLearning.vue"),
+        meta:{title:"课程学习"}
       },
-      {
-        path: 'pay',
-        component: () => import("../views/Pay.vue")
-      },
+      
       {
         path: 'scanPay',
         component: () => import("../views/ScanPay.vue"),
@@ -122,18 +123,18 @@ const router = new VueRouter({
   routes
 })
 
-// router.beforeEach((to,from,next)=>{
-
-// if(store.getters.token){
-//   next()
-// }else{
-//   if(to.path.includes('/home')||to.path.includes('/courses')){
-//     next()
-//   }else{
-//     next({
-//       path:'/index/home'
-//     })
-//   }
-// }
-// })
+router.beforeEach((to,from,next)=>{
+if(localStorage.getItem("token")){
+  next()
+}else{
+  if(to.path.includes('/user')){
+    next({
+      path:'/index/home'
+    })
+  }else{
+    next()
+    
+  }
+}
+})
 export default router

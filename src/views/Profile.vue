@@ -73,7 +73,7 @@
     <!-- 扫描二维码绑定微信 -->
     <el-dialog :visible.sync="dialogVisible1" width="340px" :before-close="handleClose1" center>
       <div slot="title" class="popup-title">扫描二维码绑定微信</div>
-      <img src="../assets/image/img_qr.png" alt />
+      <img src="~assets/image/img_qr.png" alt />
     </el-dialog>
     <!-- 绑定、更换手机号 -->
     <bind-phone :isShowForm="isShowForm" @hidePhoneForm="hidePhoneForm" ></bind-phone>

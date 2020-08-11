@@ -2,7 +2,7 @@
  <div class="banner">
   <el-carousel height="480px" trigger="click" loop >
     <el-carousel-item v-for="(item,index) in banners" :key="index">
-      <img :src="item.pcurl" class="banner-img"/>
+      <img v-lazy="item.pcurl" class="banner-img"/>
     </el-carousel-item>
   </el-carousel>
  </div>

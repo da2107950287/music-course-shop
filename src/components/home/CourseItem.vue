@@ -1,7 +1,6 @@
 <template>
     <div class="course-box">
         <div class="course-item" @click="showCourse(course.couType)">
-            <!-- <div>{{course}}</div> -->
             <div class="title">{{course.couTypeName}}</div>
             <div class="content">
                 <div class="course-name">{{course.couName}}</div>

@@ -4,31 +4,91 @@
     <div class="title">
       <div>商品信息</div>
     </div>
-    <div class="table">
-      <div class="table-body">
-        <div class="left">大提琴乐曲《赛马》提升课——琴艺技能提升</div>
-        <div class="right">
-          <span>总课时：3.0</span>
-          <span>&yen;299.00</span>
-          <span class="num">&times;1</span>
+    <div v-for="(item,index) in courses" :key="index">
+      <div class="table" @click="seeCourse(item.couId,item.couType)">
+        <div class="table-body">
+          <div class="left">{{item.couName}}</div>
+          <div class="right">
+            <span>总课时：{{item.totalHours}}</span>
+            <span v-if="item.isnotvip==0">&yen;{{item.price}}</span>
+            <span v-else>&yen;{{item.pricevip}}</span>
+            <span class="num">&times;{{item.number}}</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="total">
-      <span>合计：2件商品</span>
-      <div>
-        <span>共计：</span>
-        <span class="price">&yen;598.00</span>
+      <div class="total">
+        <span>合计：2件商品</span>
+        <div>
+          <span>共计：</span>
+          <span class="price">&yen;{{}}</span>
+        </div>
       </div>
-    </div>
-    <div class="btn-box">
-      <!-- <div class="cancel btn">取消订单</div>
-      <div class="pay btn">去支付</div>-->
-      <!-- <div class="pay btn">再次购买</div> -->
-      <div class="study btn">去学习</div>
+      <div class="btn-box">
+        <div class="cancel btn" v-if="olState==1" @click="cancelOrder(item.olId)">取消订单</div>
+        <div class="pay btn" v-if="olState==1" @click="toPay()">去支付</div>
+        <div class="study btn" v-if="olState==5" @click="toStudy(item.couType,item.couId)">去学习</div>
+        <div class="pay btn" v-if="olState==6" @click="buyAgain(item.couType,item.couId)">再次购买</div>
+      </div>
     </div>
   </div>
 </template>
+<script>
+  export default{
+    inject:['reload'],
+    props:{
+      courses:{
+        type:Array,
+        default(){
+          return []
+        }
+      },
+      olState:{
+        type:String,
+        default(){
+          return ''
+        }
+      }
+    },
+    created(){
+      console.log(this.courses)
+    },
+    methods:{
+      cancelOrder(olId){
+        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$post("/orderlist/updateOrderlist",{olId,olState:6}).then(res=>{
+          if(res.code==200){
+            this.reload()
+          }
+        })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+        
+      },
+      toPay(){
+
+      },
+      toStudy(){
+        this.$router.push({path:"/index/detail",query:{couType,couId}})
+      },
+      buyAgain(couType,couId){
+        this.$router.push({path:"/index/submitOrder",query:{couType,couId}})
+      },
+      
+seeCourse(couId,couType){
+  this.$router.push({path:'/index/detail',query:{couId}})
+}
+     
+    }
+  }
+</script>
 <style lang="scss" scoped>
 .good-info {
   padding: 30px;
@@ -87,6 +147,9 @@
   .btn-box {
     display: flex;
     justify-content: flex-end;
+    div{
+      cursor: default;
+    }
   }
   .total {
     margin: 30px 0;

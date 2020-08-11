@@ -9,8 +9,8 @@
 </template>
 <script>
     
-    import TopDetail from '../components/detail/TopDetail'
-    import CourseDetail from '../components/detail/CourseDetail'
+    import TopDetail from 'components/detail/TopDetail'
+    import CourseDetail from 'components/detail/CourseDetail'
     export default {
         inject:['reload'],
         data() {

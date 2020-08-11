@@ -5,109 +5,109 @@
       <div slot="right">累计学习：{{accLeaTime}}分钟</div>
     </profile-header>
     <div class="course-bottom">
-      <course-item>
-        <img slot="img" src="../assets/image/img_kc_01.png" alt />
+      <course-item v-for="(item,index) in list" :key="index" :list="item.courseEntity">
+        <img slot="img" v-lazy="item.courseEntity.cover" alt />
         <div slot="progress" class="bg-progress">
-          <el-progress
-            type="circle"
-            :percentage="43"
-            :width="100"
-            color="#fff"
-            class="progress"
-          ></el-progress>
+          <el-progress type="circle" :percentage="item.rateOfLearning" :width="100" color="#fff" class="progress">
+          </el-progress>
           <div class="progress-text">已学习</div>
         </div>
 
-        <div slot="last" class="btn" @click="toStudy">去学习</div>
+        <div slot="last" class="btn" @click="toStudy(item.couId)">去学习</div>
       </course-item>
     </div>
   </div>
 </template>
 <script>
-import ProfileHeader from "../components/ProfileHeader.vue";
-import CourseItem from "../components/CourseItem.vue";
-
-
-export default {
-  data() {
-    return {
-      pageNumber:1,
-      pageSize:5,
-      accLeaTime:null,
-    };
-  },
-
-  created(){
-this.accLeaTime=localStorage.getItem("accLeaTime")
-    this.$post('/course/getUserCourse',{PageNumber:this.pageNumber,PageSize:this.pageSize}).then(res=>{
-      console.log(res)
-    })
-  },
-  methods:{
-    toStudy(){
-      this.$router.push({path:'/courseLearning'})
+  import ProfileHeader from "components/ProfileHeader.vue";
+  import CourseItem from "components/CourseItem.vue";
+  export default {
+    data() {
+      return {
+        pageNumber: 1,
+        pageSize: 5,
+        accLeaTime: null,//累计时间
+        list: []
+      };
     },
 
-  },
-  components: {
-    ProfileHeader,
-    CourseItem,
-  },
-};
+    created() {
+      this.accLeaTime = localStorage.getItem("accLeaTime")
+      this.$post('/course/getUserCourse', { PageNumber: this.pageNumber, PageSize: this.pageSize }).then(res => {
+        if (res.code == 200) {
+          this.list = res.data.list;
+        }
+      })
+    },
+    methods: {
+      toStudy(couId) {
+        this.$router.push({ path:'/index/courseLearning',query:{couId} })
+      },
+
+    },
+    components: {
+      ProfileHeader,
+      CourseItem,
+    },
+  };
 </script>
 <style lang="scss" scoped>
-.course-bottom {
-  width: 950px;
+  .course-bottom {
+    width: 950px;
 
-  padding: 0 30px;
-  box-sizing: border-box;
-  background-color: #fff;
-  >div{
-    border-bottom:1px solid #EEEEEE
+    padding: 0 30px;
+    box-sizing: border-box;
+    background-color: #fff;
+
+    >div {
+      border-bottom: 1px solid #EEEEEE
+    }
+
+    .bg-progress {
+      width: 282px;
+      height: 185px;
+      position: absolute;
+      top: 0;
+      background-color: rgba(54, 54, 58, 0.3);
+
+      .progress {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50px, -50px);
+      }
+
+      .progress-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-22px, 10px);
+        font-size: 14px;
+        color: #fff;
+        line-height: 20px;
+      }
+    }
   }
 
-  .bg-progress {
-    width: 282px;
-    height: 185px;
-    position: absolute;
-    top: 0;
-    background-color: rgba(54, 54, 58, 0.3);
-    .progress {
-      width: 100px;
-      height: 100px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50px, -50px);
-    }
-    .progress-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-22px, 10px);
-      font-size: 14px;
-      color: #fff;
-      line-height: 20px;
-    }
+  .btn {
+    width: 88px;
+    height: 32px;
+    border-radius: 2px;
+    line-height: 32px;
+    text-align: center;
+    color: #fff;
+    background-color: #fb9715;
+    cursor: default;
   }
-}
 
-.btn {
-  width: 88px;
-  height: 32px;
-  border-radius: 2px;
-  line-height: 32px;
-  text-align: center;
-  color: #fff;
-  background-color: #fb9715;
-}
+  .el-progress /deep/ path:first-child {
+    stroke: #d2d2d2;
+  }
 
-.el-progress /deep/ path:first-child {
-  stroke: #d2d2d2;
-}
-
-.el-progress /deep/ .el-progress__text {
-  color: #fff;
-  font-size: 16px !important;
-}
+  .el-progress /deep/ .el-progress__text {
+    color: #fff;
+    font-size: 16px !important;
+  }
 </style>

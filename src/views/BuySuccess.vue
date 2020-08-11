@@ -1,7 +1,7 @@
 <template>
   <div class="buy-success">
     <div class="content">
-      <img src="../assets/image/icon_zfcg.png" alt />
+      <img src="assets/image/icon_zfcg.png" alt />
       <div class="clues">购买成功，获取1000积分</div>
       <div class="text">有效期从今天开始计算、请合理安排学习时间</div>
       <div class="order-box">

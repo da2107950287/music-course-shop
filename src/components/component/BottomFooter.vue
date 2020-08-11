@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="bg-qr" v-if="isShow">
-            <img src="../assets/image/qr.png" alt="">
+            <img src="~assets/image/qr.png" alt="">
         </div>
 
     </div>
@@ -33,7 +33,6 @@
         },
         methods: {
             dispalyQrCode() {
-                console.log(8888)
                 this.isShow = !this.isShow;
             },
             seeAgreement(type) {
@@ -48,7 +47,6 @@
         background-color: #36363A;
         position: relative;
        
-
         .footer {
             width: 1200px;
             height: 100px;
@@ -93,7 +91,7 @@
         position: absolute;
         left: 508px;
         bottom: 66px;
-        background-image: url(../assets/image/bg_wxgzh.png);
+        background-image: url(~assets/image/bg_wxgzh.png);
         background-size: 100%;
         display: flex;
         justify-content: center;

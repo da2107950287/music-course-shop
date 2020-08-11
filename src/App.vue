@@ -1,18 +1,17 @@
 <template>
   <div id="app">
-<keep-alive>
-  <!-- " v-loading="loading" element-loading-text="拼命加载中"
-  element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)" -->
-  <keep-alive>
-    <router-view v-if="isRouterAlive"></router-view>
-  </keep-alive>
-</keep-alive>
+<!-- <keep-alive> -->
+  <!-- " -->
+  <!-- <keep-alive> -->
+    <router-view v-if="isRouterAlive" v-loading="loading" element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)" ></router-view>
+  <!-- </keep-alive> -->
+<!-- </keep-alive> -->
  
   </div>
 </template>
 <script>
-  import TopHeader from "../src/components/TopHeader.vue";
-  import BottomFooter from "../src/components/BottomFooter.vue"
+
   import {mapGetter} from 'vuex';
   export default {
     provide() {
@@ -39,10 +38,7 @@
         })
       }
     },
-    components: {
-      TopHeader,
-      BottomFooter
-    }
+
   }
 </script>
 <style>

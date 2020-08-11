@@ -1,18 +1,5 @@
 import originAxios from 'axios'
 import store from '../../store/index'
-// export function post(url,data={}){
-//     return new Promise((resolve,reject) => {
-//         originAxios.post(url,data)
-//             .then(response => {
-//                 resolve(response.data);
-//             }),err => {
-//                 console.log(err);
-//                 reject(err);
-//             }
-//     }).catch(res => {
-//         console.log(res);
-//     });
-// }
 export function post(url, params,) {
 	let option = {
 		url,
@@ -46,6 +33,9 @@ export function post(url, params,) {
 		})
 
 		instance.interceptors.response.use(response => {
+			if(response.data.code==501){
+				localStorage.clear();
+			}
 			store.dispatch('hideLoading')
 			return response.data
 		}, err => {
