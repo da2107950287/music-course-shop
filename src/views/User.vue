@@ -5,7 +5,7 @@
         <div class="left-top">
           <img :src="avatar" alt />
           <div>
-            <span>{{nickName}}</span>
+            <span class="nickname">{{nickName}}</span>
             <div class="sex-icon"></div>
           </div>
         </div>
@@ -23,37 +23,36 @@
     data() {
       return {
         menu: [
-          {  title: "我的资料", link: '/profile' },
-          {  title: "我的课程", link: '/course' },
-          {  title: "我的订单", link: '/order' },
-          {  title: "我的收藏", link: '/collect' },
-          {  title: "我的消息", link: '/news' },
-          {  title: "我的积分", link: '/integral' },
-          {  title: "退出登录", link: '/home' },
+          { title: "我的资料", link: '/profile' },
+          { title: "我的课程", link: '/course' },
+          { title: "我的订单", link: '/order' },
+          { title: "我的收藏", link: '/collect' },
+          { title: "我的消息", link: '/news' },
+          { title: "我的积分", link: '/integral' },
+          { title: "退出登录", link: '/home' },
         ],
-        
+
       };
     },
-    computed:{
-      avatar(){
+    computed: {
+      avatar() {
         return localStorage.getItem("headportrait")
       },
-      nickName(){
+      nickName() {
         return localStorage.getItem("nickName")
       }
     },
-    watch:{
-      $route(to,from){
-        console.log(to,from)
-      },
-
-    },
-    created(){
-      
-    },
     methods: {
       handleClick(item) {
-        this.$router.push('/index/user' + item.link)
+        if (item.link.includes("/home")) {
+          this.$router.push('/index/home')
+          localStorage.clear();
+          
+        } else {
+          this.$router.push('/index/user' + item.link)
+
+        }
+
       },
     },
   };
@@ -77,7 +76,8 @@
       padding: 34px 0;
       box-sizing: border-box;
       background-color: #fff;
-      >img{
+
+      >img {
         width: 80px;
         height: 80px;
       }
@@ -89,6 +89,8 @@
         margin-top: 10px;
         color: #6a6a6f;
         font-size: 16px;
+        font-family: "PingFangSC-Regular", "PingFang SC";
+
       }
 
       .sex-icon {
@@ -102,12 +104,14 @@
     .left-bottom {
       margin-top: 10px;
       background-color: #fff;
+      font-family: "PingFangSC-Medium", "PingFang SC";
 
       >div {
         height: 60px;
         line-height: 60px;
         text-align: left;
-        cursor: pointer;;
+        cursor: pointer;
+        color: #6A6A6F;
       }
 
       >div::before {
@@ -119,15 +123,17 @@
         vertical-align: middle;
         margin-right: 80px;
       }
-      .active{
-        background:rgba(152,183,2,0.1);
+
+      .active {
+        background: rgba(152, 183, 2, 0.1);
         color: #98b702;
 
         /* opacity: 0.1; */
       }
+
       .active::before {
         background-color: #98b702;
-       
+
       }
     }
   }

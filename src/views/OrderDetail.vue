@@ -8,7 +8,7 @@
                 <div slot="title" v-show="detail.olState==6">已取消</div>
                 <div slot="dec" v-show="detail.olState==1">请在{{countTime}}内完成支付，超时订单将被自动取消哦〜</div>
             </profile-header>
-            <good-info :courses="detail.orderlistCourse" :olState="detail.olState" ></good-info>
+            <good-info :courses="detail.orderlistCourse" :olState="detail.olState" :olPrice="detail.olPrice" ></good-info>
             <order-info :detail="detail"></order-info>
         </div>
     </div>

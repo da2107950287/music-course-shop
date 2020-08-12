@@ -14,9 +14,9 @@
       <div class="right">
         <div @click="go('/index/user/news')" class="notification">
           <img src="~assets/image/icon_hender_xx.png" class="notification-message" />
-          <div class="red-box">{{notReadNUm}}</div>
+          <div class="red-box" v-if="notReadNum>0">{{notReadNum}}</div>
         </div>
-        <div v-if="isShow" class="login" @click="showLogin">
+        <div v-if="isShow" class="login" @click="dialogFormVisible=true">
           <img src="~assets/image/pho_def.png" class="login-icon" />
           <span class="login-text">点击登录</span>
         </div>
@@ -29,7 +29,8 @@
       </div>
     </div>
     <!-- 登录弹窗 -->
-    <el-dialog :visible.sync="dialogFormVisible" center width="480px">
+    <login-box :dialogFormVisible="dialogFormVisible" @hideLoginBox="hideLoginBox"></login-box>
+    <!-- <el-dialog :visible.sync="dialogFormVisible" center width="480px">
       <el-form :model="loginForm" :rules="rules" ref="loginForm" class="demo-ruleForm">
         <div class="left self-left">
           <div class="logo">芥末</div>
@@ -54,7 +55,7 @@
         <span>登录遇到问题请联系客服：</span>
         <span>400-555-666</span>
       </div>
-    </el-dialog>
+    </el-dialog> -->
     <div class="btn">
       <a href="#top-header">
         <img src="~assets/image/bnt_top.png" alt @click="consult" />
@@ -66,55 +67,56 @@
 </template>
 <script>
   import Consult from "components/Consult";
-  import LoginBox from "components/LoginBox";
+  import LoginBox from "components/component/LoginBox";
   import TopMenu from "components/TopMenu";
 
 
   export default {
-    inject:["reload"],
+    inject: ["reload"],
     data() {
-      //手机号自定义规则
-      var validatorPhone = (rule, value, callback) => {
-        if (value === "") {
-          callback(new Error("请输入手机号"));
-        } else {
-          var isPhone = /^[1][0-9][0-9]{9}$/;
-          if (!isPhone.test(value)) {
-            callback(new Error("手机号输入错误"));
-          } else {
-            this.canClick = true;
-            callback();
-          }
-        }
-      };
-      //短信验证码自定义规则
-      var validatorSmsCode = (rule, value, callback) => {
-        if (value === "") {
-          callback(new Error("请输入验证码"));
-        } else {
+      // //手机号自定义规则
+      // var validatorPhone = (rule, value, callback) => {
+      //   if (value === "") {
+      //     callback(new Error("请输入手机号"));
+      //   } else {
+      //     var isPhone = /^[1][0-9][0-9]{9}$/;
+      //     if (!isPhone.test(value)) {
+      //       callback(new Error("手机号输入错误"));
+      //     } else {
+      //       this.canClick = true;
+      //       callback();
+      //     }
+      //   }
+      // };
+      // //短信验证码自定义规则
+      // var validatorSmsCode = (rule, value, callback) => {
+      //   if (value === "") {
+      //     callback(new Error("请输入验证码"));
+      //   } else {
 
-          callback();
-        }
-      };
+      //     callback();
+      //   }
+      // };
+      // 
       return {
         dialogFormVisible: false, //登录弹窗开关
-        canClick: false, //验证码开关
-        loginBtn:false,
-        codeMsg: "发送验证码",
-        totalTime: 60,
+        // canClick: false, //验证码开关
+        // loginBtn:false,
+        // codeMsg: "发送验证码",
+        // totalTime: 60,
         avatar: "",
         nickName: "",
-        notReadNUm: 0,
+        notReadNum: 0,
         list: [],
         isShowMenu: false,
-        loginForm: {
-          phone: "",
-          smsCode: "",
-        },
-        rules: {
-          phone: [{ validator: validatorPhone, trigger: "blur" }],
-          smsCode: [{ validator: validatorSmsCode, trigger: "blur" }],
-        },
+        // loginForm: {
+        //   phone: "",
+        //   smsCode: "",
+        // },
+        // rules: {
+        //   phone: [{ validator: validatorPhone, trigger: "blur" }],
+        //   smsCode: [{ validator: validatorSmsCode, trigger: "blur" }],
+        // },
       };
     },
     computed: {
@@ -139,7 +141,7 @@
       //获取未读消息
       this.$post('/other/getNotReadNumber', {}).then(res => {
         if (res.code == 200) {
-          this.notReadNUm = res.data;
+          this.notReadNum = res.data;
         }
       })
     },
@@ -197,26 +199,26 @@
                 case "200":
                   this.avatar = res.data.headportrait;
                   this.nickName = res.data.nickname;
-                  localStorage.setItem("accLeaTime",res.data.accLeaTime);
-                  localStorage.setItem("headportrait",res.data.headportrait);
-                  localStorage.setItem("token",res.data.token);
+                  localStorage.setItem("accLeaTime", res.data.accLeaTime);
+                  localStorage.setItem("headportrait", res.data.headportrait);
+                  localStorage.setItem("token", res.data.token);
                   localStorage.setItem("nickName", res.data.nickname);
-                  localStorage.setItem("vip",res.data.vip);
-                  localStorage.setItem("sex",res.data.sex);
-                  localStorage.setItem("state",res.data.state);
-                  localStorage.setItem("uid",res.data.uid);
-                  this.$store.commit("setUserInfo",{
-                    accLeaTime:res.data.accLeaTime,
-                    headportrait:res.data.headportrait,
-                    nickname:res.data.nickname,
-                    token:res.data.token,
-                    vip:res.data.vip,
-                    integral:res.data.integral,
-                    sex:res.data.sex,
-                    status:res.data.state,
-                    uid:res.data.uid
+                  localStorage.setItem("vip", res.data.vip);
+                  localStorage.setItem("sex", res.data.sex);
+                  localStorage.setItem("state", res.data.state);
+                  localStorage.setItem("uid", res.data.uid);
+                  this.$store.commit("setUserInfo", {
+                    accLeaTime: res.data.accLeaTime,
+                    headportrait: res.data.headportrait,
+                    nickname: res.data.nickname,
+                    token: res.data.token,
+                    vip: res.data.vip,
+                    integral: res.data.integral,
+                    sex: res.data.sex,
+                    status: res.data.state,
+                    uid: res.data.uid
                   });
-                  
+
                   this.dialogFormVisible = false;
                   this.reload()
                 case 201:
@@ -239,7 +241,9 @@
       consult() { },
       //查看用户协议
       seeUserAgreement() {
+        this.dialogFormVisible = false;
         this.$router.push({ path: "/index/about", query: { type: "A" } });
+
       },
       go(link) {
         this.$router.push(link)
@@ -248,8 +252,11 @@
         this.isShowMenu = !this.isShowMenu;
       },
       hideMenu() {
-        console.log(888)
-        this.isShowMenu = false
+        this.isShowMenu = false;
+      },
+      //隐藏登录框
+      hideLoginBox(){
+        this.dialogFormVisible=false
       }
     },
     components: {
@@ -282,6 +289,7 @@
       align-items: center;
       margin-left: 60px;
       text-align: center;
+      font-weight: 500;
       font-family: "PingFangSC-Medium", "PingFang SC";
     }
   }
@@ -291,31 +299,28 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-  }
 
-  .self-left {
-    margin-bottom: 50px;
-  }
+    .logo {
+      width: 60px;
+      height: 60px;
+      line-height: 60px;
+      font-weight: 600;
+      font-size: 18px;
+      background: rgba(255, 255, 255, 1);
+      box-shadow: 0px 0px 6px 0px rgba(129, 156, 2, 0.4);
+      border-radius: 10px;
+      color: #98b702;
+    }
 
-  .logo {
-    width: 60px;
-    height: 60px;
-    line-height: 60px;
-    font-weight: 600;
-    background: rgba(255, 255, 255, 1);
-    box-shadow: 0px 0px 6px 0px rgba(129, 156, 2, 0.4);
-    border-radius: 10px;
-    color: #98b702;
-  }
-
-  .title {
-    width: 96px;
-    height: 25px;
-    font-size: 24px;
-    color: rgba(152, 183, 2, 1);
-    line-height: 25px;
-    margin-left: 10px;
-    font-family: "STHupo";
+    .title {
+      width: 96px;
+      height: 25px;
+      font-size: 24px;
+      color: rgba(152, 183, 2, 1);
+      line-height: 25px;
+      margin-left: 10px;
+      font-family: "sthupo";
+    }
   }
 
 
@@ -383,80 +388,11 @@
     margin-left: 5px;
     line-height: 60px;
     cursor: default;
+    font-weight: 400;
+    font-family: "PingFangSC-Regular", "PingFang SC";
   }
 
-  /*修改el-input样式 */
-  .el-input /deep/ .el-input__inner {
-    border: none;
-    border-bottom: 1px solid #eee;
-    font-size: 16px;
-    color: #36363a;
-    border-radius: 0;
-  }
 
-  .graphics-code {
-    position: relative;
-
-    .code {
-      position: absolute;
-      top: 0;
-      right: 0;
-      font-size: 14px;
-      font-family: "PingFangSC-Regular", "PingFang SC";
-      font-weight: 400;
-      color: #ccc;
-      cursor:default;
-    }
-
-    .can-click {
-      color: #98b702;
-    }
-  }
-
-  .login-button {
-    width: 400px;
-    height: 50px;
-    line-height: 50px;
-    text-align: center;
-    background-color: #98b702;
-    border-radius: 3px;
-    opacity: 0.6;
-    color: #fff;
-    font-size: 18px;
-    font-weight: 500;
-    margin: 12px 0;
-    cursor: default;
-  }
-  .login-btn-active{
-opacity: 1;
-  }
-  .agreement {
-    font-size: 14px;
-    text-align: center;
-  }
-
-  .agreement>span:nth-child(1) {
-    color: #36363a;
-  }
-
-  .agreement>span:nth-child(2) {
-    color: #fb9715;
-  }
-
-  .contact {
-    font-size: 14px;
-    font-weight: 400px;
-    text-align: center;
-    color: #6a6a6f;
-  }
-
-  .contact>spam:nth-child(1) {
-    color: #6a6a6f;
-  }
-
-  .contact>span:nth-child(2) {
-    color: #0091ff;
-  }
 
   .btn {
     position: fixed;
@@ -470,5 +406,9 @@ opacity: 1;
       width: 80px;
       height: 80px;
     }
+  }
+
+  /deep/ .el-form-item.is-error .el-input__inner {
+    border-color: #98b702;
   }
 </style>

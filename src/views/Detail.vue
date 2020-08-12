@@ -2,7 +2,7 @@
     <div>
         <div class="main-detail">
             <top-detail :topDetail="topDetail" @collectCourse="collectCourse" @buy="buy" :collected="collected"></top-detail>
-            <course-detail :couresDetail="couresDetail" :catalogue="catalogue" class="margin30"></course-detail>
+            <course-detail :couresDetail="couresDetail" :catalogue="catalogue" :buyState="buyState" class="margin30"></course-detail>
         </div>
 
     </div>
@@ -20,7 +20,8 @@
                 couresDetail: {},
                 topDetail: {},
                 catalogue:[],
-                collected:false
+                collected:false,
+                buyState:null,
             }
         },
         created() {
@@ -29,8 +30,9 @@
             this.$post('/course/showCourse', { couId: this.couId }).then(res => {
                 if (res.code == 200) {
                     this.couresDetail = res.data;
-                
                     this.couType=res.data.couType;
+                    this.buyState=res.data.buyState;
+                    console.log(this.buyState)
                     this.topDetail = {
                         cover: res.data.cover,
                         couName: res.data.couName,
@@ -39,7 +41,8 @@
                         price: res.data.price,
                         totalHours: res.data.totalHours,
                         termOfValidity: res.data.termOfValidity,
-                        lecturer: res.data.lecturer
+                        lecturer: res.data.lecturer,
+                        buyState:res.data.buyState
                     }
                 }
             })
@@ -47,6 +50,7 @@
             this.$post('/course/getCatalogue',{couId: this.couId}).then(res=>{
                 if(res.code==200){
                     this.catalogue=res.data;
+                    
                 }
             })
         },

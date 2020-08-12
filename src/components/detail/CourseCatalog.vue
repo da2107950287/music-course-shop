@@ -3,20 +3,24 @@
     <div v-for="(item,index) in catalogue" :key="index">
       <!-- <div class="title">第 1 章 ：基础夯实</div> -->
       <div class="lists">
-        <div class="list" @click="go(item.catUrl,item.catName)">
+        <div class="list" @click="go(item)">
           <div>
             <span>第 {{index+1}} 讲</span>
-            <img src="../../assets/image/icon_kcml_sp.png" alt />
+            <img src="~assets/image/icon_kcml_sp.png" alt />
             <span>{{item.catName}}</span>
           </div>
           <div>{{item.lecturer}}</div>
-          <div v-if="item.rateOfLearning>=0">已观看{{item.rateOfLearning}}%</div>
-
-          <div v-else-if="item.audition==1">
-            <img src="../../assets/image/bat_st_def.png" alt />
+          <!-- 直播 -->
+          <div v-if="item.catType==1">
+            <div>{{item.playstate}}</div>
           </div>
-          <div v-else>{{item.catTime}}</div>
-          <!-- <div>{{未开通}}</div> -->
+          <!-- 录播 -->
+          <div v-if="item.catType==2">
+            <div v-if="item.audition==1">
+              <img src="~assets/image/bat_st_def.png" class="img-audition" />
+            </div>
+            <div v-else>{{item.catTime}}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -30,11 +34,30 @@
         default() {
           return []
         }
+      },
+      buyState: {
+        type: Number
       }
     },
     methods: {
-      go(url, catName) {
-        this.$router.push({ path: '/index/vedio', query: { url, catName } })
+      go(item) {
+          if (item.audition == 1) {
+            this.$router.push({ path: '/index/vedio', query: { url: item.catUrl, catName: item.catName } })
+          }
+        // } 
+        if(this.buyState==1) {
+          if (item.catType == 1) {
+            if (item.playstate == 2) {//正在直播
+              this.$router.push({ path: '/index/vedio', query: { url: item.playurl, catName: item.catName } })
+            } else if (item.playstate == 2) {//直播已结束
+              this.$router.push({ path: '/index/vedio', query: { url: item.playback, catName: item.catName } })
+            }
+          } else if (item.catType == 2) {//录播
+            this.$router.push({ path: '/index/vedio', query: { url: item.catUrl, catName: item.catName } })
+
+          }
+        }
+
       }
     }
   }
@@ -92,18 +115,20 @@
         }
       }
 
-      div:first-child {
+      >div:first-child {
         justify-content: flex-start;
         flex: 2;
       }
 
-      div:nth-child(2) {
+      >div:nth-child(2) {
         justify-content: flex-start;
 
       }
 
-      div:nth-child(3) {
-        >img {
+      >div:nth-child(3) {
+        justify-content: flex-end;
+
+        .img-audition {
           width: 86px;
           height: 24px;
         }

@@ -14,7 +14,7 @@
             </course-item>
 
         </div>
-        <el-pagination @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize"
+        <el-pagination v-if="list.length>0" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize"
             background layout="prev, pager, next" :total="total" class="pagination">
         </el-pagination>
     </div>
@@ -25,8 +25,8 @@
     export default {
         data() {
             return {
-                currentPage: 1,
-                pageSize: 1,
+                currentPage: 1,//当前页码
+                pageSize: 10,
                 total: 0,
                 list: [],
 
@@ -40,7 +40,7 @@
                 this.$post('/course/getCourseColl', { PageNumber: this.currentPage, PageSize: this.pageSize }).then(res => {
                     if (res.code == 200) {
                         this.list = res.data.list;
-                        this.total = res.data.PageCount;
+                        this.total = res.data.PageCount * this.pageSize;
                     }
                 })
             },
@@ -56,7 +56,8 @@
     }
 </script>
 <style lang="scss" scoped>
-    @import "../assets/css/pagination.css";
+    @import "~assets/css/pagination.css";
+
     .collect {
         width: 950px;
     }
@@ -80,6 +81,4 @@
             font-size: 32px;
         }
     }
-
-
 </style>

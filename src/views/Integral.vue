@@ -18,7 +18,7 @@
         </ol>
       </div>
     </div>
-    <el-pagination @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize" background
+    <el-pagination  @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize" background
       layout="prev, pager, next" :total="total" class="pagination">
     </el-pagination>
   </div>
@@ -29,9 +29,9 @@
     data() {
       return {
         integral: 0,
-        currentPage:1,
-        pageSize:10,
-        list:[],
+        currentPage: 1,
+        pageSize: 10,
+        list: [],
       };
     },
     created() {
@@ -40,16 +40,16 @@
           this.integral = res.data.userinfo.integral;
         }
       })
-     this.getData()
+      this.getData()
     },
     methods: {
-      getData(){
-        this.$post("/other/getIntegralRecord",{PageNumber:this.currentPage,PageSize:this.pageSize}).then(res=>{
-        if (res.code == 200) {
-          this.total=res.data.PageCount;
-          this.list=res.data.list;
-        }
-      })
+      getData() {
+        this.$post("/other/getIntegralRecord", { PageNumber: this.currentPage, PageSize: this.pageSize }).then(res => {
+          if (res.code == 200) {
+            this.total = res.data.PageCount * this.pageSize;
+            this.list = res.data.list;
+          }
+        })
       },
       handleCurrentChange(currentPage) {
         this.currentPage = currentPage;
@@ -62,7 +62,7 @@
   };
 </script>
 <style lang="scss" scoped>
-  @import '../assets/css/pagination.css';
+  @import '~assets/css/pagination.css';
 
   ul,
   ol,
@@ -94,6 +94,8 @@
 
     li {
       font-weight: 500;
+      font-family: "PingFangSC-Medium", "PingFang SC";
+
     }
   }
 
@@ -101,6 +103,7 @@
     display: flex;
     line-height: 80px;
     border-bottom: 1px solid #eee;
+    font-family: "PingFangSC-Regular", "PingFang SC";
 
     li:nth-child(1) {
       text-align: left;

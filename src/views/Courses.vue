@@ -5,7 +5,6 @@
         <el-pagination v-if="!list.length==0" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize"
             background layout="prev, pager, next" :total="total" class="pagination">
         </el-pagination>
-        
         <download-app />
     </div>
 </template>
@@ -46,7 +45,7 @@
                 this.$post("/course/getCourse", { couType: this.couType, PageNumber: this.currentPage, PageSize: this.pageSize }).then(res => {
                     if (res.code == 200) {
                         this.list = res.data.list;
-                        this.total = res.data.PageCount;
+                        this.total = res.data.PageCount*this.pageSize;
                     }
                 })
             },

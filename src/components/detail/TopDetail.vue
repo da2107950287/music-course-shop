@@ -38,15 +38,15 @@
                 </div>
             </div>
             <div class="btn-box">
-                <div @click="buy">立即购买</div>
-                <div>免费试听</div>
+                <div v-if="topDetail.buyState==0" @click="buy">立即购买</div>
+                <div v-else>已购买</div>
+                <div @click="audition">免费试听</div>
             </div>
         </div>
     </div>
 </template>
 <script>
     export default {
-        
         props:{
             topDetail:{
                 type:Object,
@@ -63,7 +63,7 @@
         },
         data() {
             return {
-
+                
             }
         },
         methods:{
@@ -72,6 +72,10 @@
             },
             buy(){
                 this.$emit("buy");
+            },
+            //试听
+            audition(){
+                this.$bus.$emit("audition");
             }
         }
     }
@@ -191,6 +195,7 @@
         
     }
     .btn-box>div:nth-child(2){
+        box-sizing: border-box;
         margin-left: 20px;
         background:rgba(251,151,21,0.1);
         color: #FB9715;

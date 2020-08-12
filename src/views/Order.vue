@@ -2,7 +2,7 @@
   <div class="order">
     <div class="order-header">
       <div v-for="(item,index) in lists" :key="index" class="list" @click="handleClick(item.olState,index)">
-        <div :class="{'active':currentIndex==index}">{{item.name}}</div>
+        <div :class="{'active':currentIndex==item.olState}">{{item.name}}</div>
       </div>
     </div>
     <order-list :list="list"></order-list>
@@ -17,7 +17,7 @@
     data() {
       return {
         status: 0,
-        currentIndex: 0,
+        currentIndex: "all",
         currentPage: 1,
         pageSize: 10,
         total: null,
@@ -33,14 +33,14 @@
     },
 
     created() {
-      this.getData("all")
+      this.getData(this.currentIndex)
     },
     methods: {
       getData(olState) {
 
         this.$post('/orderlist/getOrderlist', { olState, type: this.type, PageNumber: this.currentPage, PageSize: this.pageSize }).then(res => {
           if (res.code == 200) {
-            this.total = res.data.PageCount
+            this.total = res.data.PageCount*this.pageSize;
             this.list = res.data.list;
             this.list.forEach(item => {
               if (item.olState == 1) {
@@ -64,13 +64,12 @@
       },
       handleCurrentChange(currentPage) {
         this.currentPage = currentPage;
-        this.getData()
+        this.getData(this.currentIndex)
       },
       handleClick(olState, index) {
         this.currentPage = 1;
-        this.currentIndex = index;
+        this.currentIndex = olState;
         this.getData(olState)
-
       },
     },
     components: {
@@ -79,7 +78,7 @@
   };
 </script>
 <style lang="scss" scoped>
-  @import '../assets/css/pagination.css';
+  @import '~assets/css/pagination.css';
 
   .order {
     width: 950px;

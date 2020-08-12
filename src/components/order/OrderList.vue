@@ -12,7 +12,7 @@
                 <div>已取消 </div>
             </div>
             <div v-for="(el,index) in item.orderlistCourse" :key="index+'1'">
-                <div class="table" @click="seeDetail(el.olId)">
+                <div class="table">
                     <div class="table-header">
                         <div>
                             <span>订单号：</span>
@@ -23,25 +23,27 @@
                             <span>{{item.olTime}}</span>
                         </div>
                     </div>
-                    <div class="table-body">
+                    <div class="table-body" @click="seeDetail(el.olId)">
                         <div class="left">{{el.couName}}</div>
                         <div class="right">
                             <span>总课时：{{el.totalHours}}</span>
-                            <span>&yen;{{el.price}}</span>
+                            <span v-if="el.isnotVip==0">&yen;{{el.price}}</span>
+                            <span v-else>&yen;{{el.pricevip}}</span>
                             <span>&times;{{el.number}}</span>
                         </div>
                     </div>
                 </div>
                 <div class="total">
-                    <span>合计：{{el.number}}件商品</span>
+                    <span>合计：{{item.orderlistCourse.length}}件商品</span>
                     <div>
                         <span>共计：</span>
-                        <span class="price">&yen;{{item.cdyPrice}}</span>
+                        <span class="price">&yen;{{item.olPrice}}</span>
                     </div>
                 </div>
                 <div class="btn-box">
                     <div class="cancel btn" v-show="item.olState==1" @click="cancelOrder(el.olId)">取消订单</div>
-                    <div class="pay btn" v-show="item.olState==1" @click="toPay(el.olId,el.couName,item.cdyPrice)">去支付</div>
+                    <div class="pay btn" v-show="item.olState==1" @click="toPay(el.olId,el.couName,item.cdyPrice)">去支付
+                    </div>
                     <div class="study btn" v-show="item.olState==5" @click="toStudy(el.couId)">去学习</div>
                     <div class="pay btn" v-show="item.olState==6" @click="buyAgain(el.couType,el.couId)">再次购买</div>
                 </div>
@@ -68,15 +70,21 @@
             },
             //取消订单
             cancelOrder(olId) {
-                this.$post("/orderlist/updateOrderlist", { olId, olState: 6 }).then(res => {
-                    if (res.code == 200) {
-                        this.reload();
-                    }
+                this.$confirm('你确定要取消该订单?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                }).then(() => {
+                    this.$post("/orderlist/updateOrderlist", { olId, olState: 6 }).then(res => {
+                        if (res.code == 200) {
+                            this.reload();
+                        }
+                    })
                 })
+
             },
             //去支付
-            toPay(olId,couName,totalPrice) {
-                this.$router.push({ path: '/index/scanPay', query: {olId,couName,totalPrice} });
+            toPay(olId, couName, totalPrice) {
+                this.$router.push({ path: '/index/scanPay', query: { olId, couName, totalPrice } });
             },
             //再次购买
             buyAgain(couType, couId) {
@@ -84,12 +92,13 @@
             },
             //去学习
             toStudy(couId) {
-        this.$router.push({ path:'/index/courseLearning',query:{couId} })
-      },
+                this.$router.push({ path: '/index/courseLearning', query: { couId } })
+            },
         }
     }
 </script>
 <style lang="scss" scoped>
+   
     .order-item {
         margin-top: 10px;
         padding: 30px;
@@ -105,6 +114,7 @@
                 font-size: 20px;
                 font-weight: 500;
                 color: #36363a;
+                font-family:"PingFangSC-Medium","PingFang SC";
             }
 
             div:nth-child(2) {
@@ -138,16 +148,21 @@
                 align-items: center;
                 background-color: #f7f7f7;
                 color: #9899a1;
+                cursor: default;
+
             }
 
             .table-body {
                 padding: 30px;
                 display: flex;
                 justify-content: space-between;
+                cursor: default;
+
 
                 .left {
                     color: #36363a;
                     font-weight: 500;
+                    font-family:"PingFangSC-Medium","PingFang SC";
                 }
 
                 .right {

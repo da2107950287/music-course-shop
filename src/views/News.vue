@@ -6,27 +6,30 @@
     <div class="table">
       <div class="table-header flex">
         <div @click="handleCheckedAll">
-          <img v-if="!checkedAll" src="assets/image/icon_check_normal.png" class="select-icon" />
-          <img v-else src="assets/image/icon_check_sel.png" class="select-icon" />
+          <img v-if="!checkedAll" src="~assets/image/icon_check_normal.png" class="select-icon" />
+          <img v-else src="~assets/image/icon_check_sel.png" class="select-icon" />
         </div>
 
         <div @click="readMsg" class="btn read">已读</div>
-        <img @click="deleteMsg" src="assets/image/bnt_sc.png" class="btn delete" />
+        <img @click="deleteMsg" src="~assets/image/bnt_sc.png" class="btn delete" />
       </div>
       <div v-for="(item,index) in arr" :key="index" class="list">
         <div class="table-body flex">
           <div @click="item.checked=!item.checked">
-            <img v-if="item.checked==false" src="assets/image/icon_check_normal.png" class="select-icon" />
-            <img v-else src="assets/image/icon_check_sel.png" class="select-icon" />
+            <img v-if="item.checked==false" src="~assets/image/icon_check_normal.png" class="select-icon" />
+            <img v-else src="~assets/image/icon_check_sel.png" class="select-icon" />
           </div>
 
           <div class="flex td">
-            <img src="assets/image/icon_jyxx.png" />
+            <div class="td-left">
+              <img src="~assets/image/icon_jyxx.png" />
+              <div v-if="item.readstate==0" class="red-circle"></div>
+            </div>
             <div class="td-right">
               <div class="flex">
                 <!-- <span v-if="item.type==0" class="tip">交易消息</span>
                 <span v-else class="tip">系统通知</span> -->
-                <span>{{item.msgTitle}}</span>
+                <span class="msg-title">{{item.msgTitle}}</span>
                 <span>{{item.msgTime}}</span>
               </div>
               <div>{{item.content}}</div>
@@ -35,8 +38,8 @@
         </div>
       </div>
     </div>
-    <el-pagination @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize" background
-      layout="prev, pager, next" :total="total" class="pagination">
+    <el-pagination v-if="arr.length>0" @current-change="handleCurrentChange" :current-page="currentPage"
+      :page-size="pageSize" background layout="prev, pager, next" :total="total" class="pagination">
     </el-pagination>
   </div>
 </template>
@@ -46,27 +49,10 @@
     data() {
       return {
         checked: [],
-
         currentPage: 1,
-        pageSize: 1,
+        pageSize: 10,
         total: 0,
-        arr: [
-          {
-            id: 0,
-            type: 0,
-            message:
-              "您成功购买“大提琴乐曲《赛马》提升课——琴艺技能提升课”请查看详细信息。",
-            time: "2020-1010 12:00",
-          },
-          {
-            id: 1,
-            type: 1,
-            message:
-              "您成功购买“大提琴乐曲《赛马》提升课——琴艺技能提升课”请查看详细信息。",
-            time: "2020-1010 12:00",
-          },
-
-        ],
+        arr: [],
       };
     },
     computed: {
@@ -80,20 +66,20 @@
       }
     },
     created() {
-   this.getData()
+      this.getData()
 
     },
     methods: {
-      getData(){
+      getData() {
         this.$post("/other/getMessage", { PageNumber: this.currentPage, PageSize: this.pageSize }).then(res => {
-        if (res.code == 200) {
-          this.arr = res.data.list;
-          this.total = res.data.PageCount
-          this.arr.forEach((ele, index) => {
-            this.$set(ele, "checked", false);
-          });
-        }
-      })
+          if (res.code == 200) {
+            this.arr = res.data.list;
+            this.total = res.data.PageCount * this.pageSize;
+            this.arr.forEach((ele, index) => {
+              this.$set(ele, "checked", false);
+            });
+          }
+        })
       },
       handleCheckedAll() {
         let isCheckedAll = this.arr.some(item => {
@@ -112,10 +98,11 @@
       },
       // 获取已读消息
       readMsg() {
-        this.$post('/other/getMessage', { PageNumber: this.pageNumber, PageSize: this.pageSize }).then(res => {
+        this.currentPage=1;
+        this.$post('/other/getMessage', { PageNumber: this.currentPage, PageSize: this.pageSize }).then(res => {
           if (res.code == 200) {
             this.arr = res.data.list;
-            
+            this.total = res.data.PageCount * this.pageSize;
             this.arr.forEach((ele, index) => {
               this.$set(ele, "checked", false);
             });
@@ -123,15 +110,19 @@
         })
       },
       deleteMsg() {
-        this.arr = this.arr.filter(item => {
-          item.checked == false;
+        let arr = this.arr.filter(item => {
+          console.log(item)
+          return item.checked == false;
         })
+        this.arr = arr
+
       },
-      handleCurrentChange(){
+      //点击页码
+      handleCurrentChange(currentPage) {
         this.currentPage = currentPage;
         this.getData()
       }
-      
+
     },
     components: {
       ProfileHeader,
@@ -139,7 +130,8 @@
   };
 </script>
 <style lang="scss" scoped>
-  @import "../assets/css/pagination.css";
+  @import "~assets/css/pagination.css";
+
   .flex {
     display: flex;
   }
@@ -206,26 +198,44 @@
       font-size: 14px;
       line-height: 24px;
 
-      img {
-        width: 48px;
-        height: 48px;
-        margin-right: 10px;
+      .td-left {
+        position: relative;
+        img {
+          width: 48px;
+          height: 48px;
+          margin-right: 10px;
+        }
+
+        .red-circle {
+          width: 6px;
+          height: 6px;
+          position: absolute;
+          top: 4px;
+          right: 14px;
+          border-radius: 50%;
+          background-color: #FF4545;
+        }
       }
+
 
       .td-right {
         width: 100%;
 
         div {
           justify-content: space-between;
+          font-family: "PingFangSC-Regular", "PingFang SC";
 
           .tip {
             color: #36363a;
             font-weight: 500;
           }
+
+          .msg-title {
+            color: #36363A;
+            font-family: "PingFangSC-Medium", "PingFang SC";
+          }
         }
       }
     }
   }
-
-
 </style>

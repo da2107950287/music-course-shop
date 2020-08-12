@@ -2,9 +2,8 @@
   <div class="teacher-intro">
     <div class="intro-item" v-for="(item,index) in teacherList" :key="index">
       <div class="left">
-        <img v-lazy="item.headportrait" />
+        <img :src="item.headportrait" />
       </div>
-
       <div class="right">
         <h3>{{item.username}}</h3>
         <div>

@@ -69,6 +69,7 @@
       font-size: 20px;
       font-weight: 500;
       color: #36363a;
+      font-family:"PingFangSC-Medium","PingFang SC";
     }
     div:nth-child(2) {
       margin-left: 10px;

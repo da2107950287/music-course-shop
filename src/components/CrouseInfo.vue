@@ -1,19 +1,20 @@
 <template>
     <div class="content">
         <div class="course-name">{{list.couName}}</div>
-        <div class="course-time common">
+        <div class="common">
             <img src="../assets/image/icon_zks.png" class="img-icon">
             <span>总 课 时：</span>
             <span>{{list.totalHours}}</span>
         </div>
         <div class="blank"></div>
-        <div class="period-of-validity common">
+        <div class="common">
             <img src="../assets/image/icon_yxq.png" class="img-icon">
             <span>有 效 期：</span>
-            <span>{{list.termOfValidity}}</span>
+            <span v-if="list.termOfValidity==0">长期有效</span>
+            <span v-else>{{list.termOfValidity}}月</span>
         </div>
         <div class="blank"></div>
-        <div class="teacher-name common">
+        <div class="common">
             <img src="../assets/image/icon_skls.png" class="img-icon">
             <span>授课老师：</span>
             <span>{{list.lecturer}}</span>
@@ -21,11 +22,11 @@
     </div>
 </template>
 <script>
-    export default{
-        props:{
-            list:{
-                type:Object,
-                default(){
+    export default {
+        props: {
+            list: {
+                type: Object,
+                default() {
                     return {}
                 }
             }
@@ -33,7 +34,7 @@
     }
 </script>
 <style scoped>
-     .content {
+    .content {
         padding: 0 20px;
         /* background-color: #F7F7F7; */
         color: #9899A1;
@@ -48,7 +49,7 @@
         color: #36363A;
         font-size: 22px;
         font-weight: 500;
-        
+        font-family: "PingFangSC-Medium", "PingFang SC";
     }
 
     .img-icon {
@@ -57,13 +58,19 @@
         margin-right: 3px;
     }
 
-    .common>span:nth-child(2) {
-        color: #9899A1;
+    .common {
+        font-family: "PingFangSC-Regular", "PingFang SC";
+
+        >span:nth-child(2) {
+            color: #9899A1;
+        }
+
+
+        >span:nth-child(3) {
+            color: #6A6A6F;
+        }
     }
 
-    .common>span:nth-child(3) {
-        color: #6A6A6F;
-    }
 
     .blank {
         width: 1px;

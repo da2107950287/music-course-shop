@@ -3,19 +3,20 @@
         <div class="top">
             <div class="list-tab" v-for="(item,index) in lists" :key=index :class="{'active':index===currentIndex}"
                 @click="handleClick(index)">{{item}}</div>
-            <img src="../../assets/image/lab_kcxq_kcml.png" alt="" class="audition-icon">
+            <img src="~assets/image/lab_kcxq_kcml.png" alt="" class="audition-icon">
         </div>
         <div class="content">
             <course-description v-show="currentIndex==0" :courseDes="couresDetail"></course-description>
-            <course-catalog v-show="currentIndex==1" :catalogue="catalogue"></course-catalog>
-            <teacher-intro v-show="currentIndex==2" :teacherList="teacherList"></teacher-intro>
+            <course-catalog v-show="currentIndex==1" :catalogue="catalogue" :buyState="buyState"></course-catalog>
+            <div  v-show="currentIndex==2" v-html="couresDetail.lecturerIntro"></div>
+            <!-- <teacher-intro :teacherList="teacherList"></teacher-intro> -->
         </div>
     </div>
 </template>
 <script>
-    import CourseDescription from '../detail/CourseDescription'
-    import CourseCatalog from '../detail/CourseCatalog'
-    import TeacherIntro from '../detail/TeacherIntro'
+    import CourseDescription from 'components/detail/CourseDescription'
+    import CourseCatalog from 'components/detail/CourseCatalog'
+    import TeacherIntro from 'components/detail/TeacherIntro'
     export default {
         props: {
             couresDetail: {
@@ -29,6 +30,9 @@
                 default() {
                     return []
                 }
+            },
+            buyState:{
+                type:Number
             }
         },
         data() {
@@ -39,10 +43,14 @@
             }
         },
         created() {
-            console.log(this.couresDetail)
             this.teacherList = this.couresDetail.list;
+            this.$bus.$on("audition",this.audition)
         },
         methods: {
+     
+            audition(){
+                this.currentIndex=1
+            },
             handleClick(index) {
                 this.currentIndex = index
             }

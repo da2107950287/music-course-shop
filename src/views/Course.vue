@@ -12,10 +12,12 @@
           </el-progress>
           <div class="progress-text">已学习</div>
         </div>
-
         <div slot="last" class="btn" @click="toStudy(item.couId)">去学习</div>
       </course-item>
     </div>
+    <el-pagination @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize" background
+      layout="prev, pager, next" :total="total" class="pagination">
+    </el-pagination>
   </div>
 </template>
 <script>
@@ -24,8 +26,9 @@
   export default {
     data() {
       return {
-        pageNumber: 1,
+        currentPage: 1,
         pageSize: 5,
+        total:0,
         accLeaTime: null,//累计时间
         list: []
       };
@@ -33,16 +36,21 @@
 
     created() {
       this.accLeaTime = localStorage.getItem("accLeaTime")
-      this.$post('/course/getUserCourse', { PageNumber: this.pageNumber, PageSize: this.pageSize }).then(res => {
+      this.$post('/course/getUserCourse', { PageNumber: this.currentPage, PageSize: this.pageSize }).then(res => {
         if (res.code == 200) {
+          this.total=res.data.PageCount*this.pageSize;
           this.list = res.data.list;
         }
       })
     },
     methods: {
       toStudy(couId) {
-        this.$router.push({ path:'/index/courseLearning',query:{couId} })
+        this.$router.push({ path: '/index/courseLearning', query: { couId } })
       },
+      handleCurrentChange(currentPage) {
+        this.currentPage = currentPage;
+        this.getData()
+      }
 
     },
     components: {
@@ -52,6 +60,7 @@
   };
 </script>
 <style lang="scss" scoped>
+  @import '~assets/css/pagination.css';
   .course-bottom {
     width: 950px;
 

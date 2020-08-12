@@ -32,6 +32,7 @@
   font-weight: 500;
   display: flex;
   align-items: center;
+  font-family:"PingFangSC-Medium","PingFang SC";
   .status {
     color: #9899a1;
     font-weight: 400;

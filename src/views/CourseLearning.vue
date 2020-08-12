@@ -2,15 +2,15 @@
   <div class="course-learning">
     <div class="top-box">
       <div class="left">
-        <course-info></course-info>
+        <course-info :list="arr.courseEntity"></course-info>
       </div>
       <div class="right">
         <div class="bg-progress progress1">
-          <el-progress type="circle" :percentage="20" :width="100" color="#98B702" class="progress"></el-progress>
+          <el-progress type="circle" :percentage="arr.rateOfLearning" :width="100" color="#98B702" class="progress"></el-progress>
           <div class="progress-text text1">已学习</div>
         </div>
         <div class="bg-progress progress2">
-          <el-progress type="circle" :percentage="30" :width="100" color="#FB9715" class="progress"></el-progress>
+          <el-progress type="circle" :percentage="100-arr.rateOfLearning" :width="100" color="#FB9715" class="progress"></el-progress>
           <div class="progress-text text2">未学习</div>
         </div>
       </div>
@@ -26,15 +26,15 @@
         >{{item}}</div>
       </div>
       <div class="content">
-        <course-catalog v-show="currentIndex==1" :catalogue="list1"></course-catalog>
-        <course-catalog v-show="currentIndex==0" :catalogue="list2"></course-catalog>
+        <cou-cataLog v-show="currentIndex==0" :catalogue="list2"></cou-cataLog>
+        <cou-cataLog v-show="currentIndex==1" :catalogue="list1"></cou-cataLog>
       </div>
     </div>
   </div>
 </template>
 <script>
 import CourseInfo from "components/CrouseInfo.vue";
-import CourseCatalog from "components/detail/CourseCatalog.vue";
+import CouCataLog from "components/courselearning/CouCataLog.vue";
 export default {
   data() {
     return {
@@ -44,16 +44,23 @@ export default {
       couId: "",
       list1: [], //未学
       list2: [], //已学
+      arr:null
     };
   },
+  
   created() {
     this.couId = this.$route.query.couId;
+    this.$post("/course/showUserCourse", {couId: this.couId,}).then((res) => {
+      if(res.code==200){
+        this.arr=res.data;
+      }
+    });
     this.$post("/course/getUserCatalogue", { couId: this.couId }).then(
       (res) => {
-        console.log(res);
-        this.list1 = res.data.list1;
-        this.list2 = res.data.list2;
-        console.log(this.list1);
+        if (res.code == 200) {
+          this.list1 = res.data.list1;
+          this.list2 = res.data.list2;
+        }
       }
     );
   },
@@ -64,7 +71,7 @@ export default {
   },
   components: {
     CourseInfo,
-    CourseCatalog,
+    CouCataLog,
   },
 };
 </script>
@@ -110,12 +117,12 @@ export default {
       .text1 {
         color: #98b702;
       }
-      .text2{
-          color: #FB9715;
+      .text2 {
+        color: #fb9715;
       }
     }
-    .progress1{
-        margin-right: 50px;
+    .progress1 {
+      margin-right: 50px;
     }
   }
 }
@@ -147,12 +154,12 @@ export default {
   color: #98b702;
   background-color: #fff;
 }
-.progress1  /deep/ path:first-child {
- stroke: rgba(152, 183, 2, 0.3)
+.progress1 /deep/ path:first-child {
+  stroke: rgba(152, 183, 2, 0.3);
 }
 
-.progress2  /deep/ path:first-child {
-  stroke: rgba(251, 151, 21, 0.3)
+.progress2 /deep/ path:first-child {
+  stroke: rgba(251, 151, 21, 0.3);
 }
 
 .el-progress /deep/ .el-progress__text {
