@@ -18,7 +18,8 @@ export default {
 .download {
   width: 100%;
   background-image: url(~assets/image/bg_ad_xz.png);
-  background-size: 100%;
+  background-size: auto 120px;
+  background-repeat: no-repeat;
 }
 .download > div {
     height: 120px;
@@ -29,7 +30,6 @@ export default {
 }
 .download > div > div {
   height: 40px;
-  /* margin-left: 360px; */
   font-size: 30px;
   font-family: "FZLTCHJW--GB1-0", "FZLTCHJW--GB1";
   font-weight: normal;

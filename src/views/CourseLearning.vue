@@ -10,7 +10,7 @@
           <div class="progress-text text1">已学习</div>
         </div>
         <div class="bg-progress progress2">
-          <el-progress type="circle" :percentage="100-arr.rateOfLearning" :width="100" color="#FB9715" class="progress"></el-progress>
+          <el-progress type="circle" :percentage="rateOfLearning" :width="100" color="#FB9715" class="progress"></el-progress>
           <div class="progress-text text2">未学习</div>
         </div>
       </div>
@@ -44,15 +44,21 @@ export default {
       couId: "",
       list1: [], //未学
       list2: [], //已学
-      arr:null
+      arr:{},
+      rateOfLearning:0,
     };
   },
-  
+  computed:{
+    // rateOfLearning(){
+    //   return 
+    // }
+  },
   created() {
     this.couId = this.$route.query.couId;
     this.$post("/course/showUserCourse", {couId: this.couId,}).then((res) => {
       if(res.code==200){
         this.arr=res.data;
+        this.rateOfLearning=100-this.arr.rateOfLearning
       }
     });
     this.$post("/course/getUserCatalogue", { couId: this.couId }).then(

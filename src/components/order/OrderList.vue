@@ -1,9 +1,9 @@
 <template>
-    <div class="order-list">
+    <div  class="order-list">
         <div class="order-item" v-for="(item,index) in list" :key="index">
             <div class="title" v-show="item.olState==1">
                 <div>待支付</div>
-                <div>请在{{item.countTime}}内完成支付，超时订单将被自动取消哦〜</div>
+                <div class="count-down">请在{{item.countTime}}内完成支付，超时订单将被自动取消哦〜</div>
             </div>
             <div class="title" v-show="item.olState==5">
                 <div>已完成</div>
@@ -37,7 +37,7 @@
                     <span>合计：{{item.orderlistCourse.length}}件商品</span>
                     <div>
                         <span>共计：</span>
-                        <span class="price">&yen;{{item.olPrice}}</span>
+                        <span class="price">&yen;{{item.payPrice}}</span>
                     </div>
                 </div>
                 <div class="btn-box">
@@ -98,7 +98,6 @@
     }
 </script>
 <style lang="scss" scoped>
-   
     .order-item {
         margin-top: 10px;
         padding: 30px;
@@ -117,7 +116,10 @@
                 font-family:"PingFangSC-Medium","PingFang SC";
             }
 
-            div:nth-child(2) {
+            /* .fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+} */
+            .count-down{
                 margin-left: 10px;
                 font-size: 16px;
                 color: #ff4545;

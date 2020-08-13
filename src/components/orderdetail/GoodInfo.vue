@@ -20,7 +20,7 @@
         <span>合计：{{courses.length}}件商品</span>
         <div>
           <span>共计：</span>
-          <span class="price">&yen;{{olPrice}}</span>
+          <span class="price">&yen;{{payPrice}}</span>
         </div>
       </div>
       <div class="btn-box">
@@ -47,7 +47,8 @@
         default() {
           return ''
         }
-      },olPrice:{
+      },
+      payPrice:{
         type:String
       }
     },

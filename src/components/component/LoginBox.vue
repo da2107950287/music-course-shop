@@ -87,7 +87,6 @@
             }
         },
         methods: {
-
             nextEnter(next) {
                 this.$nextTick(() => {
                     this.$refs[next].focus()
@@ -102,6 +101,7 @@
                 if (!this.canClick) return;
                 this.canClick = true;
                 this.codeMsg = this.totalTime + "s";
+                //60秒倒计时
                 let clock = window.setInterval(() => {
                     this.totalTime--;
                     this.codeMsg = this.totalTime + "s";
@@ -179,7 +179,6 @@
                     }
                 });
             },
-            consult() { },
             //查看用户协议
             seeUserAgreement() {
                 this.$emit("hideLoginBox")
@@ -251,7 +250,7 @@
     .agreement {
         font-size: 14px;
         text-align: center;
-
+        font-family:"PingFangSC-Regular","PingFang SC";
         >span:nth-child(1) {
             color: #36363a;
         }
@@ -288,6 +287,7 @@
         font-weight: 400px;
         text-align: center;
         color: #6a6a6f;
+        font-family:"PingFangSC-Regular","PingFang SC";
 
         >spam:nth-child(1) {
             color: #6a6a6f;
@@ -297,8 +297,4 @@
             color: #0091ff;
         }
     }
-
-    /* /deep/ .el-form-item.is-error .el-input__inner {
-        border-color: #98b702;
-    } */
 </style>

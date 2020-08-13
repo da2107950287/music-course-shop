@@ -3,13 +3,13 @@
         <div class="top">
             <div class="list-tab" v-for="(item,index) in lists" :key=index :class="{'active':index===currentIndex}"
                 @click="handleClick(index)">{{item}}</div>
-            <img src="~assets/image/lab_kcxq_kcml.png" alt="" class="audition-icon">
+            <div class="audition-icon"></div>
         </div>
         <div class="content">
             <course-description v-show="currentIndex==0" :courseDes="couresDetail"></course-description>
             <course-catalog v-show="currentIndex==1" :catalogue="catalogue" :buyState="buyState"></course-catalog>
-            <div  v-show="currentIndex==2" v-html="couresDetail.lecturerIntro"></div>
-            <!-- <teacher-intro :teacherList="teacherList"></teacher-intro> -->
+            <!-- <div v-show="currentIndex==2" v-html="couresDetail.lecturerIntro"></div> -->
+            <teacher-intro v-show="currentIndex==2"  :teacherList="teacherList"></teacher-intro>
         </div>
     </div>
 </template>
@@ -31,8 +31,8 @@
                     return []
                 }
             },
-            buyState:{
-                type:Number
+            buyState: {
+                type: Number
             }
         },
         data() {
@@ -44,12 +44,12 @@
         },
         created() {
             this.teacherList = this.couresDetail.list;
-            this.$bus.$on("audition",this.audition)
+            this.$bus.$on("audition", this.audition)
         },
         methods: {
-     
-            audition(){
-                this.currentIndex=1
+
+            audition() {
+                this.currentIndex = 1
             },
             handleClick(index) {
                 this.currentIndex = index
@@ -81,6 +81,9 @@
         position: absolute;
         top: 23px;
         left: 635px;
+        background-image: url(~assets/image/icon.png);
+        background-position: -158px -194px;
+
     }
 
     .list-tab {

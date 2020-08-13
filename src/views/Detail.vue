@@ -1,27 +1,30 @@
 <template>
     <div>
         <div class="main-detail">
-            <top-detail :topDetail="topDetail" @collectCourse="collectCourse" @buy="buy" :collected="collected"></top-detail>
-            <course-detail :couresDetail="couresDetail" :catalogue="catalogue" :buyState="buyState" class="margin30"></course-detail>
+            <top-detail v-if="isRouterAlive" :topDetail="topDetail" @collectCourse="collectCourse" @buy="buy" :collected="collected">
+            </top-detail>
+            <course-detail :couresDetail="couresDetail" :catalogue="catalogue" :buyState="buyState" class="margin30">
+            </course-detail>
         </div>
 
     </div>
 </template>
 <script>
-    
+
     import TopDetail from 'components/detail/TopDetail'
     import CourseDetail from 'components/detail/CourseDetail'
     export default {
-        inject:['reload'],
+
         data() {
             return {
                 couId: '',
-                couType:'',
+                couType: '',
                 couresDetail: {},
                 topDetail: {},
-                catalogue:[],
-                collected:false,
-                buyState:null,
+                catalogue: [],
+                collected: false,
+                buyState: null,
+                isRouterAlive:true,
             }
         },
         created() {
@@ -30,8 +33,8 @@
             this.$post('/course/showCourse', { couId: this.couId }).then(res => {
                 if (res.code == 200) {
                     this.couresDetail = res.data;
-                    this.couType=res.data.couType;
-                    this.buyState=res.data.buyState;
+                    this.couType = res.data.couType;
+                    this.buyState = res.data.buyState;
                     console.log(this.buyState)
                     this.topDetail = {
                         cover: res.data.cover,
@@ -42,32 +45,38 @@
                         totalHours: res.data.totalHours,
                         termOfValidity: res.data.termOfValidity,
                         lecturer: res.data.lecturer,
-                        buyState:res.data.buyState
+                        buyState: res.data.buyState
                     }
                 }
             })
             // 获取课程目录
-            this.$post('/course/getCatalogue',{couId: this.couId}).then(res=>{
-                if(res.code==200){
-                    this.catalogue=res.data;
-                    
+            this.$post('/course/getCatalogue', { couId: this.couId }).then(res => {
+                if (res.code == 200) {
+                    this.catalogue = res.data;
+
                 }
             })
         },
-        methods:{
+        methods: {
+            reload() {
+                this.isRouterAlive = false;
+                this.$nextTick(() => {
+                    this.isRouterAlive = true
+                })
+            },
             //收藏课程
-            collectCourse(){
-                this.$post('/course/setCourseColl',{couId: this.couId}).then(res=>{
-                    if(res.code==200){
-                        this.collected=true;
-                        this.reload()
+            collectCourse() {
+                this.$post('/course/setCourseColl', { couId: this.couId }).then(res => {
+                    if (res.code == 200) {
+                        this.collected = true;
+                        this.reload();
                         this.$message.success(res.msg)
                     }
                 })
             },
             //立即购买
-            buy(){
-                this.$router.push({path:'/index/submitOrder',query:{couType:this.couType,couId:this.couId}})
+            buy() {
+                this.$router.push({ path: '/index/submitOrder', query: { couId: this.couId } })
             }
         },
         components: {

@@ -11,14 +11,14 @@
       <div class="table-body">
         <el-radio-group v-model="payType" fill="#98B702">
           <el-radio :label="1">
-            <div class="btn">
-              <img src="../../assets/image/icon_wxzf.png" />
+            <div class="btns">
+              <div class="btn wx"></div>
               <span>微信支付</span>
             </div>
           </el-radio>
           <el-radio :label="2">
-            <div class="btn">
-              <img src="../../assets/image/icon_zfbzf.png" />
+            <div class="btns">
+              <div class="btn zfb"></div>
               <span>支付宝支付</span>
             </div>
           </el-radio>
@@ -42,9 +42,9 @@
       };
     },
     props: ["totalPrice"],
-    methods:{
-      pay(){
-        this.$emit("pay",this.payType)
+    methods: {
+      pay() {
+        this.$emit("pay", this.payType)
       }
     }
   };
@@ -119,7 +119,7 @@
           align-items: center;
         }
 
-        .btn {
+        .btns {
           width: 146px;
           height: 46px;
           margin-left: 10px;
@@ -130,10 +130,21 @@
           border: 1px solid #ddd;
           background-color: #fff;
 
-          img {
-            width: 23px;
-            height: 23px;
+          .btn {
+            width: 32px;
+            height: 32px;
             margin-right: 10px;
+            background-image: url(~assets/image/icon.png);
+
+          }
+
+          .wx {
+            background-position: -440px -187px;
+          }
+
+          .zfb {
+            background-position: -502px -187px;
+
           }
         }
       }

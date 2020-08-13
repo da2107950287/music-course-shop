@@ -5,31 +5,35 @@
             <div class="content">
                 <div class="course-name">{{course.couName}}</div>
                 <div class="common">
-                    <img src="../../assets/image/icon_zks.png" class="img-icon">
+                    <div class="img-icon img1"></div>
+
                     <span>总 课 时：</span>
                     <span>{{course.totalHours}}</span>
                 </div>
                 <div class="blank"></div>
                 <div class="common">
-                    <img src="../../assets/image/icon_yxq.png" class="img-icon">
+                    <div class="img-icon img2"></div>
+
                     <span>有 效 期：</span>
                     <span>{{course.termOfValidity}}</span>
                 </div>
                 <div class="blank"></div>
                 <div class="common">
-                    <img src="../../assets/image/icon_skls.png" class="img-icon">
+                    <div class="img-icon img3"></div>
+
                     <span>授课老师：</span>
                     <span>{{course.lecturer}}</span>
                 </div>
             </div>
             <div class="bottom">
+
                 <div class="left" v-if="course.teachingMethods==1">
-                    <img src="../../assets/image/icon_zb.png" alt="" class="img-icon">
+                    <div class="icon-zb img-icon"></div>
                     <div class="live-lesson">直播课</div>
                 </div>
                 <div class="left" v-else></div>
                 <div class="right">
-                    <img src="../../assets/image/icon_vip.png">
+                    <div class="vip"></div>
                     <div class="money">
                         <span>&yen;</span>
                         <span>{{course.pricevip}}</span>
@@ -50,22 +54,14 @@
                 }
             }
         },
-        data() {
-            return {
-
-            }
-        },
-        created() {
-            console.log(this.course)
-        },
         methods: {
             showCourse(couType) {
-                this.$router.push({ path: '/index/detail', query: { couId: this.course.couId,couType } })
+                this.$router.push({ path: '/index/detail', query: { couId: this.course.couId, couType } })
             }
         }
     }
 </script>
-<style scoped>
+<style lang="scss" scoped>
     .course-box {
         width: 384px;
         height: 306px;
@@ -73,7 +69,6 @@
         margin-top: 45px;
         background-color: #fff;
         border: 1px solid rgba(238, 238, 238, 1);
-
     }
 
     .course-item {
@@ -137,6 +132,24 @@
         width: 16px;
         height: 16px;
         margin-right: 3px;
+        background-image: url(~assets/image/icon.png);
+    }
+
+    .img1 {
+        background-position: -174px -92px;
+    }
+
+    .img2 {
+        background-position: -220px -92px;
+    }
+
+    .img3 {
+        background-position: -266px -92px;
+    }
+
+    .icon-zb {
+        background-position: -312px -92px;
+
     }
 
     .common {
@@ -180,10 +193,15 @@
 
     }
 
-    .right>img {
-        width: 32px;
-        height: 18px;
+    .right {
+        .vip {
+            width: 32px;
+            height: 18px;
+            background-image: url(~assets/image/icon.png);
+            background-position: -358px -91px;
+        }
     }
+
 
     .money {
         color: #36363A;

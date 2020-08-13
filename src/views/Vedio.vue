@@ -7,7 +7,6 @@
     </div>
   </div>
 </template>
-
 <script>
   import RateComponent from "components/vedio/RateComponent/index.js";
   export default {
@@ -135,7 +134,7 @@
     font-family: "PingFangSC-Medium", "PingFang SC";
     font-weight: 500;
   }
-
+  /* 组件样式 */
   .player-hidden {
     display: none !important;
   }

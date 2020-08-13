@@ -16,6 +16,11 @@
         <div class="bg-qr" v-if="isShow">
             <img src="~assets/image/qr.png" alt="">
         </div>
+        <div class="btns">
+            <div class="consult btn"></div>
+            <div class="top btn" @click="toTop"></div>
+        </div>
+
 
     </div>
 </template>
@@ -26,9 +31,9 @@
                 isShow: false
             }
         },
-        watch:{
-            $route(to,from){
-                this.isShow=false
+        watch: {
+            $route(to, from) {
+                this.isShow = false
             }
         },
         methods: {
@@ -36,7 +41,11 @@
                 this.isShow = !this.isShow;
             },
             seeAgreement(type) {
-                this.$router.push({ path: '/index/about',query:{type} })
+                this.$router.push({ path: '/index/about', query: { type } })
+            },
+            //回到顶部
+            toTop() {
+                window.scrollTo(0, 0);
             }
         }
     }
@@ -46,7 +55,7 @@
         width: 100%;
         background-color: #36363A;
         position: relative;
-       
+
         .footer {
             width: 1200px;
             height: 100px;
@@ -101,6 +110,31 @@
             width: 80px;
             height: 80px;
 
+        }
+    }
+
+    .btns {
+        position: fixed;
+        bottom: 200px;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        z-index: 100;
+
+        .btn {
+            width: 60px;
+            height: 60px;
+            background-image: url(~assets/image/icon.png);
+            border-radius: 50%;
+        }
+
+        .consult {
+            background-position: -66px -292px;
+        }
+
+        .top {
+            margin-top: 30px;
+            background-position: -246px -292px;
         }
     }
 </style>

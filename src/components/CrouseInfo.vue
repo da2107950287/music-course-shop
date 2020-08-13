@@ -2,20 +2,21 @@
     <div class="content">
         <div class="course-name">{{list.couName}}</div>
         <div class="common">
-            <img src="../assets/image/icon_zks.png" class="img-icon">
+            <div class="img-icon img1"></div>
             <span>总 课 时：</span>
             <span>{{list.totalHours}}</span>
         </div>
         <div class="blank"></div>
         <div class="common">
-            <img src="../assets/image/icon_yxq.png" class="img-icon">
+            <div class="img-icon img2"></div>
+
             <span>有 效 期：</span>
             <span v-if="list.termOfValidity==0">长期有效</span>
             <span v-else>{{list.termOfValidity}}月</span>
         </div>
         <div class="blank"></div>
         <div class="common">
-            <img src="../assets/image/icon_skls.png" class="img-icon">
+            <div class="img-icon img3"></div>
             <span>授课老师：</span>
             <span>{{list.lecturer}}</span>
         </div>
@@ -56,11 +57,24 @@
         width: 16px;
         height: 16px;
         margin-right: 3px;
+        background-image: url(~assets/image/icon.png);
+    }
+
+    .img1 {
+        background-position: -174px -92px;
+    }
+
+    .img2 {
+        background-position: -220px -92px;
+    }
+
+    .img3 {
+        background-position: -266px -92px;
     }
 
     .common {
         font-family: "PingFangSC-Regular", "PingFang SC";
-
+        display: flex;
         >span:nth-child(2) {
             color: #9899A1;
         }

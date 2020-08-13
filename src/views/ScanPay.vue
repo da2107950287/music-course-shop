@@ -50,7 +50,6 @@
       this.couName = this.$route.query.couName;
       if (!this.$route.query.hasOwnProperty("olId")) {
         this.couId = this.$route.query.couId;
-
         this.integral = this.$route.query.integral;
         this.payType = this.$route.query.payType;
         if (this.payType == 1) {
@@ -60,15 +59,15 @@
         }
       } else {
         this.olId = this.$route.query.olId;
-        this.$post("/wx/buyOrderlist", { olId:this.olId, type: 1 }).then(res => {
-         if(res.code==200){
-           this.qrLink=res.data
-          if(this.qrLink != "") {
+        this.$post("/wx/buyOrderlist", { olId: this.olId, type: 1 }).then(res => {
+          if (res.code == 200) {
+            this.qrLink = res.data
+            if (this.qrLink != "") {
               this.$nextTick(() => {
                 this.qrcode();
               });
             }
-         }
+          }
         })
       }
 
@@ -114,8 +113,27 @@
           height: 180,
           text: this.qrLink,
         });
+        // this.getOrderstate()
 
       },
+      getOrderstate() {
+        let num = 15 * 60;
+        let timer = setInterval(() => {
+          num--;
+          this.$post("", {}).then(res => {
+            if (res.code == 200) {
+              if (res.data == 1) {
+                this.$router.push({ path: '/index/paySuccess', query: {} });
+                clearInterval(timer)
+              }
+            }
+
+          })
+          if (num < 0) {
+            clearInterval(timer);
+          }
+        }, 1000)
+      }
     },
   };
 </script>

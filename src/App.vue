@@ -72,9 +72,10 @@
   html,
   body,
   #app {
-    width: 100%;
+    min-width: 1200px;
     background-color: #F5F5F5;
-
+    font-family:"PingFangSC-Regular","PingFang SC";
+    
 
   }
 </style>

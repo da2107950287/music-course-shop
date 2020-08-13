@@ -1,8 +1,10 @@
 <template>
-  <div class="top-menu">
-    <div v-for="(item,index) in menu" :key="index" @click="handleClick(item.link)"
-      :class="{'active':$route.path.includes(item.link)&&$route.path.includes('/user')}">{{item.title}}</div>
-  </div>
+  
+    <div class="top-menu">
+      <div v-for="(item,index) in menu" :key="index" @click="handleClick(item.link)"
+        :class="{'active':$route.path.includes(item.link)&&$route.path.includes('/user')}">{{item.title}}</div>
+    </div>
+  
 </template>
 <script>
   export default {
@@ -21,21 +23,29 @@
       };
     },
     methods: {
+      //鼠标离开就隐藏
+      leave(){
+        // let timer=setTimeout(()=>{
+          this.$emit('hideMenu');
+        //   clearTimeout(timer)
+        // },2000)
+      },
+      //跳转到对应的页面
       handleClick(link) {
-        this.$emit('hideMenu')
+        this.$emit('hideMenu');
         if (link.includes("/home")) {
           this.$router.push("/index/home");
           localStorage.clear();
           this.reload()
         } else {
           this.$router.push("/index/user" + link);
-
         }
       },
     },
   };
 </script>
 <style lang="scss" scoped>
+
   .top-menu {
     z-index: 999;
     padding: 10px 30px;

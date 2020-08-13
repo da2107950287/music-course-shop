@@ -29,12 +29,13 @@
         </div>
         <div class="personal-icon">
             <img :src="userinfo.headportrait" alt />
+
+
             <label for="inputId">
                 <input style="display: none" id="inputId" ref="input" type="file"
-                    accept="image/gif, image/jpeg, image/jpg, image/png, image/svg" @change="handleFileChange"> <img
-                    src="~assets/image/icon_xg.png" />
+                    accept="image/gif, image/jpeg, image/jpg, image/png, image/svg" @change="handleFileChange">
+                <div class="edit"></div>
             </label>
-            <img src="../../assets/js/axios.js" alt="">
 
         </div>
     </div>
@@ -86,11 +87,11 @@
                     background: this.userinfo.background
                 }).then(res => {
                     if (res.code == 200) {
-                        localStorage.setItem("nickName",this.userinfo.nickname)
-                        localStorage.setItem("headportrait",imgUrl)
-                        this.$emit("updateAvatar",imgUrl)
+                        localStorage.setItem("nickName", this.userinfo.nickname)
+                        localStorage.setItem("headportrait", imgUrl)
+                        this.$emit("updateAvatar", imgUrl)
                         window.location.reload()
-                        
+
                     }
                 })
             }
@@ -141,10 +142,14 @@
                 height: 100px;
             }
 
-            img:nth-child(2) {
+            .edit {
+                width: 85px;
+                height: 24px;
                 position: absolute;
                 bottom: 2px;
-                right: 12px;
+                right: 8px;
+                background-image: url(~assets/image/icon.png);
+                background-position: -564px -191px;
             }
         }
     }

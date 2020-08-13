@@ -6,13 +6,13 @@
         <div class="collect-bottom">
             <course-item v-for="(item,index) in list" :key="index" :list="item.courseEntity">
                 <img slot="img" :src="item.courseEntity.cover">
-                <img slot="collect" src="assets/image/icon_kcxq_sc_sel.png" alt="">
+                <div slot="collect" class="iscollected" ></div>
+              
                 <div slot="last" class="btn">
                     <span>会员价：&yen;</span>
                     <span class="price">{{item.courseEntity.pricevip}}</span>
                 </div>
             </course-item>
-
         </div>
         <el-pagination v-if="list.length>0" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize"
             background layout="prev, pager, next" :total="total" class="pagination">
@@ -23,13 +23,13 @@
     import ProfileHeader from "components/ProfileHeader.vue";
     import CourseItem from "components/CourseItem.vue"
     export default {
+      
         data() {
             return {
                 currentPage: 1,//当前页码
                 pageSize: 10,
                 total: 0,
                 list: [],
-
             }
         },
         created() {
@@ -71,14 +71,22 @@
             border-bottom: 1px solid #EEEEEE
         }
     }
-
+    .iscollected{
+        width: 20px;
+        height: 20px;
+        background-image: url(~assets/image/icon.png);
+                background-position: -470px -90px;
+    }
     .btn {
         font-size: 18px;
         color: #36363A;
         line-height: 25px;
+        font-family:"PingFangSC-Regular","PingFang SC";
+        font-weight: 400;
 
         .price {
             font-size: 32px;
+            
         }
     }
 </style>

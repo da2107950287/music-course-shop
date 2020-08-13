@@ -6,7 +6,8 @@
         <div class="list" @click="go(item)">
           <div>
             <span>第 {{index+1}} 讲</span>
-            <img src="~assets/image/icon_kcml_sp.png" alt />
+            <div v-if="item.catType==1" class="play live"></div>
+            <div v-if="item.catType==2" class="play record"></div>
             <span>{{item.catName}}</span>
           </div>
           <div>主讲：{{item.lecturer}}</div>
@@ -90,7 +91,7 @@
       color: #9899a1;
       cursor: pointer;
 
-      div {
+      >div {
         display: flex;
         flex: 1;
         justify-content: flex-end;
@@ -99,10 +100,19 @@
           color: #6a6a6f;
         }
 
-        >img {
+        .play {
           width: 20px;
           height: 20px;
           margin: 0 10px;
+          background-image: url(~assets/image/icon.png);
+        }
+        .live{
+          background-position: -290px -193px;
+
+        }
+        .record{
+          background-position: -240px -193px;
+
         }
       }
 

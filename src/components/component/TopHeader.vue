@@ -13,110 +13,48 @@
       </div>
       <div class="right">
         <div @click="go('/index/user/news')" class="notification">
-          <img src="~assets/image/icon_hender_xx.png" class="notification-message" />
+          <div class="notification-message"></div>
+          <!-- <img src="~assets/image/icon_hender_xx.png" class="notification-message" /> -->
           <div class="red-box" v-if="notReadNum>0">{{notReadNum}}</div>
         </div>
-        <div v-if="isShow" class="login" @click="dialogFormVisible=true">
-          <img src="~assets/image/pho_def.png" class="login-icon" />
+        <div v-if="isShow" class="login" @click="showLoginBox">
+          <div class="login-icon"></div>
+          <!-- <img src="~assets/image/pho_def.png" class="login-icon" /> -->
           <span class="login-text">点击登录</span>
         </div>
         <div v-else class="login" @click="showMenu">
           <img :src="avatar" class="login-icon" />
           <span class="login-text">{{nickName}}</span>
         </div>
-        <top-menu v-if="isShowMenu" @hideMenu="hideMenu"></top-menu>
+        <!-- 个人菜单 -->
+        <transition name="fade">
+          <top-menu v-if="isShowMenu" @hideMenu="hideMenu"></top-menu>
 
+        </transition>
       </div>
     </div>
     <!-- 登录弹窗 -->
     <login-box :dialogFormVisible="dialogFormVisible" @hideLoginBox="hideLoginBox"></login-box>
-    <!-- <el-dialog :visible.sync="dialogFormVisible" center width="480px">
-      <el-form :model="loginForm" :rules="rules" ref="loginForm" class="demo-ruleForm">
-        <div class="left self-left">
-          <div class="logo">芥末</div>
-          <div class="title">芥末音乐</div>
-        </div>
-        <el-form-item prop="phone">
-          <el-input v-model="loginForm.phone" maxlength="11" placeholder="请输入手机号"></el-input>
-        </el-form-item>
 
-        <el-form-item prop="smsCode" class="graphics-code">
-          <el-input v-model="loginForm.smsCode" placeholder="请输入验证码"></el-input>
-          <div class="code" :class="{'can-click':canClick}" @click="codeClick">{{codeMsg}}</div>
-        </el-form-item>
-      </el-form>
-      <div class="agreement">
-        <span>首次登陆默认同意</span>
-        <span @click="seeUserAgreement">《用户协议》</span>
-      </div>
-      <div @click="submitForm" class="login-button" :class="{'login-btn-active':loginBtn}">登 录</div>
-
-      <div class="contact">
-        <span>登录遇到问题请联系客服：</span>
-        <span>400-555-666</span>
-      </div>
-    </el-dialog> -->
-    <div class="btn">
-      <a href="#top-header">
-        <img src="~assets/image/bnt_top.png" alt @click="consult" />
-      </a>
-      <img src="~assets/image/bnt_zxzx.png" alt />
-    </div>
     <!-- <consult></consult> -->
   </div>
 </template>
 <script>
-  import Consult from "components/Consult";
+  import Consult from "components/component/Consult";
   import LoginBox from "components/component/LoginBox";
-  import TopMenu from "components/TopMenu";
+  import TopMenu from "components/component/TopMenu";
 
 
   export default {
     inject: ["reload"],
     data() {
-      // //手机号自定义规则
-      // var validatorPhone = (rule, value, callback) => {
-      //   if (value === "") {
-      //     callback(new Error("请输入手机号"));
-      //   } else {
-      //     var isPhone = /^[1][0-9][0-9]{9}$/;
-      //     if (!isPhone.test(value)) {
-      //       callback(new Error("手机号输入错误"));
-      //     } else {
-      //       this.canClick = true;
-      //       callback();
-      //     }
-      //   }
-      // };
-      // //短信验证码自定义规则
-      // var validatorSmsCode = (rule, value, callback) => {
-      //   if (value === "") {
-      //     callback(new Error("请输入验证码"));
-      //   } else {
-
-      //     callback();
-      //   }
-      // };
-      // 
       return {
         dialogFormVisible: false, //登录弹窗开关
-        // canClick: false, //验证码开关
-        // loginBtn:false,
-        // codeMsg: "发送验证码",
-        // totalTime: 60,
-        avatar: "",
-        nickName: "",
-        notReadNum: 0,
+        isShowMenu: false,//菜单开关
+        avatar: "",//头像
+        nickName: "",//昵称
+        notReadNum: 0,//未读消息数量
         list: [],
-        isShowMenu: false,
-        // loginForm: {
-        //   phone: "",
-        //   smsCode: "",
-        // },
-        // rules: {
-        //   phone: [{ validator: validatorPhone, trigger: "blur" }],
-        //   smsCode: [{ validator: validatorSmsCode, trigger: "blur" }],
-        // },
       };
     },
     computed: {
@@ -126,7 +64,6 @@
         } else {
           this.avatar = localStorage.getItem('headportrait')
           this.nickName = localStorage.getItem("nickName")
-          console.log(localStorage.getItem("nickName"))
           return false;
         }
       },
@@ -146,107 +83,22 @@
       })
     },
     methods: {
+      //选择课程类型
       select(link, couType) {
         if (couType) {
           this.$router.push({ path: link, query: { couType } })
-
         } else {
           this.$router.push(link)
         }
       },
-      showLogin() {
-        this.dialogFormVisible = true;
-      },
-      codeClick() {
-        if (!this.canClick) return;
-        this.canClick = true;
-        this.codeMsg = this.totalTime + "s";
-        let clock = window.setInterval(() => {
-          this.totalTime--;
-          this.codeMsg = this.totalTime + "s";
-          if (this.totalTime < 0) {
-            window.clearInterval(clock);
-            this.codeMsg = "重新发送验证码";
-            this.totalTime = 60;
-            this.canClick = true; //这里重新开启
-          }
-        }, 1000);
-        this.$post("/userinfo/send_sms", { account: this.loginForm.phone }).then(
-          (res) => {
-            switch (res.code) {
-              case "200":
-                this.$message.success(res.msg);
-                break;
-              case "500":
-                this.$message.error(res.msg);
-                break;
-              default:
-                console.log(res.msg);
-            }
-          }
-        );
-      },
-      //登录
-      submitForm() {
-        this.$refs.loginForm.validate((valid) => {
-          if (valid) {
-            this.$post("/userinfo/login", {
-              account: this.loginForm.phone,
-              verify: this.loginForm.smsCode,
-              inCode: "",
-            }).then((res) => {
-              switch (res.code) {
-                case "200":
-                  this.avatar = res.data.headportrait;
-                  this.nickName = res.data.nickname;
-                  localStorage.setItem("accLeaTime", res.data.accLeaTime);
-                  localStorage.setItem("headportrait", res.data.headportrait);
-                  localStorage.setItem("token", res.data.token);
-                  localStorage.setItem("nickName", res.data.nickname);
-                  localStorage.setItem("vip", res.data.vip);
-                  localStorage.setItem("sex", res.data.sex);
-                  localStorage.setItem("state", res.data.state);
-                  localStorage.setItem("uid", res.data.uid);
-                  this.$store.commit("setUserInfo", {
-                    accLeaTime: res.data.accLeaTime,
-                    headportrait: res.data.headportrait,
-                    nickname: res.data.nickname,
-                    token: res.data.token,
-                    vip: res.data.vip,
-                    integral: res.data.integral,
-                    sex: res.data.sex,
-                    status: res.data.state,
-                    uid: res.data.uid
-                  });
-
-                  this.dialogFormVisible = false;
-                  this.reload()
-                case 201:
-                  this.$message.success(res.msg);
-                  this.dialogFormVisible = false;
-                  this.reload()
-                  break;
-                case "401":
-                case "402":
-                case "500":
-                  this.$message.error(res.msg);
-                  break;
-                default:
-                  console.log(res.msg);
-              }
-            });
-          }
-        });
-      },
       consult() { },
-      //查看用户协议
-      seeUserAgreement() {
-        this.dialogFormVisible = false;
-        this.$router.push({ path: "/index/about", query: { type: "A" } });
-
-      },
+      //跳转到我的消息页面
       go(link) {
-        this.$router.push(link)
+        if (localStorage.getItem("token")) {
+          this.$router.push(link);
+        } else {
+          this.$message.warning("对不起，请登录后再进行操作！");
+        }
       },
       showMenu() {
         this.isShowMenu = !this.isShowMenu;
@@ -255,9 +107,14 @@
         this.isShowMenu = false;
       },
       //隐藏登录框
-      hideLoginBox(){
-        this.dialogFormVisible=false
-      }
+      hideLoginBox() {
+        this.dialogFormVisible = false;
+      },
+      //显示登录框
+      showLoginBox() {
+        this.dialogFormVisible = true;
+      },
+      
     },
     components: {
       LoginBox,
@@ -267,9 +124,12 @@
   };
 </script>
 <style lang="scss" scoped>
+ 
+  .fade-leave-active {
+    transition: opacity .5s;
+  }
   .top-header-box {
     width: 100%;
-
     margin-bottom: 30px;
     background-image: url(~assets/image/bg_hander.png);
   }
@@ -348,6 +208,8 @@
     .notification-message {
       width: 24px;
       height: 24px;
+      background-image: url(~assets/image/icon.png);
+      background-position: -66px -88px;
     }
 
     .red-box {
@@ -382,6 +244,9 @@
     width: 24px;
     height: 24px;
     cursor: default;
+    background-image: url(~assets/image/icon.png);
+      background-position: -120px -88px;
+      border-radius: 50%;
   }
 
   .login-text {
@@ -392,21 +257,7 @@
     font-family: "PingFangSC-Regular", "PingFang SC";
   }
 
-
-
-  .btn {
-    position: fixed;
-    top: 100px;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    z-index: 100;
-
-    img {
-      width: 80px;
-      height: 80px;
-    }
-  }
+  
 
   /deep/ .el-form-item.is-error .el-input__inner {
     border-color: #98b702;
