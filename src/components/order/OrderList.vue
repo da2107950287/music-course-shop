@@ -42,7 +42,7 @@
                 </div>
                 <div class="btn-box">
                     <div class="cancel btn" v-show="item.olState==1" @click="cancelOrder(el.olId)">取消订单</div>
-                    <div class="pay btn" v-show="item.olState==1" @click="toPay(el.olId,el.couName,item.cdyPrice)">去支付
+                    <div class="pay btn" v-show="item.olState==1" @click="toPay(el.olId,item.payMethod,el.couName,item.cdyPrice)">去支付
                     </div>
                     <div class="study btn" v-show="item.olState==5" @click="toStudy(el.couId)">去学习</div>
                     <div class="pay btn" v-show="item.olState==6" @click="buyAgain(el.couType,el.couId)">再次购买</div>
@@ -83,12 +83,12 @@
 
             },
             //去支付
-            toPay(olId, couName, totalPrice) {
-                this.$router.push({ path: '/index/scanPay', query: { olId, couName, totalPrice } });
+            toPay(olId,payMethod, couName, totalPrice) {
+                this.$router.push({ path: '/index/scanPay', query: { olId,payMethod, couName, totalPrice } });
             },
             //再次购买
-            buyAgain(couType, couId) {
-                this.$router.push({ path: "/index/submitOrder", query: { couType, couId } })
+            buyAgain(payMethod, couId) {
+                this.$router.push({ path: "/index/submitOrder", query: { payMethod, couId } })
             },
             //去学习
             toStudy(couId) {

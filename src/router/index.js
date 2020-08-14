@@ -115,7 +115,11 @@ const routes = [
           },
         ]
       },
-
+      {
+        path: 'test',
+        component: () => import("views/Test.vue"),
+        meta: { title: "直播弹幕测试" }
+      },
 
     ]
   }

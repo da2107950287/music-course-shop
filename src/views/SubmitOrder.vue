@@ -56,8 +56,8 @@
             })
         },
         methods: {
-            pay(payType) {
-                this.$router.push({ path: '/index/scanPay', query: { totalPrice: this.totalPrice, couId: this.couId, integral: this.integral, payType, couName: this.couName } });
+            pay(payMethod) {
+                this.$router.push({ path: '/index/scanPay', query: { totalPrice: this.totalPrice, couId: this.couId, integral: this.integral, payMethod, couName: this.couName } });
             }
         },
         components: {

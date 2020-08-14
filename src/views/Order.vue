@@ -34,17 +34,18 @@
 
     created() {
       this.getData(this.currentIndex)
+
     },
     methods: {
       getData(olState) {
 
         this.$post('/orderlist/getOrderlist', { olState, type: this.type, PageNumber: this.currentPage, PageSize: this.pageSize }).then(res => {
           if (res.code == 200) {
-            this.total = res.data.PageCount*this.pageSize;
+            this.total = res.data.PageCount * this.pageSize;
             this.list = res.data.list;
             this.list.forEach(item => {
               if (item.olState == 1) {
-                setInterval(() => {
+                let timer = setInterval(() => {
                   var date = new Date();
                   var now = date.getTime();
                   let olData = new Date(item.olTime.replace(/-/g, '/'))
@@ -55,6 +56,8 @@
                     let m = Math.floor(leftTime / 1000 / 60 % 60);
                     let s = Math.floor(leftTime / 1000 % 60);
                     this.$set(item, "countTime", m + "分" + s + "秒")
+                  } else {
+                    clearInterval(timer);
                   }
                 }, 1000);
               }

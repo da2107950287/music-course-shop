@@ -9,7 +9,7 @@
         <span>(微信/支付宝支付)</span>
       </div>
       <div class="table-body">
-        <el-radio-group v-model="payType" fill="#98B702">
+        <el-radio-group v-model="payMethod" fill="#98B702">
           <el-radio :label="1">
             <div class="btns">
               <div class="btn wx"></div>
@@ -38,13 +38,13 @@
   export default {
     data() {
       return {
-        payType: 1,
+        payMethod: 1,
       };
     },
     props: ["totalPrice"],
     methods: {
       pay() {
-        this.$emit("pay", this.payType)
+        this.$emit("pay", this.payMethod)
       }
     }
   };

@@ -37,12 +37,16 @@
     <!-- 扫描二维码绑定微信 -->
     <el-dialog :visible.sync="dialogVisible1" width="340px" :before-close="handleClose1" center>
       <div slot="title" class="popup-title">扫描二维码绑定微信</div>
-      <img src="~assets/image/img_qr.png" alt />
+      <!-- <div id="qrcode" class="qrcode" ref="qrcode"></div> -->
+      <div id="wxCode"></div>
+
+      <!-- <img src="~assets/image/img_qr.png" alt /> -->
     </el-dialog>
     <!-- 绑定、更换手机号 -->
     <bind-phone :isShowForm="isShowForm" @hidePhoneForm="hidePhoneForm"></bind-phone>
   </div>
 </template>
+<script src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
 <script>
   import {
     provinceAndCityData,
@@ -55,9 +59,10 @@
   import BindPhone from "components/profile/BindPhone";
 
   import DisplayProfile from "components/profile/DisplayProfile";
+  import QRCode from "qrcodejs2";
 
   export default {
-    inject:['reload'],
+    inject: ['reload'],
     data() {
       return {
         dialogVisible1: false,
@@ -73,7 +78,6 @@
         userinfo: {}, //用户信息
       };
     },
-    created() { },
     created() {
       //查询用户信息
       this.$post("/userinfo/showUserinfo", {}).then((res) => {
@@ -100,6 +104,18 @@
       // 绑定微信
       bindWeChat() {
         this.dialogVisible1 = true;
+        this.$nextTick(() => {
+          var obj = new WxLogin({
+            id: "wxCode",　　//div的id
+            appid: "wx3ce688c651b9bc53",　　//后台申请的appid
+            scope: "snsapi_login",　　//写死
+            redirect_uri: encodeURI("http:localhost:8080"),　　//扫描二维码后跳转的页面
+            state: "",
+            style: "black",//二维码黑白风格
+            href: ""
+          });
+        })
+
       },
 
       handleClose1() {

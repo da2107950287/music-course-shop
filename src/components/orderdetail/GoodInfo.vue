@@ -25,7 +25,7 @@
       </div>
       <div class="btn-box">
         <div class="cancel btn" v-if="olState==1" @click="cancelOrder(item.olId)">取消订单</div>
-        <div class="pay btn" v-if="olState==1" @click="toPay()">去支付</div>
+        <div class="pay btn" v-if="olState==1" @click="toPay(item.olId,item.couName)">去支付</div>
         <div class="study btn" v-if="olState==5" @click="toStudy(item.couType,item.couId)">去学习</div>
         <div class="pay btn" v-if="olState==6" @click="buyAgain(item.couType,item.couId)">再次购买</div>
       </div>
@@ -49,7 +49,10 @@
         }
       },
       payPrice:{
-        type:String
+     
+      },
+      payMethod:{
+   
       }
     },
     
@@ -69,14 +72,15 @@
       
 
       },
-      toPay() {
+      toPay(olId,couName) {
+        this.$router.push({ path: '/index/scanPay', query: { olId,payMethod:this.payMethod, couName, totalPrice:this.payPrice } });
 
       },
       toStudy() {
         this.$router.push({ path: "/index/detail", query: { couType, couId } })
       },
-      buyAgain(couType, couId) {
-        this.$router.push({ path: "/index/submitOrder", query: { couType, couId } })
+      buyAgain(payMethod, couId) {
+        this.$router.push({ path: "/index/submitOrder", query: { payMethod, couId } })
       },
 
       seeCourse(couId, couType) {
