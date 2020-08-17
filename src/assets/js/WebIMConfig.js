@@ -34,104 +34,26 @@ function getUrl(){
 
 
 var config = {
-    /*
-     * XMPP server
-     */
-    xmppURL: getUrl().xmppUrl,
-    /*
-     * Backend REST API URL
-     */
-    apiURL: getUrl().apiUrl,
-  
-    /*
-     * Application AppKey
-     */
-    //appkey:"gdpwq123#ceshi",
-    appkey: "easemob-demo#chatdemoui",
-    /*
-     * Application Host
-     */
-    Host: "easemob.com",
-    /*
-     * Whether to use HTTPS
-     * @parameter {Boolean} true or false
-     */
-    https: true,
-    isHttpDNS: false,
-    /*
-     * isMultiLoginSessions
-     * true: A visitor can sign in to multiple webpages and receive messages at all the webpages.
-     * false: A visitor can sign in to only one webpage and receive messages at the webpage.
-     */
-    isMultiLoginSessions: true,
-    /**
-     * Whether to use window.doQuery()
-     * @parameter {Boolean} true or false
-     */
-    isWindowSDK: false,
-    /**
-     * isSandBox=true:  xmppURL: 'im-api.sandbox.easemob.com',  apiURL: '//a1.sdb.easemob.com',
-     * isSandBox=false: xmppURL: 'im-api.easemob.com',          apiURL: '//a1.easemob.com',
-     * @parameter {Boolean} true or false
-     */
-    isSandBox: false,
-    /**
-     * Whether to console.log in strophe.log()
-     * @parameter {Boolean} true or false
-     */
-    isDebug: true,
-    /**
-     * Whether to show logs in strophe
-     * @parameter {Boolean} true or false
-     */
-    isStropheLog: false,
-    /**
-     * will auto connect the xmpp server autoReconnectNumMax times in background when client is offline.
-     * won't auto connect if autoReconnectNumMax=0.
-     */
-    autoReconnectNumMax: 5,
-    /**
-     * the interval secons between each atuo reconnectting.
-     * works only if autoReconnectMaxNum >= 2.
-     */
-    autoReconnectInterval: 2,
-    /**
-     * webrtc supports WebKit and https only
-     */
-    isWebRTC: true,//window.RTCPeerConnection && /^https\:$/.test(window.location.protocol),
-    /**
-     *  cn: chinese
-     *  us: english
-     */
-    i18n: "us",
-    /*
-     * Set to auto sign-in
-     */
-    isAutoLogin: true,
-    /**
-     * Size of message cache for person to person
-     */
-    p2pMessageCacheSize: 500,
-    /**
-     * When a message arrived, the receiver send an ack message to the
-     * sender, in order to tell the sender the message has delivered.
-     * See call back function onReceivedMessage
-     */
-    delivery: true,
-    /**
-     * Size of message cache for group chating like group, chatroom etc
-     */
-    groupMessageCacheSize: 200,
-    /**
-     * 5 actual logging methods, ordered and available:
-     * 'TRACE', 'DEBUG', 'INFO', 'WARN', 'ERROR'
-     */
+    socketServer: '//im-api-v2.easemob.com/ws',    // socket Server地址
 
-    loglevel: "ERROR",
-
-    /**
-     * enable localstorage for history messages
-     */
-    enableLocalStorage: true
+    restServer: '//a1.easemob.com',               // rest Server地址
+    
+    appkey: '1131200717046573#mustard',        // App key
+    
+    https : false,                            // 是否使用https
+    
+    isHttpDNS: true,                          // 3.0 SDK支持，防止DNS劫持从服务端获取XMPPUrl、restUrl 
+    
+    isMultiLoginSessions: false,              // 是否开启多页面同步收消息，注意，需要先联系商务开通此功能
+    
+    isDebug: false,                           // 打开调试，会自动打印log，在控制台的console中查看log
+    
+    autoReconnectNumMax: 2,                   // 断线重连最大次数
+    
+    heartBeatWait: 30000,                     // 心跳间隔（只在小程序中使用）
+    
+    delivery: true,                           // 是否发送已读回执
+    
+    useOwnUploadFun: false         // 是否使用自己的上传方式（如将图片文件等上传到自己的服务器，构建消息时只传url）
 }
 export default config

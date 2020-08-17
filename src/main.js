@@ -12,7 +12,10 @@ import VueLazyload from 'vue-lazyload'
 import 'normalize.css/normalize.css'
 import {post} from './assets/js/axios'
 import axios from 'axios'
+import Vant from 'vant';
+import 'vant/lib/index.css';
 
+Vue.use(Vant);
 
 Vue.use(ElementUI);
 
