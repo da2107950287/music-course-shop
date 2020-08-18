@@ -25,7 +25,7 @@
           </el-cascader>
         </div>
         <div>
-          <span>简介:</span>
+          <span>简介：</span>
           <el-input type="text" v-model="userinfo.intro"></el-input>
         </div>
       </div>
@@ -46,7 +46,6 @@
     <bind-phone :isShowForm="isShowForm" @hidePhoneForm="hidePhoneForm"></bind-phone>
   </div>
 </template>
-<script src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
 <script>
   import {
     provinceAndCityData,
@@ -57,7 +56,6 @@
     TextToCode,
   } from "element-china-area-data";
   import BindPhone from "components/profile/BindPhone";
-
   import DisplayProfile from "components/profile/DisplayProfile";
   import QRCode from "qrcodejs2";
 
@@ -104,17 +102,21 @@
       // 绑定微信
       bindWeChat() {
         this.dialogVisible1 = true;
-        this.$nextTick(() => {
+        const s = document.createElement('script')
+        s.type = 'text/javascript'
+        s.src = 'https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js'
+        const wxElement = document.body.appendChild(s)
+        wxElement.onload = function () {
           var obj = new WxLogin({
-            id: "wxCode",　　//div的id
-            appid: "wx3ce688c651b9bc53",　　//后台申请的appid
-            scope: "snsapi_login",　　//写死
-            redirect_uri: encodeURI("http:localhost:8080"),　　//扫描二维码后跳转的页面
-            state: "",
-            style: "black",//二维码黑白风格
-            href: ""
-          });
-        })
+            id: 'wxCode', // 需要显示的容器id
+            appid: 'wx3ce688c651b9bc53', // 公众号appid wx*******
+            scope: 'snsapi_login', // 网页默认即可
+            redirect_uri: encodeURIComponent('http://127.0.0.1'), // 授权成功后回调的url
+            state: Math.ceil(Math.random() * 1000), // 可设置为简单的随机数加session用来校验
+            style: 'black', // 提供"black"、"white"可选。二维码的样式
+            href: '' // 外部css文件url，需要https
+          })
+        }
 
       },
 
@@ -207,6 +209,8 @@
         display: inline-block;
         color: #9899a1;
         cursor: default;
+        text-align-last: justify;
+        text-align: justify;
       }
 
       span:nth-child(2) {

@@ -5,8 +5,8 @@
         <div :class="{'active':currentIndex==item.olState}">{{item.name}}</div>
       </div>
     </div>
-    <order-list :list="list"></order-list>
-    <el-pagination v-if="list.length!=0" @current-change="handleCurrentChange" :current-page="currentPage"
+    <order-list :style="{'margin-bottom':total<=pageSize?'30px':''}" :list="list"></order-list>
+    <el-pagination v-if="total>pageSize" @current-change="handleCurrentChange" :current-page="currentPage"
       :page-size="pageSize" background layout="prev, pager, next" :total="total" class="pagination">
     </el-pagination>
   </div>
@@ -55,7 +55,7 @@
                   if (leftTime >= 0) {
                     let m = Math.floor(leftTime / 1000 / 60 % 60);
                     let s = Math.floor(leftTime / 1000 % 60);
-                    this.$set(item, "countTime", m + "分" + s + "秒")
+                    this.$set(item, "countTime", `请在${m}分${s}秒内完成支付，超时订单将被自动取消哦〜`)
                   } else {
                     clearInterval(timer);
                   }

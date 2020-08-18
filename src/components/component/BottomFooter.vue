@@ -17,18 +17,22 @@
             <img src="~assets/image/qr.png" alt="">
         </div>
         <div class="btns">
-            <div class="consult btn"></div>
+            <div v-if="!isShowChat" class="consult1 btn" @click="showChat"></div>
+            <div v-else class="consult2 btn" @click="hideChat"></div>
             <div class="top btn" @click="toTop"></div>
-        </div>
+            <chat v-if="isShowChat" @hideChat="hideChat" class="chat"></chat>
 
+        </div>
 
     </div>
 </template>
 <script>
+    import Chat from 'components/chat/Chat'
     export default {
         data() {
             return {
-                isShow: false
+                isShow: false,
+                isShowChat: false
             }
         },
         watch: {
@@ -37,6 +41,13 @@
             }
         },
         methods: {
+            showChat() {
+                this.isShowChat = true;
+
+            },
+            hideChat() {
+                this.isShowChat = false;
+            },
             dispalyQrCode() {
                 this.isShow = !this.isShow;
             },
@@ -47,6 +58,9 @@
             toTop() {
                 window.scrollTo(0, 0);
             }
+        },
+        components: {
+            Chat
         }
     }
 </script>
@@ -114,7 +128,7 @@
     }
 
     .btns {
-        position: fixed;
+        position: absolute;
         bottom: 200px;
         right: 0;
         display: flex;
@@ -128,13 +142,25 @@
             border-radius: 50%;
         }
 
-        .consult {
+        .consult1 {
             background-position: -66px -292px;
+        }
+
+        .consult2 {
+            background-position: -156px -292px;
+
         }
 
         .top {
             margin-top: 30px;
             background-position: -246px -292px;
+        }
+        .chat{
+            position: absolute;
+            bottom: 160px;
+            right: 20px;
+            box-shadow: 5px 5px 10px rgba(152, 183, 2, 0.2);
+
         }
     }
 </style>

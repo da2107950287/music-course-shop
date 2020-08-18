@@ -21,6 +21,7 @@ export default {
     ...mapActions(["sendImgMessage"]),
     // TODO 当前username、及type不是从pams里取
     pictureChange(e) {
+      console.log(this.type)
       let isRoom = this.type == "chatroom" || this.type == "groupchat";
       let file = WebIM.utils.getFileUrl(e.target);
       if (!file.filename) {
@@ -48,9 +49,7 @@ export default {
       let img = this.$refs.imgDom;
       img && img.click();
     },
-    inputRef(node) {
-      this.image = node;
-    }
+    
   },
   props: [
     "type", // 聊天类型 contact, group, chatroom

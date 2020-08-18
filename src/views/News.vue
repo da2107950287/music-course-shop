@@ -3,7 +3,7 @@
     <profile-header>
       <div slot="title">我的消息</div>
     </profile-header>
-    <div class="table">
+    <div class="table" :style="{'margin-bottom':total<=pageSize?'30px':''}">
       <div class="table-header flex">
         <div @click="handleCheckedAll">
           <img v-if="!checkedAll" src="~assets/image/icon_check_normal.png" class="select-icon" />
@@ -38,7 +38,7 @@
         </div>
       </div>
     </div>
-    <el-pagination v-if="arr.length>0" @current-change="handleCurrentChange" :current-page="currentPage"
+    <el-pagination v-if="total>pageSize" @current-change="handleCurrentChange" :current-page="currentPage"
       :page-size="pageSize" background layout="prev, pager, next" :total="total" class="pagination">
     </el-pagination>
   </div>

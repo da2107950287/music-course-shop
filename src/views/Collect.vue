@@ -3,8 +3,8 @@
         <profile-header>
             <div slot="title">我的收藏</div>
         </profile-header>
-        <div class="collect-bottom">
-            <course-item v-for="(item,index) in list" :key="index" :list="item.courseEntity">
+        <div class="collect-bottom" :style="{'margin-bottom':total<=pageSize?'30px':''}">
+            <course-item v-for="(item,index) in list" :key="index" :list="item.courseEntity" @click.native="seeDetail(item.couId)">
                 <img slot="img" :src="item.courseEntity.cover">
                 <div slot="collect" class="iscollected" ></div>
               
@@ -14,7 +14,7 @@
                 </div>
             </course-item>
         </div>
-        <el-pagination v-if="list.length>0" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize"
+        <el-pagination v-if="total>pageSize" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize"
             background layout="prev, pager, next" :total="total" class="pagination">
         </el-pagination>
     </div>
@@ -47,6 +47,10 @@
             handleCurrentChange(currentPage) {
                 this.currentPage = currentPage;
                 this.getData()
+            },
+            seeDetail(couId){
+                console.log(9999)
+                this.$router.push({path:'/index/detail',query:{couId}})
             }
         },
         components: {

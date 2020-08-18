@@ -9,7 +9,7 @@
             <course-description v-show="currentIndex==0" :courseDes="couresDetail"></course-description>
             <course-catalog v-show="currentIndex==1" :catalogue="catalogue" :buyState="buyState"></course-catalog>
             <!-- <div v-show="currentIndex==2" v-html="couresDetail.lecturerIntro"></div> -->
-            <teacher-intro v-show="currentIndex==2"  :teacherList="teacherList"></teacher-intro>
+            <teacher-intro v-show="currentIndex==2"  :teacherList="couresDetail.list"></teacher-intro>
         </div>
     </div>
 </template>
@@ -43,7 +43,7 @@
             }
         },
         created() {
-            this.teacherList = this.couresDetail.list;
+            
             this.$bus.$on("audition", this.audition)
         },
         methods: {

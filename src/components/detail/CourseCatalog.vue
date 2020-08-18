@@ -43,11 +43,23 @@
     methods: {
       go(item) {
         if (item.audition == 1) {
-          this.$router.push({ path: '/index/vedio', query: { url: item.catUrl, catName: item.catName } })
-        } else if (this.buyState == 1) {
+          if (item.catType == 1) {//直播
+            if(item.playstate==1){
+              this.$message("直播未开始")
+            }else if (item.playstate == 2) {//正在直播
+              this.$router.push({ path: '/index/liveVedio', query: { url: item.playurl, catName: item.catName } })
+            } else if (item.playstate == 3) {//直播已结束
+              this.$router.push({ path: '/index/vedio', query: { url: item.playback, catName: item.catName } })
+            }
+          } else if (item.catType == 2) {//录播
+            this.$router.push({ path: '/index/vedio', query: { url: item.catUrl, catName: item.catName } })
+          }
+          
+        } else {
+          if (this.buyState == 1) {
           if (item.catType == 1) {
             if (item.playstate == 2) {//正在直播
-              this.$router.push({ path: '/index/vedio', query: { url: item.playurl, catName: item.catName } })
+              this.$router.push({ path: '/index/liveVedio', query: { url: item.playurl, catName: item.catName } })
             } else if (item.playstate == 2) {//直播已结束
               this.$router.push({ path: '/index/vedio', query: { url: item.playback, catName: item.catName } })
             }
@@ -58,6 +70,9 @@
         } else {
           this.$message("请购买后，在进行观看")
         }
+        }
+        
+        
 
       }
     }

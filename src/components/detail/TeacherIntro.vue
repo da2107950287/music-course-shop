@@ -5,7 +5,7 @@
         <img :src="item.headportrait" />
       </div>
       <div class="right">
-        <h3>{{item.username}}</h3>
+        <div class="nickname">{{item.username}}</div>
         <div>
           <span>授课内容：</span>
           <span>精品竖笛进阶课程</span>
@@ -25,10 +25,6 @@
         }
       }
     },
-    created(){
-      console.log(this.teacherList)
-    }
-
   };
 </script>
 <style lang="scss" scoped>
@@ -56,8 +52,12 @@
       width: 883px;
       margin-left: 20px;
 
-      h3 {
+      .nickname {
         color: #36363A;
+        font-size: 24px;
+        font-family: "PingFangSC-Medium", "PingFang SC";
+        font-weight: 500;
+        margin-bottom: 15px;
       }
 
       div {

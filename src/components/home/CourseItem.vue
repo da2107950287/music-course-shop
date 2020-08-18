@@ -15,7 +15,8 @@
                     <div class="img-icon img2"></div>
 
                     <span>有 效 期：</span>
-                    <span>{{course.termOfValidity}}</span>
+                    <span v-if="course.termOfValidity!=0">{{course.termOfValidity}}月</span>
+                    <span v-else>长期有效</span>
                 </div>
                 <div class="blank"></div>
                 <div class="common">
@@ -36,7 +37,7 @@
                     <div class="vip"></div>
                     <div class="money">
                         <span>&yen;</span>
-                        <span>{{course.pricevip}}</span>
+                        <span>{{course.pricevip.toFixed(2)}}</span>
                     </div>
                 </div>
             </div>
@@ -205,7 +206,7 @@
 
     .money {
         color: #36363A;
-        font-weight: 600px;
+        font-family:"PingFangSC-Semibold","PingFang SC";
     }
 
     .money>span:nth-child(1) {

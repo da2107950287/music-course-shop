@@ -3,7 +3,7 @@
         <div class="order-item" v-for="(item,index) in list" :key="index">
             <div class="title" v-show="item.olState==1">
                 <div>待支付</div>
-                <div class="count-down">请在{{item.countTime}}内完成支付，超时订单将被自动取消哦〜</div>
+                <div class="count-down">{{item.countTime}}</div>
             </div>
             <div class="title" v-show="item.olState==5">
                 <div>已完成</div>

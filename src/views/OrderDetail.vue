@@ -6,9 +6,10 @@
                 <div slot="title" v-show="detail.olState==1">待支付</div>
                 <div slot="title" v-show="detail.olState==5">已完成</div>
                 <div slot="title" v-show="detail.olState==6">已取消</div>
-                <div slot="dec" v-show="detail.olState==1">请在{{countTime}}内完成支付，超时订单将被自动取消哦〜</div>
+                <div slot="dec" v-show="detail.olState==1" class="count-time">{{countTime}}</div>
             </profile-header>
-            <good-info :courses="detail.orderlistCourse" :olState="detail.olState" :payPrice="detail.payPrice" :payMethod="detail.payMethod"></good-info>
+            <good-info :courses="detail.orderlistCourse" :olState="detail.olState" :payPrice="detail.payPrice"
+                :payMethod="detail.payMethod"></good-info>
             <order-info :detail="detail"></order-info>
         </div>
     </div>
@@ -61,5 +62,10 @@
     .order-detail {
         width: 1200px;
         margin: 0 auto 30px;
+
+        .count-time {
+            font-family: "PingFangSC-Regular", "PingFang SC";
+            font-weight: 400;
+        }
     }
 </style>

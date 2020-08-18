@@ -37,7 +37,6 @@ if (!WebIM.conn.apiUrl) {
 WebIM.conn.listen({
   onOpened: function (message) { // 连接成功回调
     // 登录或注册成功后 跳转到好友页面
-    console.log(store.state)
 		const username = store.state.login.username || localStorage.getItem("userInfo") && JSON.parse(localStorage.getItem("userInfo")).userId;
 		// const path = location.pathname.indexOf("login") !== -1 || location.pathname.indexOf("register") !== -1 ? "/contact" : location.pathname;
 		// const redirectUrl = `${path}?username=${username}`;
@@ -49,6 +48,7 @@ WebIM.conn.listen({
 	}, // 连接关闭回调
 	onTextMessage: function (message) {
 		const { from, to, type } = message;
+		console.log("接收文本消息",message)
 		const chatId = type !== "chat" ? to : from;
 		const typeMap = {
 			chat: "contact",
@@ -60,20 +60,21 @@ WebIM.conn.listen({
 			chatId: chatId,
 			msg: message.data,
 			bySelf: false,
+			time:message.time,
 			from: message.from,
 			mid: message.id
 		});
-		type === 'chat' && ack(message);
-		if (WebIM && WebIM.call && message && message.ext && message.ext.msg_extension) {
-			var msgExtension = message.ext.msg_extension && JSON.parse(message.ext.msg_extension);
-			var options = {
-				confrId: message.ext.conferenceId,
-				password: message.ext.password || "",
-				gid: msgExtension.group_id,
-				inviter: msgExtension.inviter
-			};
-			WebIM.call.listener.onInvite(message.from, options);
-		}
+		// type === 'chat' && ack(message);
+		// if (WebIM && WebIM.call && message && message.ext && message.ext.msg_extension) {
+		// 	var msgExtension = message.ext.msg_extension && JSON.parse(message.ext.msg_extension);
+		// 	var options = {
+		// 		confrId: message.ext.conferenceId,
+		// 		password: message.ext.password || "",
+		// 		gid: msgExtension.group_id,
+		// 		inviter: msgExtension.inviter
+		// 	};
+		// 	WebIM.call.listener.onInvite(message.from, options);
+		// }
 	}, // 收到文本消息
 	onEmojiMessage: function (message) {
 		console.log("onEmojiMessage", message);
@@ -188,7 +189,7 @@ WebIM.conn.listen({
 		type === 'chat' && 	ack(message);
 	}, // 收到视频消息
 	onPresence: function (message) {
-		console.log("onPresence", message);
+		console.log("处理“广播”或“发布-订阅”消息，如联系人订阅请求、处理群组、聊天室被踢解散等消息", message);
 		// let select_id = store.state.group.groupInfo.gid; // 群组相关操作，更新数据时需要
 		// switch (message.type) {
 		// 	case "subscribe":

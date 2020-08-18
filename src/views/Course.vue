@@ -4,7 +4,7 @@
       <div slot="title">我的课程</div>
       <div slot="right">累计学习：{{accLeaTime}}分钟</div>
     </profile-header>
-    <div class="course-bottom">
+    <div class="course-bottom" :style="{'margin-bottom':total<=pageSize?'30px':''}">
       <course-item v-for="(item,index) in list" :key="index" :list="item.courseEntity">
         <img slot="img" v-lazy="item.courseEntity.cover" alt />
         <div slot="progress" class="bg-progress">
@@ -15,7 +15,7 @@
         <div slot="last" class="btn" @click="toStudy(item.couId)">去学习</div>
       </course-item>
     </div>
-    <el-pagination @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize" background
+    <el-pagination v-if="total>pageSize" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize" background
       layout="prev, pager, next" :total="total" class="pagination">
     </el-pagination>
   </div>

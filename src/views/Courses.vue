@@ -1,8 +1,8 @@
 <template>
     <div>
         <banner :banners="banners" />
-        <courses :courses="list" />
-        <el-pagination v-if="!list.length==0" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize"
+        <courses :courses="list" :style="{'margin-bottom':total<=pageSize?'30px':''}"/>
+        <el-pagination v-if="total>pageSize" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize"
             background layout="prev, pager, next" :total="total" class="pagination">
         </el-pagination>
         <download-app />

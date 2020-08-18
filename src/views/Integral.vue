@@ -4,7 +4,7 @@
       <div slot="title">我的积分</div>
       <div slot="right">当前积分：{{integral}}</div>
     </profile-header>
-    <div class="integral-bottom">
+    <div class="integral-bottom" :style="{'margin-bottom':total<=pageSize?'30px':''}">
       <div class="table">
         <ul class="table-header">
           <li>积分来源/用途</li>
@@ -31,6 +31,7 @@
         integral: 0,
         currentPage: 1,
         pageSize: 10,
+        total:0,
         list: [],
       };
     },
