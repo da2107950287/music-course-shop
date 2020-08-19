@@ -1,5 +1,6 @@
 module.exports = {
-    configureWebpack: {
+  publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
+  configureWebpack: {
     resolve: {
       alias: {
         'components': '@/components',
@@ -11,14 +12,14 @@ module.exports = {
       }
     }
   },
-    devServer: {
-        port:8080,
-        proxy:{
-           "/mustard": {
-                target: "http://47.111.244.224/mustard",
-                changeOrigin: true,
-                pathRewrite: { '^/mustard': '' }
-            }
-        }
+  devServer: {
+    port: 8080,
+    proxy: {
+      "/mustard": {
+        target: "http://47.111.244.224/mustard",
+        changeOrigin: true,
+        pathRewrite: { '^/mustard': '' }
+      }
     }
+  }
 }

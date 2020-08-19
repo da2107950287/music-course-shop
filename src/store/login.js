@@ -1,5 +1,5 @@
 import { Message } from "element-ui";
-import WebIM from "../assets/js/WebIM";
+import WebIM from "assets/js/WebIM";
 const Login = {
 	state: {
 		isRegister: false,
@@ -71,12 +71,7 @@ const Login = {
       }
       WebIM.conn.joinChatRoom(optuons)
     }
-    
-
-
 	},
-	getters: {
-
-	}
+	getters: {}
 };
 export default Login;

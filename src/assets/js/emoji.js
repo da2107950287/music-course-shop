@@ -1,5 +1,5 @@
 module.exports = {
-  path: "assets/image/faces",
+  path: "../../static/image/faces",
 	obj: {
 		"[):]": "ee_1.png",
 		"[:D]": "ee_2.png",

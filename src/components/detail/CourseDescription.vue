@@ -1,10 +1,10 @@
 <template>
     <div class="course-desc">
-        <div class="title">课程参数</div>
+        <!-- <div class="title">课程参数</div> -->
         <!-- <div class="course-parameters" v-html="courseDes.intro"></div> -->
       
-        <ul class="course-parameters">
-            <li v-html="courseDes.lecturerIntro"></li>
+        <!-- <ul class="course-parameters">
+            <li v-html="courseDes.lecturerIntro"></li> -->
             <!-- <li>
                 <span>课时：</span>
                 <span>13.0</span>
@@ -37,11 +37,11 @@
                 <span>智能语音识别练习：</span>
                 <span>有</span>
             </li> -->
-        </ul>
-        <div class="title">课程介绍</div>
+        <!-- </ul> -->
+        <!-- <div class="title">课程介绍</div> -->
         <p v-html="courseDes.intro"></p>
-        <div class="title">听课须知</div>
-        <p>{{message}}</p>
+        <!-- <div class="title">听课须知</div> -->
+        <!-- <p>{{message}}</p> -->
         
     </div>
 </template>

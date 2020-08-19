@@ -17,22 +17,29 @@
             <img src="~assets/image/qr.png" alt="">
         </div>
         <div class="btns">
+            <!-- <a href='javascript:;' @click='showChat'>快联系我</a> -->
             <div v-if="!isShowChat" class="consult1 btn" @click="showChat"></div>
             <div v-else class="consult2 btn" @click="hideChat"></div>
             <div class="top btn" @click="toTop"></div>
-            <chat v-if="isShowChat" @hideChat="hideChat" class="chat"></chat>
+            <!-- <chat v-if="isShowChat" @hideChat="hideChat" class="chat"></chat> -->
 
         </div>
 
     </div>
 </template>
+<script src='//kefu.easemob.com/webim/easemob.js'></script>
 <script>
     import Chat from 'components/chat/Chat'
     export default {
         data() {
             return {
                 isShow: false,
-                isShowChat: false
+                isShowChat: false,
+                uid: "",
+                password: '123456',
+                nickname: '',
+                account: '',
+                configId: "6a6f3d22-243d-4b3c-9e7f-5598c1057842"
             }
         },
         watch: {
@@ -40,10 +47,47 @@
                 this.isShow = false
             }
         },
+        created() {
+            window.easemobim = window.easemobim || {};
+            this.$post("/userinfo/showUserinfo").then(res => {
+                if (res.code == 200) {
+                    this.uid = res.data.userinfo.uid;
+                    this.nickname = res.data.userinfo.nickname;
+                    this.account = res.data.userinfo.account;
+
+                    easemobim.config = {
+                        configId: this.configId,
+                        hide: true,
+                        autoConnect: true,
+                        hideKeyboard: true,
+                        // dialogPosition: { x: '30px', y: '100px' },
+                        // user: {
+                        //     // username 必填，password 和 token 任选一项填写
+                        //     username: this.uid,
+                        //     password: this.password,
+                        // },
+
+                        visitor: {
+                            userNickname: this.username,
+                            phone: this.account
+                        },
+                        onready: function () {
+                            console.log("open")
+                        },
+                        onclose: function () {
+                            this.isShowChat = false
+                        }
+                    }
+
+
+                }
+            })
+
+        },
         methods: {
             showChat() {
                 this.isShowChat = true;
-
+                easemobim.bind({ configId: this.configId })
             },
             hideChat() {
                 this.isShowChat = false;
@@ -64,6 +108,12 @@
         }
     }
 </script>
+<style>
+    body.theme-5 /deep/ .bg-color {
+        display: none !important;
+        background-color: #fff;
+    }
+</style>
 <style lang="scss" scoped>
     .footer-box {
         width: 100%;
@@ -129,7 +179,7 @@
 
     .btns {
         position: absolute;
-        bottom: 200px;
+        bottom: 250px;
         right: 0;
         display: flex;
         flex-direction: column;
@@ -155,7 +205,8 @@
             margin-top: 30px;
             background-position: -246px -292px;
         }
-        .chat{
+
+        .chat {
             position: absolute;
             bottom: 160px;
             right: 20px;

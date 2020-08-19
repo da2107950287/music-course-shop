@@ -22,9 +22,16 @@
       };
     },
     mounted() {
+      
       this.catName=this.$route.query.catName;
       this.url = this.$route.query.url;
-      this.uid=localStorage.getItem("uid")
+      this.catId=this.$route.query.catId;
+      this.uid=localStorage.getItem("uid");
+      this.$post("/aliyun/enterLive",{catId:this.catId}).then(res=>{
+        if(res.data==200){
+          console.log(res.data)
+        }
+      })
       var player = new Aliplayer(
         {
           id: "player-con",

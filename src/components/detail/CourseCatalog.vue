@@ -16,10 +16,12 @@
           </div>
           <!-- 直播 -->
           <div v-else-if="item.catType==1">
-            <div>{{item.playstate}}</div>
+            <div v-if="item.playstate==1">未开播</div>
+            <div v-else-if="item.playstate==2" class="living"><div></div>直播中</div>
+            <div v-else>{{item.catTime}}</div>
           </div>
           <!-- 录播 -->
-          <div v-else-if="item.catType==2">
+          <div v-else="item.catType==2">
             <div>{{item.catTime}}</div>
           </div>
         </div>
@@ -42,38 +44,23 @@
     },
     methods: {
       go(item) {
-        if (item.audition == 1) {
-          if (item.catType == 1) {//直播
-            if(item.playstate==1){
+         //已购买或者免费试听
+         if (item.audition == 1 || this.buyState == 1) {
+          //直播
+          if (item.catType == 1) {
+            if (item.playstate == 1) {//直播未开始
               this.$message("直播未开始")
-            }else if (item.playstate == 2) {//正在直播
-              this.$router.push({ path: '/index/liveVedio', query: { url: item.playurl, catName: item.catName } })
+            } else if (item.playstate == 2) {//正在直播
+              this.$router.push({ path: '/index/liveVedio', query: { url: item.playurl, catName: item.catName, catId: item.catId } })
             } else if (item.playstate == 3) {//直播已结束
               this.$router.push({ path: '/index/vedio', query: { url: item.playback, catName: item.catName } })
             }
-          } else if (item.catType == 2) {//录播
+          } else {//录播
             this.$router.push({ path: '/index/vedio', query: { url: item.catUrl, catName: item.catName } })
-          }
-          
-        } else {
-          if (this.buyState == 1) {
-          if (item.catType == 1) {
-            if (item.playstate == 2) {//正在直播
-              this.$router.push({ path: '/index/liveVedio', query: { url: item.playurl, catName: item.catName } })
-            } else if (item.playstate == 2) {//直播已结束
-              this.$router.push({ path: '/index/vedio', query: { url: item.playback, catName: item.catName } })
-            }
-          } else if (item.catType == 2) {//录播
-            this.$router.push({ path: '/index/vedio', query: { url: item.catUrl, catName: item.catName } })
-
           }
         } else {
           this.$message("请购买后，在进行观看")
         }
-        }
-        
-        
-
       }
     }
   }
@@ -165,5 +152,16 @@
   .list:hover span,
   .list:hover div {
     color: #98b702 !important;
+  }
+  .living{
+    color: #FB9715;
+    font-size: 14px;
+    >div{
+      width: 16px;
+      height: 16px;
+      background-image: url(~assets/image/icon.png);
+      background-position: -312px -92px;
+      
+    }
   }
 </style>

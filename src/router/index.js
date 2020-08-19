@@ -120,6 +120,16 @@ const routes = [
         component: () => import("views/LiveVedio.vue"),
         meta: { title: "直播" }
       },
+      {
+        path:'test',
+        component:()=>import("views/Test.vue"),
+        meta:{title:'测试'}
+      },
+      {
+        path:'kefu',
+        component:()=>import("views/kefu.vue"),
+        meta:{title:'测试'}
+      }
 
     ]
   }
@@ -127,8 +137,8 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  // base: process.env.BASE_URL,
+  // mode: 'history',
+  base: process.env.BASE_URL,
   routes
 })
 
@@ -146,4 +156,51 @@ router.beforeEach((to, from, next) => {
     }
   }
 })
+// router.afterEach((to,from,next)=>{
+//   function getClass(tagName,aClass){
+//     let aEle = document.getElementsByTagName(tagName);　　  
+//     let result = []; 
+//     let className = '';
+// 　　for(let i=0;i<aEle.length;i++){  
+//         if(aEle[i].className != ''){
+//           className = aEle[i].className;
+//           if(className.indexOf(aClass) > -1){
+//             result.push(aEle[i])
+//           }else{
+//             if(aEle[i].className == aClass){   
+//               result.push(aEle[i]) 
+//             }
+//           }
+//         }
+// 　　}
+// 　　return result
+//   }
+//   setTimeout(()=>{
+//     let _hmt = _hmt || [];
+//     (function() {
+//       //重加载环信
+//       let easemobimPromptWrapper = getClass("div","easemobim-prompt-wrapper");
+//       if(easemobimPromptWrapper.length > 0){
+//           for(let i=0;i<easemobimPromptWrapper.length;i++){
+//             easemobimPromptWrapper[i].remove();
+//           }
+//       }
+//       let easemobimMobile = getClass("iframe","easemobim-mobile");
+//       if(easemobimMobile.length > 0){
+//         for(let i=0;i<easemobimMobile.length;i++){
+//           easemobimMobile[i].remove();
+//         }
+//       }
+
+//       document.getElementById('kefuEasemob') && document.getElementById('kefuEasemob').remove();
+//       let hm = document.createElement("script");
+//       hm.src = "//kefu.easemob.com/webim/easemob.js";
+//       hm.id = "kefuEasemob";
+//       let s = document.getElementsByTagName("script")[0];
+//       s.parentNode.insertBefore(hm, s);
+
+//       // document.querySelector('body').removeClass('easemobim-mobile-body')
+//     })();
+//   },0);
+// })
 export default router
