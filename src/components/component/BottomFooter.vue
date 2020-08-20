@@ -27,7 +27,6 @@
 
     </div>
 </template>
-<script src='//kefu.easemob.com/webim/easemob.js'></script>
 <script>
     import Chat from 'components/chat/Chat'
     export default {

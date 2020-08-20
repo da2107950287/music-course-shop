@@ -187,33 +187,32 @@ export default {
     },
 
     customEmoji(value) {
-      this.imgUrl = require(`assets/image/faces/${value}`);
-      return `<img src='assets/image/faces/${value}' style="width:20px"/>`;
-    },
+        return `<img src="${require(`../../../static/faces/${value}`)}" style="width:20px"/>`
+      },
 
-    renderTxt(txt = "") {
-      let rnTxt = [];
-      let match = null;
-      const regex = /(\[.*?\])/g;
-      let start = 0;
-      let index = 0;
-      while ((match = regex.exec(txt))) {
-        index = match.index;
-        if (index > start) {
-          rnTxt.push(txt.substring(start, index));
+      renderTxt(txt = "") {
+        let rnTxt = [];
+        let match = null;
+        const regex = /(\[.*?\])/g;
+        let start = 0;
+        let index = 0;
+        while ((match = regex.exec(txt))) {
+          index = match.index;
+          if (index > start) {
+            rnTxt.push(txt.substring(start, index));
+          }
+          if (match[1] in emoji.obj) {
+            const v = emoji.obj[match[1]];
+            rnTxt.push(this.customEmoji(v));
+          } else {
+            rnTxt.push(match[1]);
+          }
+          start = index + match[1].length;
         }
-        if (match[1] in emoji.obj) {
-          const v = emoji.obj[match[1]];
-          rnTxt.push(this.customEmoji(v));
-        } else {
-          rnTxt.push(match[1]);
-        }
-        start = index + match[1].length;
-      }
-      rnTxt.push(txt.substring(start, txt.length));
-      return rnTxt.toString().replace(/,/g, "");
-    },
-    scollBottom() {
+        rnTxt.push(txt.substring(start, txt.length));
+        return rnTxt.join("");
+      },
+      scollBottom() {
       setTimeout(() => {
         const dom = this.$refs.msgContent;
         if (!dom) return;

@@ -63,6 +63,9 @@
       pay() {
         this.totalPrice = this.$route.query.totalPrice;
         this.couName = this.$route.query.couName;
+        this.fullname=this.$route.query.fullname;
+        this.address=this.$route.query.address;
+        this.mobile=this.$route.query.mobile;
         if (!this.$route.query.hasOwnProperty("olId")) {//第一次支付
           this.couId = this.$route.query.couId;
           this.integral = this.$route.query.integral;
@@ -83,6 +86,9 @@
         this.$post("/wx/buyCourse", {
           couId: this.couId,
           integral: this.integral,
+          fullname: this.fullname,
+          address: this.address,
+          mobile: this.mobile,
           type: 1,
         }).then((res) => {
           if (res.code == 200) {

@@ -1,12 +1,24 @@
 <template>
     <div class="submit-order">
+        <shipping-address @editAddress="showForm" :addresInfo="addresInfo">
+            <div slot="right">
+                <div class="title-left">
+                    <img src="~assets/image/icon_xgdz.png" alt="">
+                    <span v-if="addresInfo">修改地址</span>
+                    <span v-else>添加地址</span>
+                  </div>
+            </div>
+        </shipping-address>
         <course-info :detail="detail"></course-info>
         <pay-order :totalPrice="totalPrice" @pay="pay"></pay-order>
+        <edit-address :isShowForm="isShow" :aa="aa" @hideForm="hideForm" :addresInfo="addresInfo"></edit-address>
     </div>
 </template>
 <script>
+    import ShippingAddress from 'components/submitorder/ShippingAddress.vue'
     import CourseInfo from 'components/submitorder/CourseInfo.vue'
     import PayOrder from 'components/submitorder/PayOrder.vue'
+    import EditAddress from 'components/submitorder/EditAddress.vue'
     export default {
         data() {
             return {
@@ -16,22 +28,34 @@
                 integral: 0,
                 pricevip: null,
                 price: null,
-                couName: ""
-                
+                couName: "",
+                isShow: false,//是否显示编辑地址框
+                addresInfo: {},
+                aa: {}
             }
         },
-        computed:{
-            totalPrice(){
-                if(this.vip==0){
+        computed: {
+            totalPrice() {
+                if (this.vip == 0) {
                     return this.price
-                }else{
+                } else {
                     return this.pricevip
                 }
             }
         },
         created() {
             this.couId = this.$route.query.couId;
-
+            //获取地址
+            this.$post("/address/getAddress", {}).then(res => {
+                if (res.code == 200) {
+                    let data = res.data;
+                    data.forEach((item, index) => {
+                        if (item.state == 1) {
+                            this.addresInfo = item;
+                        }
+                    })
+                }
+            })
             // 获取用户相关信息
             this.$post('/userinfo/showUserinfo', {}).then(res => {
                 if (res.code == 200) {
@@ -57,12 +81,31 @@
         },
         methods: {
             pay(payMethod) {
-                this.$router.push({ path: '/index/scanPay', query: { totalPrice: this.totalPrice, couId: this.couId, integral: this.integral, payMethod, couName: this.couName } });
+                this.$router.push({
+                    path: '/index/scanPay', query: {
+                        totalPrice: this.totalPrice, 
+                        couId: this.couId, 
+                        integral: this.integral,
+                         payMethod, 
+                         couName: this.couName,
+                         fullname:this.addresInfo.fullname,
+                         address:this.addresInfo.detailed,
+                         mobile:this.addresInfo.mobile
+                    }
+                });
+            },
+            showForm() {
+                this.isShow = true;
+            },
+            hideForm() {
+                this.isShow = false;
             }
         },
         components: {
+            ShippingAddress,
             CourseInfo,
-            PayOrder
+            PayOrder,
+            EditAddress
         }
     }
 </script>

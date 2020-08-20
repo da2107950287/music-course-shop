@@ -100,7 +100,7 @@
         "onLogin",
         "onJoinChatRoom",
       ]),
-      hideChat(){
+      hideChat() {
         this.$emit("hideChat")
       },
       //加入聊天室
@@ -177,10 +177,27 @@
         this.message = v;
         this.$refs.txtDom.focus();
       },
+      getBase64Image(img) {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+        var ext = img.src.substring(img.src.lastIndexOf(".") + 1).toLowerCase();
+        var dataURL = canvas.toDataURL("image/" + ext);
+        return dataURL;
+      },
 
       customEmoji(value) {
-        this.imgUrl = require(`assets/image/faces/${value}`);
-        return `<img src='assets/image/faces/${value}' style="width:20px"/>`;
+        this.imgUrl = `../../../static/faces/${value}`
+        console.log(this.imgUrl)
+        var image = new Image();
+        image.src = this.imgUrl;
+        image.onload = function () {
+          var base64 = this.getBase64Image(image);
+          console.log(base64);
+        }
+        return `<img src='../../../static/faces/${value}' style="width:20px"/>`;
       },
 
       renderTxt(txt = "") {
@@ -263,21 +280,24 @@
       color: #fff;
       font-family: "PingFangSC-Medium", "PingFang SC";
       font-weight: 500;
-      .avator{
+
+      .avator {
         width: 50px;
         height: 50px;
         margin-left: 30px;
       }
-      .nickname{
+
+      .nickname {
         margin-left: 10px;
       }
-      .close{
+
+      .close {
         width: 16px;
         height: 16px;
         position: absolute;
         top: 10px;
         right: 10px;
-         background-image: url(~assets/image/icon.png);
+        background-image: url(~assets/image/icon.png);
         // background-size: 100%;
         background-position: -835px -195px;
       }

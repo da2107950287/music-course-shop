@@ -125,11 +125,7 @@ const routes = [
         component:()=>import("views/Test.vue"),
         meta:{title:'测试'}
       },
-      {
-        path:'kefu',
-        component:()=>import("views/kefu.vue"),
-        meta:{title:'测试'}
-      }
+     
 
     ]
   }

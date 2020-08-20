@@ -30,7 +30,6 @@
         </div>
       </div>
     </div>
-    <img src="../../static/faces/ee_24.png" alt="">
   </div>
 
 </template>
@@ -52,7 +51,6 @@
         password: '123456',
         uid: '',
         message: '',
-        
       }
     },
     computed: {
@@ -101,23 +99,14 @@
         this.$refs.txtDom.focus();
       },
 
+
+
       customEmoji(value) {
-        let url='../../static/faces/'+value
-        
-        return  `<img src='../../static/faces/ee_24.png' style="width:20px;height:20px"/>`
-        
-      },
-      getBase64Image(url, ref) {
-        var that = this
-        var image = new Image()
-        image.src = url + '?v=' + Math.random() // 处理缓存
-        image.crossOrigin = '*' // 支持跨域图片
-        image.onload = function () {
-          var base64 = that.drawBase64Image(image)
-          return base64
-        }
+        return `<img src="${require(`../../static/faces/${value}`)}" style="width:20px"/>`
       },
     
+      
+      
       renderTxt(txt = "") {
         let rnTxt = [];
         let match = null;
@@ -138,7 +127,7 @@
           start = index + match[1].length;
         }
         rnTxt.push(txt.substring(start, txt.length));
-        return rnTxt.toString().replace(/,/g, "");
+        return rnTxt.join("");
       },
       scollBottom() {
         setTimeout(() => {
@@ -218,6 +207,7 @@
 
     .msg-box {
       margin: 15px 15px 0;
+  
       font-size: 14px;
       box-sizing: border-box;
       clear: both;
