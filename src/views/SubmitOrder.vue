@@ -1,17 +1,17 @@
 <template>
     <div class="submit-order">
-        <shipping-address @editAddress="showForm" :addresInfo="addresInfo">
+        <shipping-address @editAddress="showForm" :addressInfo="addressInfo">
             <div slot="right">
                 <div class="title-left">
                     <img src="~assets/image/icon_xgdz.png" alt="">
-                    <span v-if="addresInfo">修改地址</span>
+                    <span v-if="addressInfo">修改地址</span>
                     <span v-else>添加地址</span>
-                  </div>
+                </div>
             </div>
         </shipping-address>
         <course-info :detail="detail"></course-info>
         <pay-order :totalPrice="totalPrice" @pay="pay"></pay-order>
-        <edit-address :isShowForm="isShow" :aa="aa" @hideForm="hideForm" :addresInfo="addresInfo"></edit-address>
+        <edit-address :isShowForm="isShow" :aa="aa" @hideForm="hideForm" :addressInfo="addressInfo"></edit-address>
     </div>
 </template>
 <script>
@@ -30,7 +30,7 @@
                 price: null,
                 couName: "",
                 isShow: false,//是否显示编辑地址框
-                addresInfo: {},
+                addressInfo: {},
                 aa: {}
             }
         },
@@ -51,7 +51,7 @@
                     let data = res.data;
                     data.forEach((item, index) => {
                         if (item.state == 1) {
-                            this.addresInfo = item;
+                            this.addressInfo = item;
                         }
                     })
                 }
@@ -81,16 +81,17 @@
         },
         methods: {
             pay(payMethod) {
+                console.log(this.addressInfo)
                 this.$router.push({
                     path: '/index/scanPay', query: {
-                        totalPrice: this.totalPrice, 
-                        couId: this.couId, 
+                        totalPrice: this.totalPrice,
+                        couId: this.couId,
                         integral: this.integral,
-                         payMethod, 
-                         couName: this.couName,
-                         fullname:this.addresInfo.fullname,
-                         address:this.addresInfo.detailed,
-                         mobile:this.addresInfo.mobile
+                        payMethod,
+                        couName: this.couName,
+                        fullname: this.addressInfo.fullname,
+                        address:this.addressInfo.addressinfo+ this.addressInfo.detailed,
+                        mobile: this.addressInfo.mobile
                     }
                 });
             },

@@ -98,7 +98,8 @@
     }
 
     .active {
-        border-top-style: #98B702;
+        border-top:3px solid #98B702;
+        
         color: #98B702;
         background-color: #fff;
     }

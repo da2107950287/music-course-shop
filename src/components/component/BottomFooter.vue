@@ -17,14 +17,12 @@
             <img src="~assets/image/qr.png" alt="">
         </div>
         <div class="btns">
-            <!-- <a href='javascript:;' @click='showChat'>快联系我</a> -->
             <div v-if="!isShowChat" class="consult1 btn" @click="showChat"></div>
-            <div v-else class="consult2 btn" @click="hideChat"></div>
+            <div v-else class="consult2 btn"></div>
             <div class="top btn" @click="toTop"></div>
             <!-- <chat v-if="isShowChat" @hideChat="hideChat" class="chat"></chat> -->
 
         </div>
-
     </div>
 </template>
 <script>
@@ -41,21 +39,23 @@
                 configId: "6a6f3d22-243d-4b3c-9e7f-5598c1057842"
             }
         },
+        
         watch: {
             $route(to, from) {
                 this.isShow = false
             }
         },
         created() {
+            let _this=this
             window.easemobim = window.easemobim || {};
-            this.$post("/userinfo/showUserinfo").then(res => {
+            if(localStorage.getItem("token")){
+                this.$post("/userinfo/showUserinfo").then(res => {
                 if (res.code == 200) {
                     this.uid = res.data.userinfo.uid;
                     this.nickname = res.data.userinfo.nickname;
                     this.account = res.data.userinfo.account;
-
                     easemobim.config = {
-                        configId: this.configId,
+                        configId: _this.configId,
                         hide: true,
                         autoConnect: true,
                         hideKeyboard: true,
@@ -67,14 +67,14 @@
                         // },
 
                         visitor: {
-                            userNickname: this.username,
-                            phone: this.account
+                            userNickname: _this.username,
+                            phone: _this.account
                         },
                         onready: function () {
                             console.log("open")
                         },
                         onclose: function () {
-                            this.isShowChat = false
+                            _this.isShowChat = false
                         }
                     }
 
@@ -82,6 +82,8 @@
                 }
             })
 
+            }
+            
         },
         methods: {
             showChat() {

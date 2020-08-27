@@ -166,6 +166,8 @@
           this.$post("/orderlist/showOrderlist", { olId: this.olId }).then(res => {
             if (res.code == 200) {
               if (res.data.olState != 1 && res.data.olState != 6) {
+                
+                  console.log("支付完成")
                 this.$post("/orderlist/showOrderlist", { olId: this.olId }).then(res => {
                   if (res.code == 200) {
                     this.$router.push({ path: '/index/paySuccess', query: { olId: this.olId, totalPrice: this.totalPrice } });

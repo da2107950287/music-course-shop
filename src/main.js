@@ -18,10 +18,8 @@ import 'vant/lib/index.css';
 Vue.use(Vant);
 
 Vue.use(ElementUI);
-
 Vue.use(VueLazyload)
 Vue.prototype.$axios=axios
-
 Vue.config.productionTip = false
 Vue.prototype.$post=post;
 

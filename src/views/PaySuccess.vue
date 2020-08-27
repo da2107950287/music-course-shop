@@ -29,15 +29,15 @@
       }
     },
     created(){
-      this.olId=this.$query.olId;
-      this.totalPrice=this.$query.totalPrice;
+      this.olId=this.$route.query.olId;
+      this.totalPrice=this.$route.query.totalPrice;
     },
-    mehods:{
+    methods:{
       go(link){
         this.$push({path:link})
       },
       seeOrderDetail(){
-        this.$router.push({path:'/index/orderDetal',query:{olId:this.olId}})
+        this.$router.push({path:'/index/orderDetal',query:{olId:this.olId}});
       }
     }
   }

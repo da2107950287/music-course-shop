@@ -13,14 +13,15 @@
     data() {
       return {
         url: "",
-        catName:'',
-        uid:''
+        catName: '',
+        uid: '',
+
       };
     },
     mounted() {
-      this.catName=this.$route.query.catName;
+      this.catName = this.$route.query.catName;
       this.url = this.$route.query.url;
-      this.uid=localStorage.getItem("uid")
+      this.uid = localStorage.getItem("uid")
       var player = new Aliplayer(
         {
           id: "player-con",
@@ -102,11 +103,18 @@
               type: RateComponent,
             },
           ],
+
         },
         function (player) {
           console.log("The player is created");
-        }
+
+        },
+
       );
+      player.on("ready", function () {
+        console.log(player.getDuration());//获取视频总时长
+      })
+
     },
   };
 </script>
@@ -134,6 +142,7 @@
     font-family: "PingFangSC-Medium", "PingFang SC";
     font-weight: 500;
   }
+
   /* 组件样式 */
   .player-hidden {
     display: none !important;

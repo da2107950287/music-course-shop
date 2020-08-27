@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import store from 'store'
+
 Vue.use(VueRouter)
 // 解决vue-router重复点击菜单报错的问题
 const originalPush = VueRouter.prototype.push;
@@ -83,34 +83,32 @@ const routes = [
           },
           {
             path: 'profile',
-            component: () => import('views/Profile.vue'),
+            component: () => import(/* webpackChunkName: "user" */ 'views/Profile.vue'),
             meta: { title: '我的资料' }
           },
-
           {
             path: 'course',
-            component: () => import('views/Course.vue'),
+            component: () => import(/* webpackChunkName: "user" */ 'views/Course.vue'),
             meta: { title: '我的课程' }
           },
-
           {
             path: 'order',
-            component: () => import('views/Order.vue'),
+            component: () => import(/* webpackChunkName: "user" */ 'views/Order.vue'),
             meta: { title: '我的订单' }
           },
           {
             path: 'collect',
-            component: () => import('views/Collect.vue'),
+            component: () => import(/* webpackChunkName: "user" */ 'views/Collect.vue'),
             meta: { title: '我的收藏' }
           },
           {
             path: 'news',
-            component: () => import('views/News.vue'),
+            component: () => import(/* webpackChunkName: "user" */ 'views/News.vue'),
             meta: { title: '我的消息' }
           },
           {
             path: 'integral',
-            component: () => import('views/Integral.vue'),
+            component: () => import(/* webpackChunkName: "user" */ 'views/Integral.vue'),
             meta: { title: '我的积分' }
           },
         ]
@@ -129,7 +127,6 @@ const routes = [
 
     ]
   }
-
 ]
 
 const router = new VueRouter({
@@ -148,7 +145,6 @@ router.beforeEach((to, from, next) => {
       })
     } else {
       next();
-
     }
   }
 })

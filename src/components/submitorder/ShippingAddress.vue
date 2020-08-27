@@ -9,8 +9,8 @@
     </div>
     <div class="table">
       <div class="tr1">
-        <span>{{addresInfo.fullname}}</span>
-        <span>{{addresInfo.mobile}}</span>
+        <span>{{addressInfo.fullname}}</span>
+        <span>{{addressInfo.mobile}}</span>
       </div>
       <div class="address">{{address}}</div>
     </div>
@@ -19,7 +19,7 @@
 <script>
   export default {
     props: {
-      addresInfo: {
+      addressInfo: {
         type: Object,
         default() {
           return {}
@@ -27,8 +27,13 @@
       }
     },
     watch:{
-      addresInfo(){
-        this.address=this.addresInfo.detailed.replace(/\//g, "")
+      addressInfo(){
+        if(this.addressInfo.addressinfo){
+          this.address=this.addressInfo.addressinfo.replace(/\s+/g, "")+this.addressInfo.detailed.replace(/\s+/g, "")
+
+        }else{
+          this.address=this.addressInfo.detailed.replace(/\s+/g, "")
+        }
       }
     },
     data(){
@@ -36,15 +41,6 @@
       address:''
      }
     },
-    // computed: {
-    //   // address() {
-    //   //   console.log(typeof this.addresInfo.detailed)
-    //   //   return 
-    //   // }
-    // },
-    // created(){
-    //   this.address=this.addresInfo.detailed.replace(/\//g, "")
-    // },
     methods: {
       editAddress() {
         this.$emit("editAddress");

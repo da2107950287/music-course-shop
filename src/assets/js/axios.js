@@ -33,7 +33,8 @@ export function post(url, params,) {
 		})
 
 		instance.interceptors.response.use(response => {
-			if(response.data.code==501){
+	
+			if (response.data.code == 501) {
 				localStorage.clear();
 			}
 			store.dispatch('hideLoading')
@@ -75,7 +76,7 @@ export function uploadPost(url, data) {
 			baseURL: '/mustard',
 			timeout: 5000,
 			method: 'post',
-			
+
 
 		});
 		// 配置请求和响应拦截
@@ -100,10 +101,14 @@ export function uploadPost(url, data) {
 
 		instance.interceptors.response.use(response => {
 			store.dispatch('hideLoading')
+	
+
 			return response.data
 		}, err => {
 			if (err && err.response) {
+				
 				switch (err.response.status) {
+
 					case 400:
 						err.message = '请求错误'
 						break

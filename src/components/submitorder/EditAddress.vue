@@ -39,7 +39,7 @@ export default {
         return false;
       },
     },
-    addresInfo: {
+    addressInfo: {
       type: Object,
       default() {
         return {};
@@ -60,11 +60,11 @@ export default {
     };
   },
   watch: {
-    addresInfo() {
-      this.form.username = this.addresInfo.fullname;
-      this.form.phone = this.addresInfo.mobile;
-      this.form.region = this.addresInfo.addressinfo.split("/");
-      this.form.address = this.addresInfo.detailed.replace(/\//g, "");
+    addressInfo() {
+      this.form.username = this.addressInfo.fullname;
+      this.form.phone = this.addressInfo.mobile;
+      this.form.region = this.addressInfo.addressinfo.split(" ");
+      this.form.address = this.addressInfo.detailed.replace(/\s+/g, "");
     },
   },
   methods: {
@@ -72,27 +72,33 @@ export default {
       this.$emit("hideForm");
     },
     saveEdit() {
-      //修改地址
-      if (this.addresInfo) {
+      //修改默认地址
+      if (this.addressInfo) {
         this.$post("/address/updateAddress", {
-          addId: this.addresInfo.addId,
+          addId: this.addressInfo.addId,
           fullname: this.form.username,
           mobile: this.form.phone,
-          addressinfo: this.form.region.join("/"),
-          detailed: this.form.region.join("/") + this.form.address,
+          addressinfo: this.form.region.join(" "),
+          detailed: this.form.address,
           state: "1",
-        }).then((res) => {});
+        }).then((res) => {
+          if(res.code==200){
+            this.$message.success(res.msg);
+            this.$emit("hideForm");
+          }
+        });
       } else {
-        //添加地址
+        //添加默认地址
         this.$post("/address/addAddress", {
           fullname: this.form.username,
           mobile: this.form.phone,
-          addressinfo: this.form.region.join("/"),
-          detailed: this.form.region.join("/") + this.form.address,
+          addressinfo: this.form.region.join(" "),
+          detailed:  this.form.address,
           state: 1,
         }).then((res) => {
           if (res.code == 200) {
             this.$message.success("添加地址成功！");
+            this.$emit("hideForm");
           }
         });
       }

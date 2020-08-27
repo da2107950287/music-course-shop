@@ -22,15 +22,27 @@
           <!-- <img src="~assets/image/pho_def.png" class="login-icon" /> -->
           <span class="login-text">点击登录</span>
         </div>
-        <div v-else class="login" @click="showMenu">
+        <!-- <div v-else class="login" @click="showMenu">
           <img :src="avatar" class="login-icon" />
           <span class="login-text">{{nickName}}</span>
-        </div>
+        </div> -->
         <!-- 个人菜单 -->
-        <transition name="fade">
+        <el-dropdown v-else @command="handleCommand" placement="bottom-end">
+          <!-- <el-button type="primary">
+            更多菜单<i class="el-icon-arrow-down el-icon--right"></i>
+          </el-button> -->
+          <div class="login">
+            <img :src="avatar" class="login-icon" />
+            <span class="login-text">{{nickName}}</span>
+          </div>
+          <el-dropdown-menu slot="dropdown" >
+            <el-dropdown-item v-for="(item,index) in menu" :command="item.link" :key="index">{{item.title}}</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+        <!-- <transition name="fade">
           <top-menu v-if="isShowMenu" @hideMenu="hideMenu"></top-menu>
 
-        </transition>
+        </transition> -->
       </div>
     </div>
     <!-- 登录弹窗 -->
@@ -40,7 +52,7 @@
   </div>
 </template>
 <script>
-  import Consult from "components/component/Consult";
+ 
   import LoginBox from "components/component/LoginBox";
   import TopMenu from "components/component/TopMenu";
 
@@ -55,6 +67,15 @@
         nickName: "",//昵称
         notReadNum: 0,//未读消息数量
         list: [],
+        menu: [
+          { title: "我的资料", link: "profile" },
+          { title: "我的课程", link: "course" },
+          { title: "我的订单", link: "order" },
+          { title: "我的收藏", link: "collect" },
+          { title: "我的消息", link: "news" },
+          { title: "我的积分", link: "integral" },
+          { title: "退出登录", link: "home" },
+        ],
       };
     },
     computed: {
@@ -114,11 +135,18 @@
       showLoginBox() {
         this.dialogFormVisible = true;
       },
-      
+      handleCommand(command){
+        if (command.includes("/home")) {
+          this.$router.push("/index/home");
+          localStorage.clear();
+          this.reload()
+        } else {
+          this.$router.push("/index/user/" + command);
+        }
+      }
     },
     components: {
       LoginBox,
-      Consult,
       TopMenu
     },
   };
@@ -261,5 +289,14 @@
 
   /deep/ .el-form-item.is-error .el-input__inner {
     border-color: #98b702;
+  }
+
+  .el-dropdown-menu__item:not(.is-disabled):hover{
+    color: #98b702;
+    background-color: #fff;
+  }
+  .el-dropdown-menu{
+    padding: 10px 20px;
+
   }
 </style>

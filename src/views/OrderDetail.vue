@@ -8,7 +8,7 @@
                 <div slot="title" v-show="detail.olState==6">已取消</div>
                 <div slot="dec" v-show="detail.olState==1" class="count-time">{{countTime}}</div>
             </profile-header>
-            <shipping-address :addresInfo="addresInfo"></shipping-address>
+            <shipping-address :addressInfo="addressInfo"></shipping-address>
             <good-info :courses="detail.orderlistCourse" :olState="detail.olState" :payPrice="detail.payPrice"
                 :payMethod="detail.payMethod"></good-info>
             <order-info :detail="detail"></order-info>
@@ -26,7 +26,7 @@
                 olId: '',
                 detail: {},
                 countTime: '',
-                addresInfo:{}
+                addressInfo:{}
             }
         },
         created() {
@@ -34,10 +34,11 @@
             this.$post('/orderlist/showOrderlist', { olId: this.olId }).then(res => {
                 if (res.code == 200) {
                     this.detail = res.data;
-                    this.addresInfo={
+                    this.addressInfo={
                         fullname:this.detail.fullname,
                         mobile:this.detail.mobile,
-                        detailed:this.detail.address
+                        detailed:this.detail.address,
+                        
                     }
                     if (this.detail.olState == 1) {
                         //待支付倒计时
